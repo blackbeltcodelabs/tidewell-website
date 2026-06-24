@@ -468,43 +468,54 @@ a:hover { text-decoration: underline; }
   z-index: 10;
 }
 
+/* Phone screen: gradient is the fallback shown when no screenshot file exists.
+   background-image is silently ignored by the browser if the file is missing —
+   no broken icon, no blank white. Drop the image files in assets/ and they
+   appear automatically. */
 .phone-screen {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  /* Placeholder gradient — visible until real screenshot loads */
-  background: linear-gradient(155deg, #EDF2FF 0%, #E0EAFF 100%);
+  background-color: #EEF2FF;
+  background-image: linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 12px 12px;
-  text-align: center;
-  gap: 5px;
 }
 
-/* Placeholder label from data-label attribute */
+/* Subtle tide wave shown when no screenshot is loaded */
 .phone-screen::after {
-  content: attr(data-label);
-  font-family: var(--font-sans);
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--color-blue);
-  opacity: 0.55;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  pointer-events: none;
+  content: '';
+  display: block;
+  width: 48px;
+  height: 48px;
+  background: rgba(10, 132, 255, 0.12);
+  border-radius: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg width='28' height='20' viewBox='0 0 28 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 14c3-7 6-7 9 0s6 7 9 0' stroke='%230A84FF' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M2 7c3-6 6-6 9 0s6 6 9 0' stroke='%230A84FF' stroke-width='1.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px 20px;
+  margin-top: 50px; /* clear dynamic island */
 }
 
-.phone-screen img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;           /* covers placeholder when loaded */
-  color: transparent;   /* hides broken-image alt text */
-}
+/* Screenshot background classes.
+   CSS multiple-backgrounds: screenshot layer first, gradient layer second.
+   If the file is missing the browser silently drops the URL layer and renders
+   only the gradient — no broken icon, no blank white frame.
+   If the file loads it sits on top of the gradient. */
+.ss-home   { background-image: url('../assets/ss-home.png'),   linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+.ss-shot   { background-image: url('../assets/ss-shot.png'),   linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+.ss-body   { background-image: url('../assets/ss-body.png'),   linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+.ss-rhythm { background-image: url('../assets/ss-rhythm.png'), linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+.ss-learn  { background-image: url('../assets/ss-learn.png'),  linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+.ss-plus   { background-image: url('../assets/ss-plus.png'),   linear-gradient(155deg, #EDF2FF 0%, #DDE6FF 100%); background-size: cover, auto; }
+
+/* Wave icon not needed when a ss-* class is set */
+.ss-home::after, .ss-shot::after, .ss-body::after,
+.ss-rhythm::after, .ss-learn::after, .ss-plus::after { display: none; }
 
 .phone-placeholder {
   position: absolute;

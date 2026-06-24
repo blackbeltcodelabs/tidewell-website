@@ -696,15 +696,22 @@ a:hover { text-decoration: underline; }
   gap: 64px;
 }
 
-/* Left column — sticky phone */
+/* Left column — sticky phone.
+   top:64px clears the fixed nav so the phone never slides behind it.
+   height accounts for the nav offset so centering stays correct. */
 .screenshots-phone-rail {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 64px;
+  height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding-right: 16px;
+}
+
+/* Slightly smaller phone so it comfortably fits the available height */
+.screenshots-phone-rail .phone-frame.lg {
+  width: 240px;
 }
 
 /* All screens stacked inside the phone */
@@ -725,8 +732,8 @@ a:hover { text-decoration: underline; }
 
 /* Right column — scrolling steps */
 .screenshots-steps-rail {
-  padding-top: calc(50vh - 280px); /* align first step to vertical center of phone */
-  padding-bottom: calc(50vh - 100px);
+  padding-top: calc(50vh - 64px - 260px); /* align first step to phone center */
+  padding-bottom: calc(50vh - 64px - 100px);
 }
 
 .screenshots-step {

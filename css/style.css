@@ -455,18 +455,7 @@ a:hover { text-decoration: underline; }
 .phone-frame.lg { width: 300px; }
 .phone-frame.sm { width: 210px; border-radius: 34px; }
 
-.phone-frame::before {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 108px;
-  height: 30px;
-  background: #000;
-  border-radius: 16px;
-  z-index: 10;
-}
+/* Dynamic island is part of the screenshot — no CSS overlay needed */
 
 /* Phone screen: gradient is the fallback shown when no screenshot file exists.
    background-image is silently ignored by the browser if the file is missing —

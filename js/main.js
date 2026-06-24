@@ -140,16 +140,32 @@ function initScrollAnimations() {
   els.forEach(el => observer.observe(el));
 }
 
-/* ── Image fallbacks ───────────────────────────────────────── */
-/* When a screenshot file is missing, hide the broken img so the  */
-/* gradient placeholder behind it shows instead.                  */
-function initImageFallbacks() {
-  document.querySelectorAll('.phone-screen img').forEach(img => {
-    const hide = () => { img.style.opacity = '0'; };
-    img.addEventListener('error', hide);
-    // Already failed (e.g. browser served cached 404)
-    if (img.complete && img.naturalHeight === 0) hide();
-  });
+/* ── Sticky screenshot scroll ──────────────────────────────── */
+
+function initStickyScreenshots() {
+  const steps   = document.querySelectorAll('.screenshots-step');
+  const screens = document.querySelectorAll('.spscreen');
+  if (!steps.length || !screens.length) return;
+
+  const activate = (idx) => {
+    steps.forEach((s, i)   => s.classList.toggle('active', i === idx));
+    screens.forEach((s, i) => s.classList.toggle('active', i === idx));
+  };
+
+  activate(0);
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    steps.forEach(s => { s.style.opacity = '1'; s.style.transform = 'none'; });
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) activate(Number(e.target.dataset.idx));
+    });
+  }, { threshold: 0.5 });
+
+  steps.forEach(step => observer.observe(step));
 }
 
 /* ── Boot ──────────────────────────────────────────────────── */
@@ -159,5 +175,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFAQ();
   initScrollAnimations();
-  initImageFallbacks();
+  initStickyScreenshots();
 });

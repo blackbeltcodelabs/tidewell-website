@@ -21,11 +21,7 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="Tidewell home">
       <div class="nav-logo-icon" aria-hidden="true">
-        <!-- Replace with app icon once available: <img src="assets/icon.png" alt=""> -->
-        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-          <path d="M1 10c2.5-5 5-5 7.5 0S14 10 16.5 5" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M1 5c2.5-4 5-4 7.5 0S14 5 16.5 1" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity="0.55"/>
-        </svg>
+        <img src="assets/icon.png" alt="">
       </div>
       <span class="nav-wordmark">Tidewell</span>
     </a>
@@ -266,7 +262,7 @@
 </section>
 
 <!-- ── Screenshots ───────────────────────────────────────────── -->
-<section class="screenshots section">
+<section class="screenshots section" id="screenshots">
   <div class="container">
     <header class="screenshots-header">
       <div class="section-label fade-in">The app</div>
@@ -275,50 +271,62 @@
     </header>
   </div>
 
-  <div class="screenshots-track">
+  <div class="screenshots-scroll-stage">
 
-    <div class="screenshot-item fade-in">
-      <div class="phone-frame">
-        <div class="phone-screen ss-home"></div>
+    <!-- Sticky phone — screens crossfade as user scrolls -->
+    <div class="screenshots-phone-rail">
+      <div class="phone-frame lg">
+        <div class="sticky-phone-screens">
+          <div class="phone-screen ss-home  spscreen" data-idx="0"></div>
+          <div class="phone-screen ss-shot   spscreen" data-idx="1"></div>
+          <div class="phone-screen ss-body   spscreen" data-idx="2"></div>
+          <div class="phone-screen ss-rhythm spscreen" data-idx="3"></div>
+          <div class="phone-screen ss-learn  spscreen" data-idx="4"></div>
+          <div class="phone-screen ss-plus   spscreen" data-idx="5"></div>
+        </div>
       </div>
-      <p class="screenshot-caption">A steady week noticed. Not loud, not dramatic.</p>
     </div>
 
-    <div class="screenshot-item fade-in delay-1">
-      <div class="phone-frame">
-        <div class="phone-screen ss-shot"></div>
-      </div>
-      <p class="screenshot-caption">Choose your dose. Tap your site. Logged.</p>
-    </div>
+    <!-- Scrolling step text -->
+    <div class="screenshots-steps-rail">
 
-    <div class="screenshot-item fade-in delay-2">
-      <div class="phone-frame">
-        <div class="phone-screen ss-body"></div>
+      <div class="screenshots-step" data-idx="0">
+        <p class="step-tag">Home</p>
+        <h3>Your week,<br>held in place.</h3>
+        <p class="step-body">See this week's check-ins, your next shot countdown, and the quiet pattern your body is making — all without noise.</p>
       </div>
-      <p class="screenshot-caption">Weight. Waist. BMI. Your body's shape, gently tracked.</p>
-    </div>
 
-    <div class="screenshot-item fade-in delay-3">
-      <div class="phone-frame">
-        <div class="phone-screen ss-rhythm"></div>
+      <div class="screenshots-step" data-idx="1">
+        <p class="step-tag">Shot Log</p>
+        <h3>Logged<br>in seconds.</h3>
+        <p class="step-body">Pick your medication, dose, and injection site. Tidewell remembers your patterns so every log gets a little faster.</p>
       </div>
-      <p class="screenshot-caption">Looking back is gentle. Your weeks, held in place.</p>
-    </div>
 
-    <div class="screenshot-item fade-in delay-4">
-      <div class="phone-frame">
-        <div class="phone-screen ss-learn"></div>
+      <div class="screenshots-step" data-idx="2">
+        <p class="step-tag">Body</p>
+        <h3>Your body's shape,<br>gently tracked.</h3>
+        <p class="step-body">Weight and waist over time — not as numbers to stress over, but as a quiet record of what's been shifting since day one.</p>
       </div>
-      <p class="screenshot-caption">The Mind · The Body · Living With It.</p>
-    </div>
 
-    <div class="screenshot-item fade-in delay-5">
-      <div class="phone-frame">
-        <div class="phone-screen ss-plus"></div>
+      <div class="screenshots-step" data-idx="3">
+        <p class="step-tag">Weekly Rhythm</p>
+        <h3>Four weeks,<br>held in place.</h3>
+        <p class="step-body">Spot patterns across weeks — when food noise spikes, when energy dips, what your body does in the days between shots.</p>
       </div>
-      <p class="screenshot-caption">Everything, without limits.</p>
-    </div>
 
+      <div class="screenshots-step" data-idx="4">
+        <p class="step-tag">Learn</p>
+        <h3>The library your<br>prescriber didn't give you.</h3>
+        <p class="step-body">Short pieces on what GLP-1s actually do to your body, your appetite, and your relationship with food. No noise. No shame.</p>
+      </div>
+
+      <div class="screenshots-step" data-idx="5">
+        <p class="step-tag">Tidewell Plus</p>
+        <h3>Everything,<br>without limits.</h3>
+        <p class="step-body">PDF exports for your prescriber, all companion pieces, cloud backup, and personalized nudges drawn from your own patterns.</p>
+      </div>
+
+    </div>
   </div>
 </section>
 

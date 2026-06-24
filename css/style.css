@@ -203,18 +203,15 @@ a:hover { text-decoration: underline; }
 .nav-logo-icon {
   width: 30px;
   height: 30px;
-  background: var(--color-blue);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .nav-logo-icon img {
   width: 30px;
   height: 30px;
-  border-radius: 8px;
+  display: block;
 }
 
 .nav-wordmark {
@@ -670,40 +667,109 @@ a:hover { text-decoration: underline; }
 
 /* ── Screenshots ───────────────────────────────────────────── */
 
+/* ── Screenshots sticky-scroll ─────────────────────────────────── */
+
 .screenshots {
-  padding: var(--section-py) 0;
+  padding: var(--section-py) 0 0;
   background: var(--color-bg-dark);
-  overflow: hidden;
+  /* no overflow:hidden — it breaks position:sticky */
 }
 
-.screenshots-header { text-align: center; margin-bottom: 52px; }
+.screenshots-header {
+  text-align: center;
+  margin-bottom: 80px;
+  padding: 0 24px;
+}
 .screenshots-header .section-label { color: rgba(255,255,255,0.45); }
 .screenshots-header .section-label::before { background: rgba(255,255,255,0.25); }
 .screenshots-header .section-heading { color: #fff; }
 .screenshots-header .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto; }
 
-.screenshots-track {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 0 24px;
+/* Two-column scroll stage */
+.screenshots-scroll-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px 120px;
+  gap: 64px;
 }
 
-.screenshot-item {
+/* Left column — sticky phone */
+.screenshots-phone-rail {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+
+/* All screens stacked inside the phone */
+.sticky-phone-screens {
+  position: absolute;
+  inset: 0;
+}
+
+/* Each screen fades in/out */
+.spscreen {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.spscreen.active {
+  opacity: 1;
+}
+
+/* Right column — scrolling steps */
+.screenshots-steps-rail {
+  padding-top: calc(50vh - 280px); /* align first step to vertical center of phone */
+  padding-bottom: calc(50vh - 100px);
+}
+
+.screenshots-step {
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  justify-content: center;
+  padding: 40px 0;
+  opacity: 0.2;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
-.screenshot-caption {
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.45);
-  text-align: center;
-  max-width: 150px;
-  line-height: 1.4;
+.screenshots-step.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+}
+
+.screenshots-step h3 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.step-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+  max-width: 360px;
 }
 
 /* ── FAQ ───────────────────────────────────────────────────── */
@@ -1200,22 +1266,45 @@ a:hover { text-decoration: underline; }
   .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: flex; }
+
+  /* Screenshots: collapse to single column on tablet */
+  .screenshots-scroll-stage {
+    grid-template-columns: 1fr;
+    padding: 0 32px 80px;
+    gap: 0;
+  }
+
+  .screenshots-phone-rail {
+    position: sticky;
+    top: 0;
+    height: 52vw;
+    max-height: 420px;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .screenshots-phone-rail .phone-frame.lg {
+    width: 200px;
+  }
+
+  .screenshots-steps-rail {
+    padding-top: 48px;
+    padding-bottom: 60px;
+  }
+
+  .screenshots-step {
+    min-height: 60vh;
+    align-items: center;
+    text-align: center;
+  }
+
+  .step-body { margin: 0 auto; }
 }
 
 @media (max-width: 600px) {
   :root { --section-py: 56px; }
 
   .features-grid { grid-template-columns: 1fr; }
-
-  .screenshots-track {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 12px;
-  }
-  .screenshots-track::-webkit-scrollbar { display: none; }
 
   .phone-frame { width: 210px; }
   .phone-frame.sm { width: 180px; border-radius: 30px; }
@@ -1227,6 +1316,11 @@ a:hover { text-decoration: underline; }
   .pricing-grid { max-width: 100%; }
 
   .contact-card { padding: 32px 24px; }
+
+  .screenshots-scroll-stage { padding: 0 20px 60px; }
+  .screenshots-phone-rail { height: 60vw; max-height: 340px; }
+  .screenshots-phone-rail .phone-frame.lg { width: 160px; }
+  .screenshots-step h3 { font-size: 1.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

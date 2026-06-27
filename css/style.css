@@ -1223,14 +1223,69 @@ a:hover { text-decoration: underline; }
   justify-content: center;
 }
 
+/* Trust pills — pricing section */
 .pricing-trust {
   text-align: center;
-  margin-top: 24px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 14px;
 }
-.pricing-trust p { font-size: 12px; color: var(--color-text-muted); }
+
+.trust-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border-strong);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.trust-pill svg { color: var(--color-blue); flex-shrink: 0; }
+
+.pricing-trust-note {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Trust strip — hero section */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 20px;
+}
+
+.hero-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.hero-trust-item svg { color: var(--color-blue); flex-shrink: 0; }
+
+.hero-trust-sep {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1;
+}
 
 /* ── About ─────────────────────────────────────────────────── */
 

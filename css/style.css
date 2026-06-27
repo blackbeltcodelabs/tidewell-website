@@ -17,6 +17,7 @@
   --color-border-strong: #D1D1D8;
   --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Newsreader', Georgia, serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -240,12 +241,12 @@ a:hover { text-decoration: underline; }
 }
 
 .nav-wordmark {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-style: normal;
   font-size: 19px;
-  font-weight: 400;
+  font-weight: 800;
   color: var(--color-text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
 }
 
 /* Liquid glass pill — absolutely centred inside nav-inner */
@@ -383,14 +384,26 @@ a:hover { text-decoration: underline; }
 }
 
 .hero-headline {
+  font-size: clamp(38px, 5.5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 22px;
+}
+
+.hero-headline span {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-style: normal;
+  color: var(--color-text);
+}
+
+.hero-headline em {
+  display: block;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(38px, 5.5vw, 60px);
-  line-height: 1.14;
-  letter-spacing: -0.025em;
-  color: var(--color-text);
-  margin-bottom: 22px;
+  color: var(--color-text-secondary);
 }
 
 .hero-sub {
@@ -398,6 +411,21 @@ a:hover { text-decoration: underline; }
   line-height: 1.75;
   color: var(--color-text-secondary);
   margin-bottom: 20px;
+}
+
+.drug-brand {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.hero-sub sup {
+  font-size: 0.6em;
+  vertical-align: super;
+  font-family: var(--font-sans);
+  font-weight: 500;
 }
 
 .hero-beta-note {
@@ -494,6 +522,25 @@ a:hover { text-decoration: underline; }
 .store-badge[aria-disabled="true"] {
   cursor: default;
   pointer-events: none;
+}
+
+/* Join Free — static badge, no interaction */
+.btn-join-free {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 10px 20px;
+  min-width: 148px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: default;
+  user-select: none;
+  box-shadow: 0 0 0 1px rgba(37,99,235,0.25), 0 4px 20px rgba(37,99,235,0.22);
 }
 
 /* Footer store badges row */
@@ -1723,6 +1770,9 @@ a:hover { text-decoration: underline; }
   line-height: 1.65;
   color: rgba(255,255,255,0.38);
   margin: 0;
+}
+.footer-disclaimer-box p + p {
+  margin-top: 8px;
 }
 
 .footer-bottom {

@@ -1916,15 +1916,16 @@ a:hover { text-decoration: underline; }
   .hero-stats { justify-content: center; }
   .hero-visual { order: -1; }
 
-  /* On tablet/mobile: collapse to single centered phone */
+  /* On tablet/mobile: collapse to single centered phone, crop bottom */
   .hero-phones {
     width: 220px;
-    height: auto;
+    height: 300px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     perspective: none;
   }
-  .hero-phones .phone-frame.lg { width: 220px; }
+  .hero-phones .phone-frame.lg { width: 200px; }
   .hero-phone-back { display: none; }
   .hero-phone-front {
     position: static;
@@ -2016,29 +2017,131 @@ a:hover { text-decoration: underline; }
 @media (max-width: 600px) {
   :root { --section-py: 56px; }
 
+  /* ── Hero ── */
+  .hero { padding: 44px 0 44px; }
+  .hero-headline { font-size: clamp(28px, 8vw, 38px); }
+  .hero-sub { font-size: 15px; line-height: 1.65; }
+  .hero-inner { gap: 36px; }
+
+  /* Hero phone: smaller + crop */
+  .hero-phones { width: 170px; height: 260px; }
+  .hero-phones .phone-frame.lg { width: 170px; }
+
+  /* Hero CTA: stack badges vertically */
+  .hero-cta-group .store-badges {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 260px;
+  }
+  .hero-cta-group .store-badge,
+  .hero-cta-group .btn-join-free {
+    min-width: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hero stats: equal 3-column grid */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-stat-value { font-size: 13px; }
+  .hero-stat-label { font-size: 9px; letter-spacing: 0.02em; }
+
+  /* Hero trust: wrap, hide separators */
+  .hero-trust { flex-wrap: wrap; gap: 6px 10px; justify-content: center; }
+  .hero-trust-sep { display: none; }
+
+  /* ── Scrolltell ── */
   .st-inner { padding: 52px 24px; gap: 32px; }
   .st-heading { font-size: clamp(1.5rem, 6vw, 2rem); }
   .st-sub { font-size: 15px; }
 
+  /* ── Phone frames (generic, not hero) ── */
   .phone-frame { width: 210px; }
   .phone-frame.sm { width: 180px; border-radius: 30px; }
   .phone-frame.lg { width: 250px; }
 
-  .footer-inner { padding: 0 24px; }
-  .footer-top { grid-template-columns: 1fr; gap: 28px; }
-  .footer-tagline { max-width: 100%; }
-  .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
+  /* ── Screenshots ── */
+  .screenshots-scroll-stage { padding: 0 20px 60px; }
+  .screenshots-phone-rail { height: 60vw; max-height: 340px; overflow: hidden; }
+  .screenshots-phone-rail .phone-frame.lg { width: 160px; }
+  .screenshots-step h3 { font-size: 1.6rem; }
 
+  /* ── Pricing ── */
   .pp-num { font-size: 48px; }
   .pp-left, .pp-right { padding: 20px 18px; }
   .pp-features { gap: 10px; }
+  .plan-tab { font-size: 13px; padding: 8px 14px; }
 
+  /* ── Final CTA ── */
+  .final-cta { padding: 64px 0; }
+  .final-cta-sub { font-size: 16px; }
+  .final-cta .store-badges {
+    flex-direction: column;
+    align-items: center;
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-cta .store-badge,
+  .final-cta .btn-join-free {
+    min-width: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── Footer ── */
+  .footer-inner { padding: 0 24px; }
+  .footer-top { grid-template-columns: 1fr; gap: 28px; }
+  .footer-tagline { max-width: 100%; }
+  .footer-store-row { flex-direction: column; gap: 8px; }
+  .footer-store-row .store-badge { min-width: 0; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
+
+  /* ── Misc ── */
   .contact-card { padding: 32px 24px; }
+  .cycle-section { overflow: hidden; }
+}
 
-  .screenshots-scroll-stage { padding: 0 20px 60px; }
-  .screenshots-phone-rail { height: 60vw; max-height: 340px; }
-  .screenshots-phone-rail .phone-frame.lg { width: 160px; }
-  .screenshots-step h3 { font-size: 1.6rem; }
+@media (max-width: 420px) {
+  :root { --section-py: 48px; }
+
+  /* ── Hero ── */
+  .hero { padding: 32px 0 36px; }
+  .hero-inner { padding: 0 18px; gap: 28px; }
+  .hero-headline { font-size: clamp(24px, 7.5vw, 30px); }
+  .hero-sub { font-size: 14px; line-height: 1.6; }
+  .hero-phones { width: 140px; height: 230px; }
+  .hero-phones .phone-frame.lg { width: 140px; }
+  .hero-stat-label { font-size: 8px; }
+
+  /* ── Cycle wheel ── */
+  .cycle-diagram { transform: scale(0.58); margin-bottom: -160px; }
+  .cycle-inner { gap: 24px; }
+
+  /* ── Screenshots ── */
+  .screenshots-phone-rail { max-height: 260px; }
+  .screenshots-phone-rail .phone-frame.lg { width: 130px; }
+  .screenshots-step { min-height: 50vh; }
+
+  /* ── Section headings ── */
+  .section-heading { font-size: clamp(1.6rem, 6vw, 2rem); }
+
+  /* ── Final CTA ── */
+  .final-cta { padding: 52px 0; }
+  .final-cta-headline { font-size: clamp(22px, 7vw, 30px); }
+
+  /* ── Drug pages ── */
+  .drug-close-section { padding: 56px 0; }
+  .drug-qa-card { padding: 20px 18px; }
+  .drug-qa-q { font-size: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

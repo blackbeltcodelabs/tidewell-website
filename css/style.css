@@ -168,16 +168,41 @@ a:hover { text-decoration: underline; }
   height: 64px;
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.80);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition), background var(--transition);
+  /* Liquid glass base */
+  background: rgba(255,255,255,0.52);
+  backdrop-filter: blur(40px) saturate(200%) brightness(1.04);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.04);
+  border-bottom: 1px solid rgba(255,255,255,0.70);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.92),
+    0 1px 0 rgba(0,0,0,0.04),
+    0 8px 32px rgba(0,0,0,0.05);
+  transition: all 240ms ease;
+}
+
+/* Prismatic refraction strip at bottom edge */
+.nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100,160,255,0.25) 20%,
+    rgba(180,120,255,0.18) 45%,
+    rgba(100,220,200,0.22) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .nav.scrolled {
-  border-bottom-color: var(--color-border);
-  background: rgba(255,255,255,0.96);
+  background: rgba(255,255,255,0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    0 1px 0 rgba(0,0,0,0.06),
+    0 8px 32px rgba(0,0,0,0.07);
 }
 
 .nav-inner {
@@ -188,6 +213,7 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
 }
 
 .nav-logo {
@@ -196,7 +222,6 @@ a:hover { text-decoration: underline; }
   gap: 9px;
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: 16px;
 }
 .nav-logo:hover { text-decoration: none; }
 
@@ -223,26 +248,42 @@ a:hover { text-decoration: underline; }
   letter-spacing: -0.01em;
 }
 
+/* Liquid glass pill — absolutely centred inside nav-inner */
 .nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 2px;
   list-style: none;
-  flex: 1;
+  /* Glass pill */
+  background: rgba(15,15,18,0.045);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(15,15,18,0.08);
+  border-radius: 100px;
+  padding: 4px 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 -1px 0 rgba(0,0,0,0.04),
+    0 2px 12px rgba(0,0,0,0.05);
 }
 
 .nav-links a {
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-secondary);
-  padding: 7px 12px;
-  border-radius: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
   transition: all var(--transition);
   text-decoration: none;
+  white-space: nowrap;
 }
 .nav-links a:hover {
   color: var(--color-text);
-  background: var(--color-bg-warm);
+  background: rgba(255,255,255,0.70);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
 .nav-cta { margin-left: auto; }
@@ -1588,6 +1629,21 @@ a:hover { text-decoration: underline; }
   transition: color var(--transition);
 }
 .footer-links a:hover { color: #fff; }
+
+.footer-disclaimer-box {
+  margin: 0 0 32px;
+  padding: 14px 20px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+}
+
+.footer-disclaimer-box p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.38);
+  margin: 0;
+}
 
 .footer-bottom {
   display: flex;

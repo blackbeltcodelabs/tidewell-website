@@ -490,11 +490,18 @@ a:hover { text-decoration: underline; }
   letter-spacing: -0.01em;
 }
 
-/* Disabled Google Play — visible but unclickable */
+/* Google Play coming soon — normal appearance, unclickable */
 .store-badge[aria-disabled="true"] {
-  opacity: 0.42;
-  cursor: not-allowed;
+  cursor: default;
   pointer-events: none;
+}
+
+/* Footer store badges row */
+.footer-store-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 /* Pricing panel: stacked column badges */

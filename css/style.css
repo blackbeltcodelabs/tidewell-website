@@ -1094,13 +1094,21 @@ a:hover { text-decoration: underline; }
 
 /* ── Pricing ───────────────────────────────────────────────── */
 
-.pricing { padding: var(--section-py) 0; background: var(--color-bg-warm); }
-.pricing-header { text-align: center; margin-bottom: 52px; }
+.pricing { padding: 56px 0 60px; background: var(--color-bg-warm); }
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+/* Force the sub-text block to centre (text-align centres the text inside,
+   margin auto centres the block itself within its container) */
+.pricing-header .section-sub { margin: 0 auto; }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
   max-width: 940px;
   margin: 0 auto;
 }
@@ -1109,13 +1117,13 @@ a:hover { text-decoration: underline; }
   background: var(--color-bg);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: 36px 28px;
+  padding: 24px 22px 22px;
   display: flex;
   flex-direction: column;
   position: relative;
   transition: all 0.25s ease;
 }
-.pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.pricing-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 .pricing-card.featured { border-color: var(--color-blue); box-shadow: 0 0 0 1px var(--color-blue), var(--shadow-md); }
 .pricing-card.lifetime { border-color: var(--color-amber); }
 
@@ -1136,62 +1144,63 @@ a:hover { text-decoration: underline; }
 .pricing-badge.amber { background: var(--color-amber); color: #fff; }
 
 .pricing-plan {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .pricing-amount {
   display: flex;
   align-items: baseline;
-  gap: 3px;
-  margin-bottom: 5px;
+  gap: 2px;
+  margin-bottom: 4px;
 }
 
-.pricing-currency { font-size: 22px; font-weight: 700; color: var(--color-text); }
+.pricing-currency { font-size: 18px; font-weight: 700; color: var(--color-text); }
 .pricing-value {
-  font-size: 52px;
+  font-size: 40px;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--color-text);
 }
-.pricing-period { font-size: 14px; color: var(--color-text-muted); font-weight: 500; align-self: flex-end; padding-bottom: 4px; }
+.pricing-period { font-size: 13px; color: var(--color-text-muted); font-weight: 500; align-self: flex-end; padding-bottom: 3px; }
 
 .pricing-anchor {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--color-text-muted);
-  margin-bottom: 22px;
-  min-height: 18px;
+  margin-bottom: 0;
+  min-height: 16px;
+  line-height: 1.4;
 }
 .pricing-anchor s { opacity: 0.65; }
 
-.pricing-divider { height: 1px; background: var(--color-border); margin: 22px 0; }
+.pricing-divider { height: 1px; background: var(--color-border); margin: 14px 0; }
 
 .pricing-features {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 8px;
   flex: 1;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 
 .pricing-feature {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   line-height: 1.4;
 }
 
 .check {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--color-blue-light);
   color: var(--color-blue);
@@ -1199,18 +1208,29 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 .pricing-card.lifetime .check { background: var(--color-amber-light); color: var(--color-amber); }
-.check svg { width: 10px; height: 10px; }
+.check svg { width: 9px; height: 9px; }
+
+/* Slightly smaller CTA button inside pricing cards */
+.pricing-cta {
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 11px;
+  margin-top: auto;
+  text-align: center;
+  justify-content: center;
+}
 
 .pricing-trust {
   text-align: center;
-  margin-top: 36px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
-.pricing-trust p { font-size: 13px; color: var(--color-text-muted); }
+.pricing-trust p { font-size: 12px; color: var(--color-text-muted); }
 
 /* ── About ─────────────────────────────────────────────────── */
 

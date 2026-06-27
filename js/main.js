@@ -140,6 +140,62 @@ function initScrollAnimations() {
   els.forEach(el => observer.observe(el));
 }
 
+/* ── Shot Cycle Wheel ──────────────────────────────────────── */
+
+function initCycleWheel() {
+  const nodes = document.querySelectorAll('.cycle-node');
+  if (!nodes.length) return;
+
+  const phases = [
+    { name: 'Shot Day',     days: 'Day 0',    label: 'You just dosed',       desc: 'Medication begins absorbing. Take it easy — nausea is common early on.' },
+    { name: 'Peak Effect',  days: 'Days 1–2', label: 'Strongest window',     desc: 'GLP-1 is at its peak. Appetite feels very quiet — don\'t fight it.' },
+    { name: 'Cruise Phase', days: 'Days 3–4', label: 'Finding your rhythm',  desc: 'Steady suppression. Your best window for building gentle habits.' },
+    { name: 'Steady State', days: 'Days 4–5', label: 'Calm middle',          desc: 'Energy and mood often stabilise here. The medication is holding.' },
+    { name: 'Wind Down',    days: 'Days 5–6', label: 'Tapering off',         desc: 'Medication level declining. Appetite may gradually return — that\'s normal.' },
+    { name: 'Next Shot',    days: 'Day 7',    label: 'Time to redose',       desc: 'Log your injection site, confirm your dose schedule, and reset.' },
+  ];
+
+  const center    = document.querySelector('.cycle-center');
+  const nameEl    = document.querySelector('.cycle-phase-name');
+  const daysEl    = document.querySelector('.cycle-phase-days');
+  const labelEl   = document.querySelector('.cycle-phase-label');
+  const descEl    = document.querySelector('.cycle-phase-desc');
+
+  let current = 0;
+  let timer;
+
+  function activatePhase(idx) {
+    nodes.forEach((n, i) => n.classList.toggle('active', i === idx));
+    const p = phases[idx];
+
+    if (center) center.classList.add('fading');
+    setTimeout(() => {
+      if (nameEl)  nameEl.textContent  = p.name;
+      if (daysEl)  daysEl.textContent  = p.days;
+      if (labelEl) labelEl.textContent = p.label;
+      if (descEl)  descEl.textContent  = p.desc;
+      if (center) center.classList.remove('fading');
+    }, 220);
+  }
+
+  function tick() {
+    current = (current + 1) % phases.length;
+    activatePhase(current);
+  }
+
+  activatePhase(0);
+  timer = setInterval(tick, 2800);
+
+  nodes.forEach((n, i) => {
+    n.addEventListener('click', () => {
+      clearInterval(timer);
+      current = i;
+      activatePhase(i);
+      timer = setInterval(tick, 2800);
+    });
+  });
+}
+
 /* ── Sticky screenshot scroll ──────────────────────────────── */
 
 function initStickyScreenshots() {
@@ -175,5 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFAQ();
   initScrollAnimations();
+  initCycleWheel();
   initStickyScreenshots();
 });

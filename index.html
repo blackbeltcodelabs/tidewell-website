@@ -139,6 +139,96 @@
 </section>
 
 
+<!-- ── Shot Cycle Wheel ─────────────────────────────────────── -->
+<section class="cycle-section">
+  <div class="cycle-inner">
+
+    <div class="cycle-header fade-in">
+      <h2 class="cycle-heading">
+        <span>Every dose has six phases.</span>
+        <em>Know which one you're in.</em>
+      </h2>
+      <p class="cycle-sub">GLP-1 medications work in predictable weekly rhythms. Understanding your current phase turns confusion into calm.</p>
+    </div>
+
+    <div class="cycle-wrap fade-in delay-1">
+      <div class="cycle-diagram" role="img" aria-label="GLP-1 weekly phase cycle: Shot Day, Peak Effect, Cruise Phase, Steady State, Wind Down, Next Shot">
+
+        <!-- Ring SVG -->
+        <svg class="cycle-svg" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="cycleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0A84FF"/>
+              <stop offset="60%" stop-color="#5AC8FA"/>
+              <stop offset="100%" stop-color="#0A84FF"/>
+            </linearGradient>
+          </defs>
+          <!-- Dim track ring -->
+          <circle cx="210" cy="210" r="155" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
+          <!-- Glowing gradient ring -->
+          <circle cx="210" cy="210" r="155" fill="none" stroke="url(#cycleGrad)" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+
+        <!-- Node 0 — Shot Day (top, 12 o'clock) -->
+        <div class="cycle-node" data-idx="0" title="Shot Day">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+            <path d="M20 4l-8 8M14 3l7 7M3 21l5-5M3 16l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M9 15l-3 3M8 10l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Node 1 — Peak Effect (top-right, 2 o'clock) -->
+        <div class="cycle-node" data-idx="1" title="Peak Effect">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <polygon points="13,2 7,13 11,13 9,22 17,9 13,9"/>
+          </svg>
+        </div>
+
+        <!-- Node 2 — Cruise Phase (bottom-right, 4 o'clock) -->
+        <div class="cycle-node" data-idx="2" title="Cruise Phase">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+            <path d="M3 10c1.5 2.5 3 2.5 4.5 0s3-2.5 4.5 0 3 2.5 4.5 0 3-2.5 4.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 16c1.5 2.5 3 2.5 4.5 0s3-2.5 4.5 0 3 2.5 4.5 0 3-2.5 4.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Node 3 — Steady State (bottom, 6 o'clock) -->
+        <div class="cycle-node" data-idx="3" title="Steady State">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M5.6 5.6l1.5 1.5M16.9 16.9l1.5 1.5M5.6 18.4l1.5-1.5M16.9 7.1l1.5-1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Node 4 — Wind Down (bottom-left, 8 o'clock) -->
+        <div class="cycle-node" data-idx="4" title="Wind Down">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </div>
+
+        <!-- Node 5 — Next Shot (top-left, 10 o'clock) -->
+        <div class="cycle-node" data-idx="5" title="Next Shot">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 7v5l3 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Center read-out -->
+        <div class="cycle-center">
+          <p class="cycle-phase-name">Shot Day</p>
+          <p class="cycle-phase-days">Day 0</p>
+          <p class="cycle-phase-label">You just dosed</p>
+          <p class="cycle-phase-desc">Medication begins absorbing. Take it easy — nausea is common early on.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ── Screenshots ───────────────────────────────────────────── -->
 <section class="screenshots section" id="screenshots">
   <div class="container">

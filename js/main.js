@@ -10,17 +10,19 @@ const APP_STATUS = 'beta'; // 'beta' | 'live'
 
 const APP_CONFIG = {
   beta: {
-    ios:         'https://testflight.apple.com/join/XXXXXXXX', // ← replace with your TestFlight public link
-    ctaLabel:    'Join via TestFlight',
-    ctaBadge:    'Currently in beta — join via TestFlight',
-    showAndroid: false,
+    ios:             'https://testflight.apple.com/join/XXXXXXXX', // ← replace with your TestFlight public link
+    ctaLabel:        'App Store',
+    ctaBadge:        'iOS beta · TestFlight invite',
+    showAndroid:     true,
+    androidDisabled: true,
   },
   live: {
-    ios:         'https://apps.apple.com/app/tidewell/id000000000', // ← replace with App Store link
-    android:     'https://play.google.com/store/apps/details?id=com.blackbeltcodelabs.tidewell',
-    ctaLabel:    'Download on the App Store',
-    ctaBadge:    null,
-    showAndroid: true,
+    ios:             'https://apps.apple.com/app/tidewell/id000000000', // ← replace with App Store link
+    android:         'https://play.google.com/store/apps/details?id=com.blackbeltcodelabs.tidewell',
+    ctaLabel:        'App Store',
+    ctaBadge:        null,
+    showAndroid:     true,
+    androidDisabled: false,
   },
 };
 
@@ -37,7 +39,9 @@ function renderCTAs() {
 
   document.querySelectorAll('[data-cta-badge]').forEach(el => {
     if (cfg.ctaBadge) {
-      el.textContent = cfg.ctaBadge;
+      const textEl = el.querySelector('[data-cta-badge-text]');
+      if (textEl) textEl.textContent = cfg.ctaBadge;
+      else el.textContent = cfg.ctaBadge;
       el.style.display = '';
     } else {
       el.style.display = 'none';
@@ -46,7 +50,15 @@ function renderCTAs() {
 
   document.querySelectorAll('[data-cta="android"]').forEach(el => {
     el.style.display = cfg.showAndroid ? '' : 'none';
-    if (cfg.showAndroid && cfg.android) el.href = cfg.android;
+    if (cfg.showAndroid) {
+      if (!cfg.androidDisabled && cfg.android) {
+        el.href = cfg.android;
+        el.removeAttribute('aria-disabled');
+      } else {
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('href', '#');
+      }
+    }
   });
 }
 

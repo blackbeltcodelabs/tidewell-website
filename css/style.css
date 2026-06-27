@@ -1158,21 +1158,21 @@ a:hover { text-decoration: underline; }
 
 .pp {
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template-columns: minmax(0,1fr) 1px minmax(0,1fr);
   background: #18181F;
   border-radius: 24px;
   overflow: hidden;
   max-width: 900px;
   margin: 0 auto;
-  min-height: 360px;
 }
 
 /* Left column */
 .pp-left {
-  padding: 44px 44px 40px;
+  padding: 36px 36px 32px;
   display: flex;
   flex-direction: column;
   position: relative;
+  min-width: 0;
 }
 
 /* Plan content blocks — only the .active one is visible */
@@ -1290,12 +1290,13 @@ a:hover { text-decoration: underline; }
   background: rgba(255,255,255,0.08);
   width: 1px;
   align-self: stretch;
-  margin: 32px 0;
+  margin: 24px 0;
 }
 
 /* Right column */
 .pp-right {
-  padding: 44px 40px 40px;
+  padding: 36px 32px 32px;
+  min-width: 0;
 }
 
 .pp-features-label {
@@ -1304,26 +1305,26 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.40);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .pp-features {
   list-style: none;
   display: none;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
 }
 .pp-features.active { display: flex; }
 
 .pp-feature {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
 }
 
 .pp-check {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: rgba(10,132,255,0.18);
   color: var(--color-blue);
@@ -1331,25 +1332,28 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
 }
-.pp-check svg { width: 11px; height: 11px; }
+.pp-check svg { width: 10px; height: 10px; }
 .pp-check-amber {
   background: rgba(245,158,11,0.15);
   color: var(--color-amber);
 }
 
+.pp-feature > div { min-width: 0; }
+
 .pp-feature strong {
   display: block;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .pp-feature span {
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.42);
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.38);
   line-height: 1.4;
 }
 
@@ -1771,8 +1775,8 @@ a:hover { text-decoration: underline; }
 
   .pp { grid-template-columns: 1fr; border-radius: 20px; }
   .pp-sep { display: none; }
-  .pp-left { padding: 32px 28px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .pp-right { padding: 28px 28px 32px; }
+  .pp-left { padding: 28px 24px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .pp-right { padding: 24px 24px 28px; }
   .pp-num { font-size: 56px; }
   .plan-toggle { flex-wrap: wrap; justify-content: center; }
 
@@ -1836,8 +1840,8 @@ a:hover { text-decoration: underline; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
 
   .pp-num { font-size: 48px; }
-  .pp-left, .pp-right { padding: 24px 20px; }
-  .pp-features { gap: 14px; }
+  .pp-left, .pp-right { padding: 20px 18px; }
+  .pp-features { gap: 10px; }
 
   .contact-card { padding: 32px 24px; }
 

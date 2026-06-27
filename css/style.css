@@ -297,7 +297,7 @@ a:hover { text-decoration: underline; }
 /* ── Hero ──────────────────────────────────────────────────── */
 
 .hero {
-  padding: 128px 0 88px;
+  padding: 72px 0 56px;
   background: var(--color-bg-warm);
   overflow: hidden;
 }
@@ -307,8 +307,8 @@ a:hover { text-decoration: underline; }
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: 1fr 520px;
-  gap: 48px;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
   align-items: center;
 }
 
@@ -437,9 +437,12 @@ a:hover { text-decoration: underline; }
 .hero-phones {
   position: relative;
   perspective: 1200px;
-  width: 420px;
-  height: 560px;
+  width: 340px;
+  height: 440px;
 }
+
+/* Override phone size specifically inside hero */
+.hero-phones .phone-frame.lg { width: 220px; }
 
 .hero-phone {
   position: absolute;
@@ -450,14 +453,14 @@ a:hover { text-decoration: underline; }
 /* Back phone — left, tilted away */
 .hero-phone-back {
   left: 0;
-  top: 40px;
+  top: 28px;
   transform:
     perspective(1200px)
     rotateY(18deg)
     rotateZ(-4deg)
     scale(0.88);
   transform-origin: center center;
-  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.18));
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.18));
   z-index: 1;
 }
 
@@ -471,7 +474,7 @@ a:hover { text-decoration: underline; }
     rotateZ(3deg)
     scale(1);
   transform-origin: center center;
-  filter: drop-shadow(0 32px 64px rgba(0,0,0,0.22));
+  filter: drop-shadow(0 28px 56px rgba(0,0,0,0.22));
   z-index: 2;
 }
 
@@ -1729,12 +1732,13 @@ a:hover { text-decoration: underline; }
 
   /* On tablet/mobile: collapse to single centered phone */
   .hero-phones {
-    width: 280px;
+    width: 220px;
     height: auto;
     display: flex;
     justify-content: center;
     perspective: none;
   }
+  .hero-phones .phone-frame.lg { width: 220px; }
   .hero-phone-back { display: none; }
   .hero-phone-front {
     position: static;

@@ -307,8 +307,8 @@ a:hover { text-decoration: underline; }
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: 1fr 480px;
-  gap: 64px;
+  grid-template-columns: 1fr 520px;
+  gap: 48px;
   align-items: center;
 }
 
@@ -426,11 +426,53 @@ a:hover { text-decoration: underline; }
 
 .hero-glow {
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(10,132,255,0.12) 0%, transparent 70%);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(10,132,255,0.13) 0%, transparent 68%);
   border-radius: 50%;
   pointer-events: none;
+}
+
+/* Two-phone 3D hero */
+.hero-phones {
+  position: relative;
+  perspective: 1200px;
+  width: 420px;
+  height: 560px;
+}
+
+.hero-phone {
+  position: absolute;
+  top: 0;
+  will-change: transform;
+}
+
+/* Back phone — left, tilted away */
+.hero-phone-back {
+  left: 0;
+  top: 40px;
+  transform:
+    perspective(1200px)
+    rotateY(18deg)
+    rotateZ(-4deg)
+    scale(0.88);
+  transform-origin: center center;
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.18));
+  z-index: 1;
+}
+
+/* Front phone — right, slight counter-tilt */
+.hero-phone-front {
+  right: 0;
+  top: 0;
+  transform:
+    perspective(1200px)
+    rotateY(-12deg)
+    rotateZ(3deg)
+    scale(1);
+  transform-origin: center center;
+  filter: drop-shadow(0 32px 64px rgba(0,0,0,0.22));
+  z-index: 2;
 }
 
 /* ── Phone Frame ───────────────────────────────────────────── */
@@ -1284,6 +1326,21 @@ a:hover { text-decoration: underline; }
   .hero-cta-group { align-items: center; }
   .hero-stats { justify-content: center; }
   .hero-visual { order: -1; }
+
+  /* On tablet/mobile: collapse to single centered phone */
+  .hero-phones {
+    width: 280px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    perspective: none;
+  }
+  .hero-phone-back { display: none; }
+  .hero-phone-front {
+    position: static;
+    transform: none;
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.18));
+  }
 
   /* Scrolltell: collapse to single column on tablet */
   .st-inner {

@@ -1091,48 +1091,54 @@ a:hover { text-decoration: underline; }
 
 /* ── Footer ────────────────────────────────────────────────── */
 
-.footer { padding: 64px 0 40px; background: var(--color-bg-dark); }
+.footer { padding: 72px 0 48px; background: var(--color-bg-dark); }
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
 
 .footer-top {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 48px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  margin-bottom: 36px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 40px;
 }
 
 .footer-wordmark {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 21px;
+  font-size: 22px;
   color: #fff;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   text-decoration: none;
 }
 .footer-wordmark:hover { text-decoration: none; color: #fff; }
 
 .footer-tagline {
   font-size: 14px;
-  color: rgba(255,255,255,0.40);
-  line-height: 1.6;
-  max-width: 220px;
+  color: rgba(255,255,255,0.50);
+  line-height: 1.65;
+  max-width: 240px;
 }
 
 .footer-col-heading {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.30);
-  margin-bottom: 16px;
+  color: rgba(255,255,255,0.40);
+  margin-bottom: 18px;
 }
 
-.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .footer-links a {
   font-size: 14px;
-  color: rgba(255,255,255,0.50);
+  color: rgba(255,255,255,0.60);
   text-decoration: none;
   transition: color var(--transition);
 }
@@ -1146,8 +1152,8 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 
-.footer-copy { font-size: 13px; color: rgba(255,255,255,0.28); }
-.footer-brand-credit { font-size: 13px; color: rgba(255,255,255,0.28); }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.45); }
+.footer-brand-credit { font-size: 13px; color: rgba(255,255,255,0.45); }
 
 /* ── Legal Pages ───────────────────────────────────────────── */
 
@@ -1313,6 +1319,7 @@ a:hover { text-decoration: underline; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
   .pricing-card.featured { order: -1; }
 
+  .footer-inner { padding: 0 40px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
 
@@ -1366,8 +1373,10 @@ a:hover { text-decoration: underline; }
   .phone-frame.sm { width: 180px; border-radius: 30px; }
   .phone-frame.lg { width: 250px; }
 
+  .footer-inner { padding: 0 24px; }
   .footer-top { grid-template-columns: 1fr; gap: 28px; }
-  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-tagline { max-width: 100%; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
 
   .pricing-grid { max-width: 100%; }
 

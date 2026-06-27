@@ -1105,104 +1105,227 @@ a:hover { text-decoration: underline; }
    margin auto centres the block itself within its container) */
 .pricing-header .section-sub { margin: 0 auto; }
 
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 940px;
-  margin: 0 auto;
-}
+/* ── Plan toggle ───────────────────────────────────────────── */
 
-.pricing-card {
+.plan-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   background: var(--color-bg);
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 24px 22px 22px;
+  border-radius: 100px;
+  padding: 5px;
+  width: fit-content;
+  margin: 0 auto 28px;
+}
+
+.plan-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.plan-tab:hover { color: var(--color-text); }
+
+.plan-tab.active {
+  background: #1C1C1E;
+  color: #fff;
+}
+
+.plan-tab-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: var(--color-blue);
+  color: #fff;
+}
+
+.plan-tab-badge-amber { background: var(--color-amber); }
+
+/* ── Unified pricing panel ─────────────────────────────────── */
+
+.pp {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  background: #18181F;
+  border-radius: 24px;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 360px;
+}
+
+/* Left column */
+.pp-left {
+  padding: 44px 44px 40px;
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: all 0.25s ease;
 }
-.pricing-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.pricing-card.featured { border-color: var(--color-blue); box-shadow: 0 0 0 1px var(--color-blue), var(--shadow-md); }
-.pricing-card.lifetime { border-color: var(--color-amber); }
 
-.pricing-badge {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
+/* Plan content blocks — only the .active one is visible */
+.pp-plan {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+}
+.pp-plan.active { display: flex; }
+
+.pp-name {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-.pricing-badge.blue { background: var(--color-blue); color: #fff; }
-.pricing-badge.amber { background: var(--color-amber); color: #fff; }
-
-.pricing-plan {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  margin-bottom: 12px;
+  color: rgba(255,255,255,0.40);
+  margin-bottom: 18px;
 }
 
-.pricing-amount {
+.pp-price-row {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 2px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
-.pricing-currency { font-size: 18px; font-weight: 700; color: var(--color-text); }
-.pricing-value {
-  font-size: 40px;
+.pp-sym {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  padding-top: 8px;
+}
+
+.pp-num {
+  font-size: 72px;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--color-text);
+  color: #fff;
 }
-.pricing-period { font-size: 13px; color: var(--color-text-muted); font-weight: 500; align-self: flex-end; padding-bottom: 3px; }
 
-.pricing-anchor {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  margin-bottom: 0;
-  min-height: 16px;
-  line-height: 1.4;
-}
-.pricing-anchor s { opacity: 0.65; }
-
-.pricing-divider { height: 1px; background: var(--color-border); margin: 14px 0; }
-
-.pricing-features {
-  list-style: none;
+.pp-price-stack {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  margin-bottom: 16px;
+  padding-top: 12px;
+  gap: 2px;
 }
 
-.pricing-feature {
+.pp-cents {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.70);
+  line-height: 1;
+}
+
+.pp-per {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.40);
+  line-height: 1;
+}
+
+.pp-billing {
+  font-size: 13px;
+  color: rgba(255,255,255,0.40);
+  margin-bottom: 18px;
+}
+
+.pp-savings {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: rgba(10,132,255,0.15);
+  border: 1px solid rgba(10,132,255,0.30);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #5AC8FA;
+  margin-bottom: 22px;
+}
+
+.pp-savings-amber {
+  background: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.25);
+  color: var(--color-amber);
+}
+
+.pp-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: 14px;
+  background: var(--color-blue);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-bottom: 14px;
+}
+.pp-cta-btn:hover { background: #0070d8; transform: translateY(-1px); }
+.pp-cta-amber { background: var(--color-amber); }
+.pp-cta-amber:hover { background: #d97706; }
+
+.pp-trust-line {
+  font-size: 12px;
+  color: rgba(255,255,255,0.28);
+  text-align: center;
+}
+
+/* Vertical separator */
+.pp-sep {
+  background: rgba(255,255,255,0.08);
+  width: 1px;
+  align-self: stretch;
+  margin: 32px 0;
+}
+
+/* Right column */
+.pp-right {
+  padding: 44px 40px 40px;
+}
+
+.pp-features-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.40);
+  margin-bottom: 24px;
+}
+
+.pp-features {
+  list-style: none;
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+}
+.pp-features.active { display: flex; }
+
+.pp-feature {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  line-height: 1.4;
+  gap: 12px;
 }
 
-.check {
-  width: 16px;
-  height: 16px;
+.pp-check {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--color-blue-light);
+  background: rgba(10,132,255,0.18);
   color: var(--color-blue);
   display: flex;
   align-items: center;
@@ -1210,17 +1333,24 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
   margin-top: 1px;
 }
-.pricing-card.lifetime .check { background: var(--color-amber-light); color: var(--color-amber); }
-.check svg { width: 9px; height: 9px; }
+.pp-check svg { width: 11px; height: 11px; }
+.pp-check-amber {
+  background: rgba(245,158,11,0.15);
+  color: var(--color-amber);
+}
 
-/* Slightly smaller CTA button inside pricing cards */
-.pricing-cta {
+.pp-feature strong {
+  display: block;
   font-size: 14px;
-  padding: 12px 20px;
-  border-radius: 11px;
-  margin-top: auto;
-  text-align: center;
-  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.pp-feature span {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.42);
+  line-height: 1.4;
 }
 
 /* Trust pills — pricing section */
@@ -1639,8 +1769,12 @@ a:hover { text-decoration: underline; }
 
   .st-cta { justify-content: center; width: 100%; }
 
-  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-  .pricing-card.featured { order: -1; }
+  .pp { grid-template-columns: 1fr; border-radius: 20px; }
+  .pp-sep { display: none; }
+  .pp-left { padding: 32px 28px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .pp-right { padding: 28px 28px 32px; }
+  .pp-num { font-size: 56px; }
+  .plan-toggle { flex-wrap: wrap; justify-content: center; }
 
   .footer-inner { padding: 0 40px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
@@ -1701,7 +1835,9 @@ a:hover { text-decoration: underline; }
   .footer-tagline { max-width: 100%; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
 
-  .pricing-grid { max-width: 100%; }
+  .pp-num { font-size: 48px; }
+  .pp-left, .pp-right { padding: 24px 20px; }
+  .pp-features { gap: 14px; }
 
   .contact-card { padding: 32px 24px; }
 

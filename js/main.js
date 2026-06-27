@@ -140,6 +140,32 @@ function initScrollAnimations() {
   els.forEach(el => observer.observe(el));
 }
 
+/* ── Pricing plan toggle ───────────────────────────────────── */
+
+function initPricingToggle() {
+  const tabs = document.querySelectorAll('.plan-tab');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const plan = tab.dataset.plan;
+
+      tabs.forEach(t => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+
+      document.querySelectorAll('.pp-plan').forEach(el => {
+        el.classList.toggle('active', el.dataset.planContent === plan);
+      });
+
+      document.querySelectorAll('.pp-features').forEach(el => {
+        el.classList.toggle('active', el.dataset.planFeatures === plan);
+      });
+    });
+  });
+}
+
 /* ── Shot Cycle Wheel ──────────────────────────────────────── */
 
 function initCycleWheel() {
@@ -231,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFAQ();
   initScrollAnimations();
+  initPricingToggle();
   initCycleWheel();
   initStickyScreenshots();
 });

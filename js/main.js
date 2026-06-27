@@ -140,29 +140,6 @@ function initScrollAnimations() {
   els.forEach(el => observer.observe(el));
 }
 
-/* ── Scrolltell panels (Features + How It Works) ───────────── */
-
-function initScrolltell() {
-  const panels = document.querySelectorAll('.st-panel');
-  if (!panels.length) return;
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    panels.forEach(p => p.classList.add('in-view'));
-    return;
-  }
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in-view');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
-
-  panels.forEach(p => observer.observe(p));
-}
-
 /* ── Sticky screenshot scroll ──────────────────────────────── */
 
 function initStickyScreenshots() {
@@ -198,6 +175,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initFAQ();
   initScrollAnimations();
-  initScrolltell();
   initStickyScreenshots();
 });

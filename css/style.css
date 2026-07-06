@@ -436,7 +436,7 @@ a:hover { text-decoration: underline; }
   padding: 14px 16px 14px 20px;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-amber);
+  border-left: 3px solid var(--color-accent);
   border-radius: 10px;
 }
 

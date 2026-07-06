@@ -6,23 +6,23 @@
    App Store. One change, entire site updates automatically.
 ───────────────────────────────────────────────────────────── */
 
-const APP_STATUS = 'beta'; // 'beta' | 'live'
+const APP_STATUS = 'live'; // 'beta' | 'live'
 
 const APP_CONFIG = {
   beta: {
-    ios:             'https://testflight.apple.com/join/XXXXXXXX', // ← replace with your TestFlight public link
-    ctaLabel:        'App Store',
+    ios:             'https://testflight.apple.com/join/XXXXXXXX',
+    ctaLabel:        'Join via TestFlight',
     ctaBadge:        'iOS beta · TestFlight invite',
     showAndroid:     true,
     androidDisabled: true,
   },
   live: {
-    ios:             'https://apps.apple.com/app/tidewell/id000000000', // ← replace with App Store link
-    android:         'https://play.google.com/store/apps/details?id=com.blackbeltcodelabs.tidewell',
-    ctaLabel:        'App Store',
-    ctaBadge:        null,
+    ios:             '#', // ← replace with App Store link once listing is approved
+    android:         '#', // ← replace with Google Play link once listing is approved
+    ctaLabel:        'Download Tidewell',
+    ctaBadge:        'Available on iOS and Android',
     showAndroid:     true,
-    androidDisabled: false,
+    androidDisabled: true, // keep disabled until store listing is live
   },
 };
 

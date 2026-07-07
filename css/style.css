@@ -418,7 +418,7 @@ a:hover { text-decoration: underline; }
   font-family: var(--font-mono);
   font-weight: 700;
   font-style: normal;
-  color: var(--color-text);
+  color: var(--color-blue);
   letter-spacing: -0.02em;
 }
 

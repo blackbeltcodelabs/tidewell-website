@@ -1611,7 +1611,7 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.04em;
   padding: 2px 7px;
   border-radius: 100px;
-  background: var(--color-amber);
+  background: var(--color-blue);
   color: #fff;
 }
 

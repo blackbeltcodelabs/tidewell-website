@@ -1490,7 +1490,7 @@ a:hover { text-decoration: underline; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(10,132,255,0.90);
+  background: #FF9F43;
   animation: blink 2.2s ease-in-out infinite;
   flex-shrink: 0;
 }

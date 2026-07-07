@@ -2197,6 +2197,313 @@ a:hover { text-decoration: underline; }
   line-height: 1.6;
 }
 
+/* ── Guardian reverse layout modifier ─────────────────────── */
+
+.guardian-section--reverse .guardian-inner { flex-direction: row-reverse; }
+
+/* ── Doctor Visit Briefing card ────────────────────────────── */
+
+.guardian-kv-header {
+  margin-bottom: 18px;
+}
+
+.guardian-kv-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.guardian-kv-period {
+  font-size: 11px;
+  color: rgba(255,255,255,0.30);
+  letter-spacing: 0.02em;
+}
+
+.guardian-kv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 14px;
+}
+
+.guardian-kv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.guardian-kv-row:nth-child(odd) {
+  background: rgba(255,255,255,0.03);
+}
+
+.guardian-kv-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.02em;
+}
+
+.guardian-kv-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.guardian-kv-notable {
+  background: rgba(255,159,67,0.07);
+  border: 1px solid rgba(255,159,67,0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.guardian-kv-notable-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FF9F43;
+  margin-bottom: 5px;
+}
+
+.guardian-kv-notable-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+.guardian-kv-share {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.50);
+}
+
+.guardian-kv-share-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34C759;
+  flex-shrink: 0;
+}
+
+/* ── Private Journey Record card ────────────────────────────── */
+
+.guardian-tl-heading {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.guardian-tl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.guardian-tl-item {
+  display: flex;
+  gap: 14px;
+  position: relative;
+}
+
+.guardian-tl-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+}
+
+.guardian-tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.20);
+  border: 1px solid rgba(255,255,255,0.30);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guardian-tl-dot--today {
+  width: 12px;
+  height: 12px;
+  background: #0A84FF;
+  border-color: rgba(10,132,255,0.60);
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.20);
+  margin-top: 1px;
+}
+
+.guardian-tl-line {
+  width: 1px;
+  flex: 1;
+  background: rgba(255,255,255,0.10);
+  margin: 4px 0;
+  min-height: 20px;
+}
+
+.guardian-tl-content {
+  padding-bottom: 20px;
+  flex: 1;
+}
+
+.guardian-tl-item:last-child .guardian-tl-content {
+  padding-bottom: 0;
+}
+
+.guardian-tl-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.guardian-tl-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.40);
+  letter-spacing: 0.02em;
+}
+
+.guardian-tl-week {
+  font-size: 10px;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.guardian-tl-today-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0A84FF;
+  background: rgba(10,132,255,0.14);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.guardian-tl-note {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.50);
+  line-height: 1.5;
+}
+
+.guardian-tl-note--today {
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+
+/* ── Pattern Insights card ──────────────────────────────────── */
+
+.guardian-pb-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.guardian-pb-subtitle {
+  font-size: 10px;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.guardian-pb-days {
+  display: flex;
+  gap: 4px;
+  padding-left: 64px;
+  margin-bottom: 10px;
+}
+
+.guardian-pb-day-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.22);
+  width: 16px;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.guardian-pb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.guardian-pb-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  width: 64px;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+
+.guardian-pb-bars {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.guardian-pb-seg {
+  width: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.guardian-pb-peak-tag {
+  font-size: 9px;
+  font-weight: 700;
+  color: #FF9F43;
+  background: rgba(255,159,67,0.14);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.guardian-pb-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 16px 0;
+}
+
+.guardian-pb-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.50);
+  line-height: 1.55;
+}
+
+.guardian-pb-quote strong {
+  font-style: normal;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  display: block;
+  margin-bottom: 6px;
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 
 @media (max-width: 960px) {

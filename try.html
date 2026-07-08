@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Tidewell</title>
+
+  <!--
+    SMART LINK — tidewellapp.com/try
+    ─────────────────────────────────────────────────────────────
+    When store listings are approved, paste the real URLs below.
+    The redirect fires before any rendering — zero flash.
+    ─────────────────────────────────────────────────────────────
+  -->
+  <script>
+    (function () {
+      var IOS_URL     = '#'; // ← paste App Store URL here when live
+      var ANDROID_URL = '#'; // ← paste Google Play URL here when live
+
+      var ua        = navigator.userAgent || '';
+      var isIOS     = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      var isAndroid = /Android/.test(ua);
+
+      // Fire redirect immediately — before any CSS or DOM paint
+      if (isIOS && IOS_URL !== '#')     { window.location.replace(IOS_URL);     }
+      if (isAndroid && ANDROID_URL !== '#') { window.location.replace(ANDROID_URL); }
+
+      // Pass state to the page script below
+      window.__TW_TRY = { isIOS: isIOS, isAndroid: isAndroid, IOS_URL: IOS_URL, ANDROID_URL: ANDROID_URL };
+    })();
+  </script>
+
+  <meta property="og:title"       content="Download Tidewell">
+  <meta property="og:description" content="Your calm companion for the week between shots. Available on iOS and Android.">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://tidewellapp.com/try">
+  <meta name="twitter:card"       content="summary">
+  <link rel="canonical"  href="https://tidewellapp.com/try">
+  <link rel="icon"       href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0A0E14;
+      --surface: #121820;
+      --border:  rgba(255,255,255,0.08);
+      --text:    #F0F4FF;
+      --muted:   rgba(240,244,255,0.48);
+      --blue:    #0A84FF;
+      --amber:   #FF9F43;
+      --r:       14px;
+    }
+
+    html, body {
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    /* ── Logo ─────────────────────────────────────────── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      margin-bottom: 44px;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .logo-word {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    /* ── Card shell ───────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    /* ── State visibility ─────────────────────────────── */
+    .state { display: none; }
+    .state.on { display: block; }
+
+    /* ── Redirecting spinner ──────────────────────────── */
+    .spin-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 8px 0;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2.5px solid rgba(10,132,255,0.18);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin-label { font-size: 15px; color: var(--muted); line-height: 1.4; }
+    .spin-label strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+
+    /* ── Coming-soon state ────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,159,67,0.1);
+      border: 1px solid rgba(255,159,67,0.25);
+      color: var(--amber);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 4px 11px;
+      margin-bottom: 20px;
+    }
+    .badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .sub a { color: var(--blue); text-decoration: none; }
+
+    /* ── Platform icon ────────────────────────────────── */
+    .p-icon {
+      width: 56px; height: 56px;
+      border-radius: var(--r);
+      background: rgba(10,132,255,0.1);
+      border: 1px solid rgba(10,132,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .p-icon svg { width: 26px; height: 26px; }
+
+    /* ── Store buttons ────────────────────────────────── */
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      border-radius: var(--r);
+      padding: 13px 18px;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.12s;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .store-btn:last-of-type { margin-bottom: 0; }
+    .store-btn:active { transform: scale(0.98); }
+    .store-btn svg { flex-shrink: 0; }
+    .store-btn-text { text-align: left; line-height: 1.2; }
+    .store-btn-sup  { font-size: 11px; display: block; }
+    .store-btn-name { font-size: 16px; font-weight: 700; display: block; }
+
+    .btn-ios {
+      background: var(--blue);
+      color: #fff;
+    }
+    .btn-ios:hover { opacity: 0.88; }
+    .btn-ios .store-btn-sup { opacity: 0.75; }
+
+    .btn-android {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-android:hover { border-color: rgba(255,255,255,0.18); }
+    .btn-android .store-btn-sup { color: var(--muted); }
+
+    .btn-disabled {
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    /* ── Footer link ──────────────────────────────────── */
+    .back {
+      display: block;
+      margin-top: 26px;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="logo">
+    <div class="logo-icon"><img src="assets/icon.png" alt="Tidewell"></div>
+    <span class="logo-word">Tidewell</span>
+  </a>
+
+  <!-- ── State A: redirecting (mobile + URL is live) ── -->
+  <div class="card state" id="s-redirecting">
+    <div class="spin-wrap">
+      <div class="spinner"></div>
+      <p class="spin-label">
+        <strong id="redirect-title">Opening the store&hellip;</strong>
+        If nothing happens, tap the button below.
+      </p>
+      <a id="redirect-fallback-btn" href="#" class="store-btn btn-ios" style="margin-top:8px;">
+        <svg viewBox="0 0 17 20" width="20" height="24" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
+        <span class="store-btn-text">
+          <span class="store-btn-sup" id="redirect-sup">Download on the</span>
+          <span class="store-btn-name" id="redirect-store-name">App Store</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── State B: store not live yet (mobile) ── -->
+  <div class="card state" id="s-soon">
+    <div class="badge">Coming soon</div>
+    <h1>Almost there</h1>
+    <p class="sub">
+      Tidewell is on its way to the <span id="soon-platform">App Store</span>.
+      Email <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>
+      and we'll let you know the moment it's ready to download.
+    </p>
+    <a href="/" class="back">← tidewellapp.com</a>
+  </div>
+
+  <!-- ── State C: desktop / unknown ── -->
+  <div class="card state" id="s-desktop">
+    <div class="p-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="5" y="2" width="14" height="20" rx="2"/>
+        <circle cx="12" cy="17" r="0.6" fill="#0A84FF" stroke="none"/>
+      </svg>
+    </div>
+    <h1>Download Tidewell</h1>
+    <p class="sub">Your calm companion for the week between shots.<br>Available on iOS and Android.</p>
+
+    <a id="d-ios" href="#" class="store-btn btn-ios">
+      <svg viewBox="0 0 17 20" width="20" height="24" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
+      <span class="store-btn-text">
+        <span class="store-btn-sup">Download on the</span>
+        <span class="store-btn-name">App Store</span>
+      </span>
+    </a>
+
+    <a id="d-android" href="#" class="store-btn btn-android">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M3 1.5v21L14.5 12 3 1.5Z" fill="#34A853"/>
+        <path d="M3 1.5L14.5 12 19.5 7 3 1.5Z" fill="#EA4335"/>
+        <path d="M3 22.5L14.5 12 19.5 17 3 22.5Z" fill="#FBBC05"/>
+        <path d="M19.5 7l3 5-3 5-5-5 5-5Z" fill="#4285F4"/>
+      </svg>
+      <span class="store-btn-text">
+        <span class="store-btn-sup">GET IT ON</span>
+        <span class="store-btn-name">Google Play</span>
+      </span>
+    </a>
+
+    <a href="/" class="back">Learn more at tidewellapp.com</a>
+  </div>
+
+  <script>
+    (function () {
+      var c          = window.__TW_TRY;
+      var IOS_URL    = c.IOS_URL;
+      var AND_URL    = c.ANDROID_URL;
+      var isIOS      = c.isIOS;
+      var isAndroid  = c.isAndroid;
+
+      function show(id) { document.getElementById(id).classList.add('on'); }
+
+      /* ── Wire desktop buttons ── */
+      var dIOS = document.getElementById('d-ios');
+      var dAnd = document.getElementById('d-android');
+      if (IOS_URL !== '#') { dIOS.href = IOS_URL; }
+      else { dIOS.classList.add('btn-disabled'); dIOS.querySelector('.store-btn-sup').textContent = 'Coming soon'; }
+
+      if (AND_URL !== '#') { dAnd.href = AND_URL; }
+      else { dAnd.classList.add('btn-disabled'); dAnd.querySelector('.store-btn-sup').textContent = 'Coming soon'; }
+
+      /* ── Route to correct state ── */
+      if (isIOS) {
+        if (IOS_URL !== '#') {
+          // Redirect already fired in <head>; show spinner + manual fallback button
+          document.getElementById('redirect-title').textContent    = 'Opening the App Store…';
+          document.getElementById('redirect-sup').textContent      = 'Download on the';
+          document.getElementById('redirect-store-name').textContent = 'App Store';
+          document.getElementById('redirect-fallback-btn').href    = IOS_URL;
+          document.getElementById('redirect-fallback-btn').className = 'store-btn btn-ios';
+          show('s-redirecting');
+        } else {
+          document.getElementById('soon-platform').textContent = 'App Store';
+          show('s-soon');
+        }
+
+      } else if (isAndroid) {
+        if (AND_URL !== '#') {
+          document.getElementById('redirect-title').textContent    = 'Opening Google Play…';
+          document.getElementById('redirect-sup').textContent      = 'GET IT ON';
+          document.getElementById('redirect-store-name').textContent = 'Google Play';
+          var fb = document.getElementById('redirect-fallback-btn');
+          fb.href = AND_URL;
+          fb.className = 'store-btn btn-android';
+          show('s-redirecting');
+        } else {
+          document.getElementById('soon-platform').textContent = 'Google Play';
+          show('s-soon');
+        }
+
+      } else {
+        show('s-desktop');
+      }
+    })();
+  </script>
+
+</body>
+</html>

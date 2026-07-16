@@ -18,11 +18,11 @@ const APP_CONFIG = {
   },
   live: {
     ios:             '#', // ← replace with App Store link once listing is approved
-    android:         '#', // ← replace with Google Play link once listing is approved
+    android:         'https://play.google.com/store/apps/details?id=com.tidewell.app',
     ctaLabel:        'Download Tidewell',
     ctaBadge:        'Available on iOS and Android',
     showAndroid:     true,
-    androidDisabled: true, // keep disabled until store listing is live
+    androidDisabled: false,
   },
 };
 

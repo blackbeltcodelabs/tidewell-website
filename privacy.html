@@ -5,28 +5,382 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Tidewell</title>
   <meta name="description" content="How Tidewell collects, uses, and protects your information.">
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="canonical" href="https://tidewellapp.com/privacy">
+  <meta property="og:title" content="Privacy Policy — Tidewell">
+  <meta property="og:description" content="How Tidewell collects, uses, and protects your information.">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://tidewellapp.com/privacy">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://tidewellapp.com/privacy">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #FAFCFE;
+      --surface:  #F3F8FC;
+      --border:   #DCE9F4;
+      --border-light: #E7EEF5;
+      --text:     #0D1E30;
+      --body:     #3E5266;
+      --muted:    #55697D;
+      --accent:   #3E6FA8;
+      --blue:     #2E7BE0;
+      --blue-dark:#1E5FBE;
+      --footer-bg:#081524;
+      --footer-text:#9DB2C7;
+      --font-head: 'Sora', system-ui, sans-serif;
+      --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { color: var(--blue-dark); }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(250,252,254,.88);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 15px 28px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    .nav-logo-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .nav-wordmark {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 17px;
+      letter-spacing: -.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      list-style: none;
+      margin-left: auto;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--body);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta { flex-shrink: 0; }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      background: var(--text);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-nav:hover { background: #1E3A52; color: #fff; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .2s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-light);
+      padding: 8px 0 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--body);
+      padding: 12px 28px;
+      text-decoration: none;
+    }
+    .mobile-menu a:hover { color: var(--text); }
+    .mobile-cta { padding: 8px 28px 0; }
+
+    /* ── Page header ─────────────────────────────────── */
+    .policy-header {
+      background: linear-gradient(180deg, var(--bg), #EFF6FC);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .policy-header-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 72px 28px 52px;
+    }
+
+    .eyebrow {
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .policy-header h1 {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: clamp(34px, 5vw, 44px);
+      letter-spacing: -.028em;
+      line-height: 1.1;
+      margin: 16px 0 0;
+      text-wrap: balance;
+    }
+
+    .date-badge {
+      display: inline-flex;
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .policy-header p {
+      font-size: 16.5px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 22px 0 0;
+      max-width: 640px;
+      text-wrap: pretty;
+    }
+
+    /* ── Main content ────────────────────────────────── */
+    .policy-main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 28px 90px;
+    }
+
+    .policy-main p {
+      font-size: 15.5px;
+      line-height: 1.75;
+      color: var(--body);
+      margin: 0 0 14px;
+      text-wrap: pretty;
+    }
+
+    .policy-main h2 {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 23px;
+      letter-spacing: -.015em;
+      margin: 44px 0 14px;
+      color: var(--text);
+    }
+
+    .policy-main h3 {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 17px;
+      margin: 28px 0 10px;
+      color: var(--text);
+    }
+
+    .policy-main ul {
+      margin: 0 0 16px;
+      padding-left: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .policy-main li {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--body);
+    }
+
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 0 0 16px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--body);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    .footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 64px 28px 0;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+      gap: 40px;
+      padding-bottom: 48px;
+    }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .footer-brand-logo img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+    .footer-brand-logo span {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 14px 0 0;
+      max-width: 240px;
+      color: var(--footer-text);
+    }
+
+    .footer-col-heading {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 13px;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--footer-text);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 24px 0 48px;
+    }
+
+    .footer-disclaimer {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #5E7288;
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 860px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .policy-header-inner { padding: 48px 20px 36px; }
+      .policy-main { padding: 16px 20px 64px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-inner { padding: 48px 20px 0; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="nav scrolled" role="navigation" aria-label="Main navigation">
+<nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="Tidewell home">
+    <a href="/" class="nav-logo" aria-label="Tidewell home">
       <div class="nav-logo-icon" aria-hidden="true">
         <img src="assets/icon.png" alt="">
       </div>
       <span class="nav-wordmark">Tidewell</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#screenshots">The App</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
       <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="#" data-cta="ios" class="btn btn-primary">
+      <a href="#" data-cta="ios" class="btn-nav">
         <span data-cta-label>Download Tidewell</span>
       </a>
     </div>
@@ -37,238 +391,219 @@
 </nav>
 
 <div class="mobile-menu" role="dialog" aria-label="Navigation menu">
-  <a href="index.html#features">Features</a>
+  <a href="index.html#screenshots">The App</a>
   <a href="index.html#pricing">Pricing</a>
   <a href="index.html#about">About</a>
+  <a href="index.html#faq">FAQ</a>
   <div class="mobile-cta">
-    <a href="#" data-cta="ios" class="btn btn-primary" style="width:100%;justify-content:center;">
+    <a href="#" data-cta="ios" class="btn-nav" style="width:100%;justify-content:center;display:flex;">
       <span data-cta-label>Download Tidewell</span>
     </a>
   </div>
 </div>
 
-<main>
-  <div class="legal-page">
-    <div class="legal-inner">
-
-      <h1 class="legal-title">Privacy Policy</h1>
-      <p class="legal-date">Effective date: 7 July 2026</p>
-
-      <div class="legal-content">
-
-        <p>This Privacy Policy applies to the <strong>Tidewell mobile application</strong> (available on iOS and Android) and the <strong>Tidewell website</strong> at tidewellapp.com (collectively, the "Service"). It explains what information we collect, why we collect it, how we use and protect it, and what rights you have.</p>
-
-        <p>Tidewell is operated by <strong>Tara Cloud Retail</strong>, doing business as <strong>Black Belt Code Labs</strong>, owned by <strong>Rahul Bhattacharya</strong> ("we", "us", "our"). We are the data controller for all personal data processed through the Service.</p>
-
-        <h2>1. Information We Collect</h2>
-
-        <h3>Information you provide directly</h3>
-        <p>When you use Tidewell, you choose to provide:</p>
-        <ul>
-          <li>Account credentials (email address and password, if you create an account)</li>
-          <li>Injection logs — date, dose, medication name, and injection site</li>
-          <li>Daily check-in responses — mood, energy levels, hunger, nausea, and other side-effect ratings</li>
-          <li>Body weight and measurement entries</li>
-          <li>Personal journal notes and milestone entries (Private Journey Record, if you use that feature)</li>
-          <li>Any information you include when contacting our support team</li>
-        </ul>
-
-        <h3>Health and wellness data</h3>
-        <p>The health and wellness data you log directly within Tidewell — medication records, symptom scores, weight entries — constitutes <strong>special category health data</strong> under GDPR and equivalent laws. We process this data on the legal basis of your <strong>explicit consent</strong>, which you provide when you create an account and begin logging. You may withdraw consent at any time by deleting your account.</p>
-
-        <h3>Apple Health (HealthKit) — iOS only</h3>
-        <p>With your explicit permission, Tidewell may read health data from Apple Health (HealthKit), which may include steps, active energy, sleep data, and heart rate. This integration is entirely optional. HealthKit data is used only to provide contextual display within your Tidewell experience.</p>
-        <ul>
-          <li>HealthKit data is <strong>never uploaded to Tidewell's servers</strong>. It is read and processed locally on your device only.</li>
-          <li>HealthKit data is <strong>never used for advertising, sold, or shared</strong> with any third party for any commercial purpose. This is an Apple requirement we strictly observe.</li>
-          <li>You can revoke Tidewell's access to Apple Health at any time via <em>Settings &gt; Privacy &amp; Security &gt; Health &gt; Tidewell</em> on your iPhone.</li>
-        </ul>
-
-        <h3>Android Health Connect — Android only</h3>
-        <p>On Android, Tidewell may request access to Android Health Connect to read health data such as steps, sleep, and heart rate. The same principles apply: Health Connect data is processed locally on your device, never uploaded to our servers, never used for advertising, and never shared with third parties. You can revoke access via <em>Settings &gt; Apps &gt; Health Connect &gt; App permissions &gt; Tidewell</em>.</p>
-
-        <h3>Device and technical information</h3>
-        <p>To operate and improve the Service, we automatically collect:</p>
-        <ul>
-          <li>Device type, model, and operating system version</li>
-          <li>App version and installation identifier</li>
-          <li>General app usage patterns and feature interactions (anonymised — not linked to your identity)</li>
-          <li>Crash reports and diagnostic error logs</li>
-          <li>IP address (used for security and fraud prevention; not used to build advertising profiles)</li>
-        </ul>
-        <p>We do not use Apple's Advertising Identifier (IDFA) or Google's Advertising ID (GAID) for advertising purposes. We request App Tracking Transparency permission on iOS only if we adopt advertising-based tracking in the future — which we do not do today.</p>
-
-        <h3>Permissions requested on your device</h3>
-        <p>Depending on your device and the features you use, Tidewell may request the following permissions:</p>
-        <ul>
-          <li><strong>Notifications</strong> — to send you optional reminders (injection reminders, check-in prompts). You can manage or disable these in your device Settings at any time.</li>
-          <li><strong>Apple Health / Health Connect</strong> — as described above. Optional.</li>
-          <li><strong>Camera or Photo Library</strong> — only if you choose to add a profile photo or attach an image to a log entry. We do not access your camera or photos without your action.</li>
-        </ul>
-        <p>We do not request access to your contacts, location, microphone, or any other sensor not listed here.</p>
-
-        <h2>2. How We Use Your Information</h2>
-        <p>We use the information we collect to:</p>
-        <ul>
-          <li>Create and manage your Tidewell account</li>
-          <li>Deliver core app features — check-in tracking, medication logs, pattern insights, and doctor visit briefings</li>
-          <li>Display your trends, patterns, and history across sessions and devices</li>
-          <li>Sync your data securely across your devices (where you are signed in)</li>
-          <li>Send you push notifications you have opted into (reminders, check-in prompts)</li>
-          <li>Respond to support requests and resolve issues</li>
-          <li>Send important notices about the Service — such as policy updates or security alerts (not marketing emails without your consent)</li>
-          <li>Improve app features, diagnose bugs, and fix crashes using anonymised analytics</li>
-          <li>Comply with legal obligations</li>
-        </ul>
-        <p>We do not use your personal data to build advertising profiles, serve targeted advertisements, or train third-party AI or machine learning models.</p>
-
-        <h2>3. Data Storage and Security</h2>
-        <p>Your Tidewell account data — including your health logs and check-in history — is stored securely using <strong>Supabase</strong>, a cloud database platform. Supabase encrypts all data at rest (AES-256) and in transit (TLS 1.2+). Supabase infrastructure is hosted on AWS and operates in accordance with relevant security and data protection standards.</p>
-        <p>We apply appropriate technical and organisational measures to protect your data against unauthorised access, loss, or misuse — including access controls, encrypted connections, and periodic security reviews.</p>
-        <p>Apple HealthKit and Android Health Connect data is processed locally on your device and is never stored on Tidewell's servers.</p>
-        <p>No method of transmission or storage over the internet is completely secure. While we take reasonable steps to protect your information, we cannot guarantee absolute security.</p>
-
-        <h2>4. Third-Party Services</h2>
-        <p>Tidewell uses a small number of trusted third-party services to operate:</p>
-        <ul>
-          <li><strong>Supabase</strong> — cloud database and authentication. Supabase processes your account data as a data processor on our behalf. <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase Privacy Policy</a>.</li>
-          <li><strong>Apple App Store</strong> — app distribution and in-app subscription billing for iOS users. <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Apple Privacy Policy</a>.</li>
-          <li><strong>Google Play Store</strong> — app distribution and in-app subscription billing for Android users. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.</li>
-          <li><strong>Crash and diagnostics reporting</strong> — we may use a third-party crash reporting service to receive anonymised error reports. These reports do not include identifiable health data.</li>
-        </ul>
-        <p>We do not use Facebook SDKs, Google Analytics, or any advertising SDKs.</p>
-
-        <h2>5. Data We Do Not Sell or Share</h2>
-        <p>We do <strong>not</strong> sell, rent, trade, or otherwise disclose your personal data to any third party for their independent marketing or commercial purposes.</p>
-        <p>We do not share identifiable personal data with:</p>
-        <ul>
-          <li>Advertising networks or ad-tech companies</li>
-          <li>Data brokers or data aggregators</li>
-          <li>Social media platforms for targeting or retargeting purposes</li>
-          <li>Insurance companies, employers, or any organisation that could use it adversely</li>
-        </ul>
-        <p>We may disclose information if required by law, regulation, legal process, or governmental request — and only to the extent strictly required. We will make reasonable efforts to notify you unless prohibited.</p>
-
-        <h2>6. Push Notifications</h2>
-        <p>Tidewell may send push notifications to your device for purposes such as injection reminders, check-in prompts, and important service updates. You will be asked for permission before we send any notifications.</p>
-        <p>You can opt out of push notifications at any time:</p>
-        <ul>
-          <li><strong>iOS</strong>: Settings &gt; Notifications &gt; Tidewell</li>
-          <li><strong>Android</strong>: Settings &gt; Apps &gt; Tidewell &gt; Notifications</li>
-        </ul>
-        <p>Disabling notifications does not affect your ability to use the app.</p>
-
-        <h2>7. Subscriptions and Payments</h2>
-        <p>Tidewell Plus subscriptions are managed and billed exclusively by <strong>Apple</strong> (via the App Store) or <strong>Google</strong> (via Google Play). We do not collect, process, or store your payment card information at any point.</p>
-        <p>Subscription purchases, renewals, and refunds are governed by Apple's or Google's respective terms and privacy policies. To manage or cancel your subscription:</p>
-        <ul>
-          <li><strong>iOS</strong>: Settings &gt; [Your Name] &gt; Subscriptions &gt; Tidewell</li>
-          <li><strong>Android</strong>: Google Play app &gt; Subscriptions &gt; Tidewell</li>
-        </ul>
-
-        <h2>8. Account Deletion</h2>
-        <p>You have the right to delete your Tidewell account and all associated personal data at any time. You can request account deletion:</p>
-        <ul>
-          <li><strong>In-app</strong>: via Settings &gt; Account &gt; Delete Account within the Tidewell app</li>
-          <li><strong>By email</strong>: contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a> with the subject line "Account Deletion Request"</li>
-        </ul>
-        <p>We will permanently delete your account and all associated health data within <strong>30 days</strong> of receiving your request. Anonymised, non-identifiable aggregated data may be retained. Deletion requests submitted through the app are processed immediately for account access revocation, with full data purge completed within 30 days.</p>
-
-        <h2>9. Data Retention</h2>
-        <p>We retain your personal data for as long as your account remains active. If you delete your account, we will delete your personal data within 30 days as described above.</p>
-        <p>We may retain certain information for a limited period where required by applicable law (for example, transaction records for tax compliance), or where it is necessary to resolve a dispute or enforce our agreements.</p>
-
-        <h2>10. Your Rights</h2>
-
-        <h3>Rights for all users</h3>
-        <p>Regardless of your location, you may:</p>
-        <ul>
-          <li>Request access to the personal data we hold about you</li>
-          <li>Request correction of inaccurate or incomplete data</li>
-          <li>Request deletion of your account and data</li>
-          <li>Opt out of push notifications at any time via your device settings</li>
-          <li>Revoke Apple Health or Health Connect permissions at any time via your device settings</li>
-        </ul>
-
-        <h3>Rights under GDPR and UK GDPR (EU and UK residents)</h3>
-        <p>If you are located in the European Economic Area or the United Kingdom, you have additional rights under the General Data Protection Regulation (GDPR) and UK GDPR:</p>
-        <ul>
-          <li><strong>Right of access</strong> — obtain a copy of the personal data we hold about you</li>
-          <li><strong>Right to rectification</strong> — correct inaccurate or incomplete data</li>
-          <li><strong>Right to erasure</strong> — request deletion of your personal data ("right to be forgotten")</li>
-          <li><strong>Right to restriction</strong> — ask us to pause processing your data in certain circumstances</li>
-          <li><strong>Right to data portability</strong> — receive your data in a structured, machine-readable format</li>
-          <li><strong>Right to object</strong> — object to processing based on legitimate interests</li>
-          <li><strong>Right to withdraw consent</strong> — where processing is based on consent, you can withdraw it at any time without affecting the lawfulness of prior processing</li>
-        </ul>
-        <p>Our lawful bases for processing are: <strong>consent</strong> (for health and wellness data, and for marketing communications); <strong>contract</strong> (to provide the Service you have signed up for); and <strong>legitimate interests</strong> (for security, fraud prevention, and anonymised analytics — balanced against your rights).</p>
-        <p>You have the right to lodge a complaint with your local data protection authority. In the UK, this is the Information Commissioner's Office (ICO) at ico.org.uk. In the EU, contact the supervisory authority in your member state.</p>
-
-        <h3>Rights under CCPA / CPRA (California residents)</h3>
-        <p>If you are a California resident, you have rights under the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA):</p>
-        <ul>
-          <li><strong>Right to know</strong> — what personal information we collect, use, and disclose</li>
-          <li><strong>Right to delete</strong> — request deletion of your personal information</li>
-          <li><strong>Right to correct</strong> — request correction of inaccurate personal information</li>
-          <li><strong>Right to opt out of sale or sharing</strong> — we do not sell or share your personal information, so this right is already satisfied. You may still submit a request to confirm.</li>
-          <li><strong>Right to non-discrimination</strong> — we will not treat you differently for exercising any of these rights</li>
-        </ul>
-        <p>To exercise your California rights, contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>. We will respond within 45 days.</p>
-
-        <h2>11. Children's Privacy</h2>
-        <p>Tidewell is not directed to children. You must be at least 13 years of age (or 16 in certain EU/EEA jurisdictions) to use the Service. We do not knowingly collect personal information from anyone under these age thresholds.</p>
-        <p>If you are a parent or guardian and believe your child has provided us with personal data without your consent, please contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a> and we will delete that information promptly.</p>
-
-        <h2>12. International Data Transfers</h2>
-        <p>Tidewell is based outside the European Economic Area. If you use the Service from within the EEA or UK, your personal data may be transferred to and processed in countries that may not provide the same level of data protection as your home country.</p>
-        <p>Where we transfer personal data outside the EEA or UK, we rely on appropriate safeguards — including Standard Contractual Clauses (SCCs) where applicable — to ensure your data is protected in accordance with GDPR and UK GDPR.</p>
-
-        <h2>13. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, the Service, or applicable law. We will provide notice of material changes through the app or by email at least 14 days before they take effect.</p>
-        <p>The "Effective date" at the top of this page indicates when this version was last revised. We encourage you to review this policy periodically. Continued use of Tidewell after changes take effect constitutes your acceptance of the updated policy.</p>
-
-        <h2>14. Contact</h2>
-        <p>Questions, requests, or concerns about this Privacy Policy? Contact us:</p>
-        <p>
-          <strong>Tara Cloud Retail</strong>, doing business as Black Belt Code Labs<br>
-          Attention: Privacy<br>
-          Email: <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>
-        </p>
-        <p>We aim to respond to all privacy-related enquiries within <strong>5 business days</strong>.</p>
-
-      </div>
-
-      <div class="legal-entity-box">
-        Tidewell is provided by <strong>Tara Cloud Retail</strong>, doing business as <strong>Black Belt Code Labs</strong> ("we", "us", "our"), owned and operated by <strong>Rahul Bhattacharya</strong>. This Privacy Policy governs your use of the Tidewell mobile application (iOS and Android) and the website at tidewellapp.com.
-      </div>
-
-    </div>
+<header class="policy-header">
+  <div class="policy-header-inner">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <div class="date-badge">Effective date: 7 July 2026</div>
+    <p>How Tidewell collects, uses, and protects your information.</p>
   </div>
+</header>
+
+<main class="policy-main">
+
+  <p>This Privacy Policy applies to the <strong>Tidewell mobile application</strong> (available on iOS and Android) and the <strong>Tidewell website</strong> at tidewellapp.com (collectively, the "Service"). It explains what information we collect, why we collect it, how we use and protect it, and what rights you have.</p>
+  <p>Tidewell is operated by <strong>Tara Cloud Retail</strong>, doing business as <strong>Black Belt Code Labs</strong>, owned by <strong>Rahul Bhattacharya</strong> ("we", "us", "our"). We are the data controller for all personal data processed through the Service.</p>
+
+  <h2>1. Information We Collect</h2>
+
+  <h3>Information you provide directly</h3>
+  <p>When you use Tidewell, you choose to provide:</p>
+  <ul>
+    <li>Account credentials (email address and password, if you create an account)</li>
+    <li>Injection logs — date, dose, medication name, and injection site</li>
+    <li>Daily check-in responses — mood, energy levels, hunger, nausea, and other side-effect ratings</li>
+    <li>Body weight and measurement entries</li>
+    <li>Personal journal notes and milestone entries (Private Journey Record, if you use that feature)</li>
+    <li>Any information you include when contacting our support team</li>
+  </ul>
+
+  <h3>Health and wellness data</h3>
+  <p>The health and wellness data you log directly within Tidewell — medication records, symptom scores, weight entries — constitutes <strong>special category health data</strong> under GDPR and equivalent laws. We process this data on the legal basis of your <strong>explicit consent</strong>, which you provide when you create an account and begin logging. You may withdraw consent at any time by deleting your account.</p>
+
+  <h3>Apple Health (HealthKit) — iOS only</h3>
+  <p>With your explicit permission, Tidewell may read health data from Apple Health (HealthKit), which may include steps, active energy, sleep data, and heart rate. This integration is entirely optional. HealthKit data is used only to provide contextual display within your Tidewell experience.</p>
+  <ul>
+    <li>HealthKit data is <strong>never uploaded to Tidewell's servers</strong>. It is read and processed locally on your device only.</li>
+    <li>HealthKit data is <strong>never used for advertising, sold, or shared</strong> with any third party for any commercial purpose. This is an Apple requirement we strictly observe.</li>
+    <li>You can revoke Tidewell's access to Apple Health at any time via <em>Settings &gt; Privacy &amp; Security &gt; Health &gt; Tidewell</em> on your iPhone.</li>
+  </ul>
+
+  <h3>Android Health Connect — Android only</h3>
+  <p>On Android, Tidewell may request access to Android Health Connect to read health data such as steps, sleep, and heart rate. The same principles apply: Health Connect data is processed locally on your device, never uploaded to our servers, never used for advertising, and never shared with third parties. You can revoke access via <em>Settings &gt; Apps &gt; Health Connect &gt; App permissions &gt; Tidewell</em>.</p>
+
+  <h3>Device and technical information</h3>
+  <p>To operate and improve the Service, we automatically collect:</p>
+  <ul>
+    <li>Device type, model, and operating system version</li>
+    <li>App version and installation identifier</li>
+    <li>General app usage patterns and feature interactions (anonymised — not linked to your identity)</li>
+    <li>Crash reports and diagnostic error logs</li>
+    <li>IP address (used for security and fraud prevention; not used to build advertising profiles)</li>
+  </ul>
+  <p>We do not use Apple's Advertising Identifier (IDFA) or Google's Advertising ID (GAID) for advertising purposes. We request App Tracking Transparency permission on iOS only if we adopt advertising-based tracking in the future — which we do not do today.</p>
+
+  <h3>Permissions requested on your device</h3>
+  <p>Depending on your device and the features you use, Tidewell may request the following permissions:</p>
+  <ul>
+    <li><strong>Notifications</strong> — to send you optional reminders (injection reminders, check-in prompts). You can manage or disable these in your device Settings at any time.</li>
+    <li><strong>Apple Health / Health Connect</strong> — as described above. Optional.</li>
+    <li><strong>Camera or Photo Library</strong> — only if you choose to add a profile photo or attach an image to a log entry. We do not access your camera or photos without your action.</li>
+  </ul>
+  <p>We do not request access to your contacts, location, microphone, or any other sensor not listed here.</p>
+
+  <h2>2. How We Use Your Information</h2>
+  <p>We use the information we collect to:</p>
+  <ul>
+    <li>Create and manage your Tidewell account</li>
+    <li>Deliver core app features — check-in tracking, medication logs, pattern insights, and doctor visit briefings</li>
+    <li>Display your trends, patterns, and history across sessions and devices</li>
+    <li>Sync your data securely across your devices (where you are signed in)</li>
+    <li>Send you push notifications you have opted into (reminders, check-in prompts)</li>
+    <li>Respond to support requests and resolve issues</li>
+    <li>Send important notices about the Service — such as policy updates or security alerts (not marketing emails without your consent)</li>
+    <li>Improve app features, diagnose bugs, and fix crashes using anonymised analytics</li>
+    <li>Comply with legal obligations</li>
+  </ul>
+  <p>We do not use your personal data to build advertising profiles, serve targeted advertisements, or train third-party AI or machine learning models.</p>
+
+  <h2>3. Data Storage and Security</h2>
+  <p>Your Tidewell account data — including your health logs and check-in history — is stored securely using <strong>Supabase</strong>, a cloud database platform. Supabase encrypts all data at rest (AES-256) and in transit (TLS 1.2+). Supabase infrastructure is hosted on AWS and operates in accordance with relevant security and data protection standards.</p>
+  <p>We apply appropriate technical and organisational measures to protect your data against unauthorised access, loss, or misuse — including access controls, encrypted connections, and periodic security reviews.</p>
+  <p>Apple HealthKit and Android Health Connect data is processed locally on your device and is never stored on Tidewell's servers.</p>
+  <p>No method of transmission or storage over the internet is completely secure. While we take reasonable steps to protect your information, we cannot guarantee absolute security.</p>
+
+  <h2>4. Third-Party Services</h2>
+  <p>Tidewell uses a small number of trusted third-party services to operate:</p>
+  <ul>
+    <li><strong>Supabase</strong> — cloud database and authentication. Supabase processes your account data as a data processor on our behalf.</li>
+    <li><strong>Apple App Store</strong> — app distribution and in-app subscription billing for iOS users.</li>
+    <li><strong>Google Play Store</strong> — app distribution and in-app subscription billing for Android users.</li>
+    <li><strong>Crash and diagnostics reporting</strong> — we may use a third-party crash reporting service to receive anonymised error reports. These reports do not include identifiable health data.</li>
+  </ul>
+  <p>We do not use Facebook SDKs, Google Analytics, or any advertising SDKs.</p>
+
+  <h2>5. Data We Do Not Sell or Share</h2>
+  <p>We do <strong>not</strong> sell, rent, trade, or otherwise disclose your personal data to any third party for their independent marketing or commercial purposes.</p>
+  <p>We do not share identifiable personal data with:</p>
+  <ul>
+    <li>Advertising networks or ad-tech companies</li>
+    <li>Data brokers or data aggregators</li>
+    <li>Social media platforms for targeting or retargeting purposes</li>
+    <li>Insurance companies, employers, or any organisation that could use it adversely</li>
+  </ul>
+  <p>We may disclose information if required by law, regulation, legal process, or governmental request — and only to the extent strictly required. We will make reasonable efforts to notify you unless prohibited.</p>
+
+  <h2>6. Push Notifications</h2>
+  <p>Tidewell may send push notifications to your device for purposes such as injection reminders, check-in prompts, and important service updates. You will be asked for permission before we send any notifications.</p>
+  <p>You can opt out of push notifications at any time:</p>
+  <ul>
+    <li><strong>iOS</strong>: Settings &gt; Notifications &gt; Tidewell</li>
+    <li><strong>Android</strong>: Settings &gt; Apps &gt; Tidewell &gt; Notifications</li>
+  </ul>
+  <p>Disabling notifications does not affect your ability to use the app.</p>
+
+  <h2>7. Subscriptions and Payments</h2>
+  <p>Tidewell Plus subscriptions are managed and billed exclusively by <strong>Apple</strong> (via the App Store) or <strong>Google</strong> (via Google Play). We do not collect, process, or store your payment card information at any point.</p>
+  <p>Subscription purchases, renewals, and refunds are governed by Apple's or Google's respective terms and privacy policies. To manage or cancel your subscription:</p>
+  <ul>
+    <li><strong>iOS</strong>: Settings &gt; [Your Name] &gt; Subscriptions &gt; Tidewell</li>
+    <li><strong>Android</strong>: Google Play app &gt; Subscriptions &gt; Tidewell</li>
+  </ul>
+
+  <h2>8. Account Deletion</h2>
+  <p>You have the right to delete your Tidewell account and all associated personal data at any time. You can request account deletion:</p>
+  <ul>
+    <li><strong>In-app</strong>: via Settings &gt; Account &gt; Delete Account within the Tidewell app</li>
+    <li><strong>By email</strong>: contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a> with the subject line "Account Deletion Request"</li>
+  </ul>
+  <p>We will permanently delete your account and all associated health data within <strong>30 days</strong> of receiving your request. Anonymised, non-identifiable aggregated data may be retained. Deletion requests submitted through the app are processed immediately for account access revocation, with full data purge completed within 30 days.</p>
+
+  <h2>9. Data Retention</h2>
+  <p>We retain your personal data for as long as your account remains active. If you delete your account, we will delete your personal data within 30 days as described above.</p>
+  <p>We may retain certain information for a limited period where required by applicable law (for example, transaction records for tax compliance), or where it is necessary to resolve a dispute or enforce our agreements.</p>
+
+  <h2>10. Your Rights</h2>
+
+  <h3>Rights for all users</h3>
+  <p>Regardless of your location, you may:</p>
+  <ul>
+    <li>Request access to the personal data we hold about you</li>
+    <li>Request correction of inaccurate or incomplete data</li>
+    <li>Request deletion of your account and data</li>
+    <li>Opt out of push notifications at any time via your device settings</li>
+    <li>Revoke Apple Health or Health Connect permissions at any time via your device settings</li>
+  </ul>
+
+  <h3>Rights under GDPR and UK GDPR (EU and UK residents)</h3>
+  <p>If you are located in the European Economic Area or the United Kingdom, you have additional rights under the General Data Protection Regulation (GDPR) and UK GDPR:</p>
+  <ul>
+    <li><strong>Right of access</strong> — obtain a copy of the personal data we hold about you</li>
+    <li><strong>Right to rectification</strong> — correct inaccurate or incomplete data</li>
+    <li><strong>Right to erasure</strong> — request deletion of your personal data ("right to be forgotten")</li>
+    <li><strong>Right to restriction</strong> — ask us to pause processing your data in certain circumstances</li>
+    <li><strong>Right to data portability</strong> — receive your data in a structured, machine-readable format</li>
+    <li><strong>Right to object</strong> — object to processing based on legitimate interests</li>
+    <li><strong>Right to withdraw consent</strong> — where processing is based on consent, you can withdraw it at any time without affecting the lawfulness of prior processing</li>
+  </ul>
+  <p>Our lawful bases for processing are: <strong>consent</strong> (for health and wellness data, and for marketing communications); <strong>contract</strong> (to provide the Service you have signed up for); and <strong>legitimate interests</strong> (for security, fraud prevention, and anonymised analytics — balanced against your rights).</p>
+  <p>You have the right to lodge a complaint with your local data protection authority. In the UK, this is the Information Commissioner's Office (ICO) at ico.org.uk. In the EU, contact the supervisory authority in your member state.</p>
+
+  <h3>Rights under CCPA / CPRA (California residents)</h3>
+  <p>If you are a California resident, you have rights under the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA):</p>
+  <ul>
+    <li><strong>Right to know</strong> — what personal information we collect, use, and disclose</li>
+    <li><strong>Right to delete</strong> — request deletion of your personal information</li>
+    <li><strong>Right to correct</strong> — request correction of inaccurate personal information</li>
+    <li><strong>Right to opt out of sale or sharing</strong> — we do not sell or share your personal information, so this right is already satisfied. You may still submit a request to confirm.</li>
+    <li><strong>Right to non-discrimination</strong> — we will not treat you differently for exercising any of these rights</li>
+  </ul>
+  <p>To exercise your California rights, contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>. We will respond within 45 days.</p>
+
+  <h2>11. Children's Privacy</h2>
+  <p>Tidewell is not directed to children. You must be at least 13 years of age (or 16 in certain EU/EEA jurisdictions) to use the Service. We do not knowingly collect personal information from anyone under these age thresholds.</p>
+  <p>If you are a parent or guardian and believe your child has provided us with personal data without your consent, please contact us at <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a> and we will delete that information promptly.</p>
+
+  <h2>12. International Data Transfers</h2>
+  <p>Tidewell is based outside the European Economic Area. If you use the Service from within the EEA or UK, your personal data may be transferred to and processed in countries that may not provide the same level of data protection as your home country.</p>
+  <p>Where we transfer personal data outside the EEA or UK, we rely on appropriate safeguards — including Standard Contractual Clauses (SCCs) where applicable — to ensure your data is protected in accordance with GDPR and UK GDPR.</p>
+
+  <h2>13. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time to reflect changes in our practices, the Service, or applicable law. We will provide notice of material changes through the app or by email at least 14 days before they take effect.</p>
+  <p>The "Effective date" at the top of this page indicates when this version was last revised. We encourage you to review this policy periodically. Continued use of Tidewell after changes take effect constitutes your acceptance of the updated policy.</p>
+
+  <h2>14. Contact</h2>
+  <p>Questions, requests, or concerns about this Privacy Policy? Contact us:</p>
+  <div class="contact-box">
+    <strong>Tara Cloud Retail</strong>, doing business as Black Belt Code Labs<br>
+    Attention: Privacy<br>
+    Email: <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a><br><br>
+    We aim to respond to all privacy-related enquiries within <strong>5 business days</strong>.
+  </div>
+
 </main>
 
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
 
-      <div class="footer-brand">
-        <a href="/" class="footer-wordmark">Tidewell</a>
+      <div>
+        <a href="/" class="footer-brand-logo">
+          <img src="assets/icon.png" alt="">
+          <span>Tidewell</span>
+        </a>
         <p class="footer-tagline">Your calm companion for the week between shots.</p>
-        <div class="footer-store-row">
-          <a href="#" data-cta="ios" class="store-badge">
-            <svg class="store-badge-icon" viewBox="0 0 17 20" width="18" height="22" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">Download on the</span>
-              <span class="store-badge-name">App Store</span>
-            </div>
-          </a>
-          <a href="#" data-cta="android" class="store-badge" aria-disabled="true">
-            <svg class="store-badge-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 1.5v21L14.5 12 3 1.5Z" fill="#34A853"/><path d="M3 1.5L14.5 12 19.5 7 3 1.5Z" fill="#EA4335"/><path d="M3 22.5L14.5 12 19.5 17 3 22.5Z" fill="#FBBC05"/><path d="M19.5 7l3 5-3 5-5-5 5-5Z" fill="#4285F4"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">GET IT ON</span>
-              <span class="store-badge-name">Google Play</span>
-            </div>
-          </a>
-        </div>
       </div>
 
       <div>
@@ -291,27 +626,39 @@
       <div>
         <p class="footer-col-heading">For your medication</p>
         <ul class="footer-links">
-          <li><a href="/mounjaro-companion" target="_blank" rel="noopener noreferrer">Mounjaro companion</a></li>
-          <li><a href="/ozempic-companion" target="_blank" rel="noopener noreferrer">Ozempic companion</a></li>
-          <li><a href="/wegovy-companion" target="_blank" rel="noopener noreferrer">Wegovy companion</a></li>
-          <li><a href="/zepbound-companion" target="_blank" rel="noopener noreferrer">Zepbound companion</a></li>
-          <li><a href="/semaglutide-companion" target="_blank" rel="noopener noreferrer">Semaglutide companion</a></li>
-          <li><a href="/tirzepatide-companion" target="_blank" rel="noopener noreferrer">Tirzepatide companion</a></li>
+          <li><a href="/mounjaro-companion">Mounjaro companion</a></li>
+          <li><a href="/ozempic-companion">Ozempic companion</a></li>
+          <li><a href="/wegovy-companion">Wegovy companion</a></li>
+          <li><a href="/zepbound-companion">Zepbound companion</a></li>
+          <li><a href="/semaglutide-companion">Semaglutide companion</a></li>
+          <li><a href="/tirzepatide-companion">Tirzepatide companion</a></li>
         </ul>
       </div>
 
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Black Belt Code Labs. All rights reserved.</p>
-      <p class="footer-brand-credit">Black Belt Code Labs</p>
-    </div>
-    <div class="footer-disclaimer-box" style="margin-top:32px;margin-bottom:0;">
-      <p>* Ozempic, Wegovy, Mounjaro, and Zepbound are registered trademarks of their respective owners. Tidewell is not affiliated with or endorsed by Novo Nordisk or Eli Lilly and Company.</p>
-      <p>Tidewell is a wellness companion, not a medical device. It does not diagnose conditions or recommend treatment. Always consult your healthcare provider about your medication and health goals.</p>
+      <p class="footer-disclaimer">Ozempic, Wegovy, Mounjaro, and Zepbound are registered trademarks of their respective owners. Tidewell is not affiliated with or endorsed by Novo Nordisk or Eli Lilly and Company. Tidewell is a wellness companion, not a medical device.<br>© 2026 Black Belt Code Labs. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+  // Mobile nav toggle
+  var hamburger = document.querySelector('.nav-hamburger');
+  var mobileMenu = document.querySelector('.mobile-menu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 </body>
 </html>

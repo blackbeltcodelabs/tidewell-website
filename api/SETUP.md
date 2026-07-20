@@ -23,7 +23,9 @@ they call the Supabase REST APIs with `fetch`):
 
 ## Supabase: create the tickets table
 
-Run this in the Supabase SQL editor:
+A dedicated, standalone table — no foreign keys to `auth.users` or any app
+table. Isolated from the app's user data, same project. Run this once in the
+Supabase SQL editor:
 
 ```sql
 create table if not exists public.contact_tickets (
@@ -40,8 +42,11 @@ create table if not exists public.contact_tickets (
   status           text not null default 'new'
 );
 
--- Lock the table down: only the service-role key (used by the Vercel
--- function) can read or write. No public/anon access.
+create index if not exists contact_tickets_created_at_idx on public.contact_tickets (created_at desc);
+create index if not exists contact_tickets_status_idx     on public.contact_tickets (status);
+
+-- Lock the table down: only the service-role key (used by the Vercel function
+-- and your admin dashboard's backend) can read or write. No public/anon access.
 alter table public.contact_tickets enable row level security;
 ```
 
@@ -68,8 +73,58 @@ The server (`api/contact.js`) is the source of truth; the client mirrors it for 
 
 Stored subject line format: `[<Priority> Priority] [<Department>] <Subject>`.
 
-## Viewing tickets / getting notified
+## Reading the table from your dashboard
 
-Tickets land in the `contact_tickets` table (Supabase → Table editor). To be
-alerted on new rows, add a **Database Webhook** (Supabase → Database → Webhooks)
-to Slack/email, or a scheduled digest — can be wired up later.
+The table is exposed through Supabase's auto-generated REST API (PostgREST).
+
+**Base address**
+
+```
+https://<REST-HOST>/rest/v1/contact_tickets
+```
+
+`<REST-HOST>` is `auth.tidewellapp.com` if the custom domain also serves REST,
+otherwise the project URL host `xxxx.supabase.co`. Confirm with:
+
+```
+curl -s -o /dev/null -w "%{http_code}\n" https://auth.tidewellapp.com/rest/v1/
+# 401 -> REST is served here (use auth.tidewellapp.com)
+# 404 -> use https://xxxx.supabase.co instead
+```
+
+**Auth** — the table is RLS-locked, so read it with the **service-role key**
+from a trusted backend (never ship that key to a browser). Send it as both the
+`apikey` header and a bearer token.
+
+**List every ticket, newest first**
+
+```
+curl "https://<REST-HOST>/rest/v1/contact_tickets?select=*&order=created_at.desc" \
+  -H "apikey: <SERVICE_ROLE_KEY>" \
+  -H "Authorization: Bearer <SERVICE_ROLE_KEY>"
+```
+
+**Supabase JS client**
+
+```js
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient('https://<REST-HOST>', '<SERVICE_ROLE_KEY>');
+
+const { data, error } = await supabase
+  .from('contact_tickets')
+  .select('*')
+  .order('created_at', { ascending: false });
+```
+
+**Common filters** (PostgREST query params)
+
+- New only: `?status=eq.new`
+- High priority: `?priority=eq.High`
+- One department: `?department=eq.Billing%20Issues`
+- Paginate: `?limit=50&offset=0` (or a `Range: 0-49` header)
+
+**Columns returned:** `id, created_at, name, email, department, priority,
+turnaround_hours, subject, subject_line, message, status`.
+
+To be alerted on new rows, add a **Database Webhook** (Supabase → Database →
+Webhooks) to Slack/email — optional, can be wired later.

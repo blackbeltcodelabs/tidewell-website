@@ -45,13 +45,11 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({ email, create_user: true })
     });
     if (!r.ok) {
-      let detail = '';
-      try { detail = (await r.text()).slice(0, 300); } catch (e2) {}
-      return res.status(502).json({
-        error: 'Could not send a code right now. Please try again shortly.',
-        upstream_status: r.status,
-        detail
-      });
+      // 429 = Supabase per-address send rate limit; surface a clear message.
+      if (r.status === 429) {
+        return res.status(429).json({ error: 'Please wait a moment before requesting another code.' });
+      }
+      return res.status(502).json({ error: 'Could not send a code right now. Please try again shortly.' });
     }
     return res.status(200).json({ ok: true });
   } catch (e) {

@@ -100,7 +100,39 @@
     .contact-note-ds { font-size: 15px; line-height: 1.7; color: var(--muted); margin: 18px auto 0; max-width: 480px; }
     .contact-emergency { margin-top: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px 28px; font-size: 14.5px; line-height: 1.7; color: var(--body); text-align: left; }
     .policy-header h1 em { font-family: 'Source Serif 4', serif; font-style: italic; font-weight: 500; color: var(--blue-dark); }
-    @media (max-width: 640px) { .contact-main { padding: 48px 20px 64px; } }
+
+    /* Contact form */
+    .contact-form-card { margin-top: 18px; background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: left; }
+    .contact-form-card .cf-eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); text-align: center; }
+    .contact-form-card .cf-heading { font-family: var(--font-head); font-weight: 600; font-size: 22px; letter-spacing: -.015em; color: var(--text); text-align: center; margin: 10px 0 0; }
+    .contact-form-card .cf-sub { font-size: 14.5px; line-height: 1.65; color: var(--muted); text-align: center; margin: 8px auto 0; max-width: 420px; }
+    .contact-form { margin-top: 28px; display: flex; flex-direction: column; gap: 18px; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cf-field { display: flex; flex-direction: column; gap: 7px; }
+    .cf-field label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .cf-field label .req { color: var(--blue); }
+    .cf-input, .cf-select, .cf-textarea {
+      width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; transition: border-color .15s, box-shadow .15s; -webkit-appearance: none; appearance: none;
+    }
+    .cf-input::placeholder, .cf-textarea::placeholder { color: #9AAEC1; }
+    .cf-input:focus, .cf-select:focus, .cf-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(46,123,224,.14); }
+    .cf-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%2355697D' stroke-width='1.6' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer; }
+    .cf-textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+    .cf-hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; overflow: hidden; }
+    .cf-submit {
+      display: inline-flex; align-items: center; justify-content: center; align-self: flex-start;
+      background: var(--text); color: #fff; font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      padding: 13px 28px; border: none; border-radius: 100px; cursor: pointer; transition: background .2s;
+    }
+    .cf-submit:hover { background: #1E3A52; }
+    .cf-submit:disabled { opacity: .6; cursor: default; }
+    .cf-status { font-size: 14.5px; line-height: 1.6; border-radius: 12px; padding: 14px 16px; display: none; }
+    .cf-status.show { display: block; }
+    .cf-status.ok { background: rgba(76,163,111,.08); border: 1px solid rgba(76,163,111,.28); color: #2F6B48; }
+    .cf-status.err { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); color: #B23B3B; }
+    @media (max-width: 640px) { .contact-main { padding: 48px 20px 64px; } .contact-form-card { padding: 28px 22px; } .cf-row { grid-template-columns: 1fr; } .cf-submit { align-self: stretch; } }
 </style>
 </head>
 <body>
@@ -145,6 +177,45 @@
     <p class="contact-label-ds">Support email</p>
     <a href="mailto:support@blackbeltcodelabs.com" class="contact-email-ds">support@blackbeltcodelabs.com</a>
     <p class="contact-note-ds">This is the Black Belt Code Labs support address for all Tidewell enquiries. We aim to respond within 1–2 business days. For billing issues, you can also manage your subscription directly through the App Store or Google Play.</p>
+  </div>
+  <div class="contact-form-card">
+    <p class="cf-eyebrow">Send a message</p>
+    <h2 class="cf-heading">Write to us directly</h2>
+    <p class="cf-sub">Prefer a form? Fill this in and it lands in the same inbox. We aim to respond within 1–2 business days.</p>
+    <form class="contact-form" id="contact-form" novalidate>
+      <!-- Web3Forms: replace the value below with your own access key from https://web3forms.com (free) -->
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New Tidewell contact-form message">
+      <input type="hidden" name="from_name" value="Tidewell website">
+      <!-- Honeypot: bots fill this, humans never see it -->
+      <input type="checkbox" name="botcheck" class="cf-hp" tabindex="-1" autocomplete="off">
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-name">Name <span class="req">*</span></label>
+          <input class="cf-input" type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
+        </div>
+        <div class="cf-field">
+          <label for="cf-email">Email <span class="req">*</span></label>
+          <input class="cf-input" type="email" id="cf-email" name="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+      </div>
+      <div class="cf-field">
+        <label for="cf-topic">Topic</label>
+        <select class="cf-select" id="cf-topic" name="topic">
+          <option>General enquiry</option>
+          <option>Bug report</option>
+          <option>Feature idea</option>
+          <option>Billing &amp; subscription</option>
+          <option>Privacy &amp; data</option>
+        </select>
+      </div>
+      <div class="cf-field">
+        <label for="cf-message">Message <span class="req">*</span></label>
+        <textarea class="cf-textarea" id="cf-message" name="message" placeholder="How can we help?" required></textarea>
+      </div>
+      <button type="submit" class="cf-submit" id="cf-submit">Send message</button>
+      <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
+    </form>
   </div>
   <div class="contact-emergency">
     <strong>Medical emergencies:</strong> Tidewell is not an emergency service. If you are experiencing a medical emergency, call your local emergency number immediately.
@@ -198,6 +269,66 @@
     if(!h||!m) return;
     h.addEventListener('click',function(){var o=m.classList.toggle('open');h.setAttribute('aria-expanded',String(o));});
     m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');h.setAttribute('aria-expanded','false');});});
+  })();
+
+  /* Contact form — Web3Forms AJAX submit, stays on page */
+  (function(){
+    var form = document.getElementById('contact-form');
+    if(!form) return;
+    var btn = document.getElementById('cf-submit');
+    var status = document.getElementById('cf-status');
+
+    function setStatus(kind, msg){
+      status.className = 'cf-status show ' + kind;
+      status.textContent = msg;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      if(!form.checkValidity()){
+        setStatus('err', 'Please add your name, a valid email, and a message.');
+        form.reportValidity();
+        return;
+      }
+
+      var key = form.elements['access_key'].value;
+      if(!key || key === 'YOUR_WEB3FORMS_ACCESS_KEY'){
+        setStatus('err', 'The form isn’t connected yet. In the meantime, email us at support@blackbeltcodelabs.com.');
+        return;
+      }
+
+      btn.disabled = true;
+      var original = btn.textContent;
+      btn.textContent = 'Sending…';
+      setStatus('', '');
+      status.className = 'cf-status';
+
+      var payload = {};
+      new FormData(form).forEach(function(v, k){ payload[k] = v; });
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data.success){
+          form.reset();
+          setStatus('ok', 'Thanks — your message is on its way. We’ll reply within 1–2 business days.');
+        } else {
+          setStatus('err', 'Something went wrong. Please email us at support@blackbeltcodelabs.com.');
+        }
+      })
+      .catch(function(){
+        setStatus('err', 'Couldn’t send just now. Please email us at support@blackbeltcodelabs.com.');
+      })
+      .finally(function(){
+        btn.disabled = false;
+        btn.textContent = original;
+      });
+    });
   })();
 </script>
 </body>

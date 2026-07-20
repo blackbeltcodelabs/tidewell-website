@@ -4,294 +4,405 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zepbound Companion App — Calm GLP-1 Support | Tidewell</title>
-  <meta name="description" content="A calm companion for your Zepbound journey. Track shots, notice your week, and find steady ground between doses — without the noise or the shame.">
+  <meta name="description" content="A calm companion for your Zepbound® journey. Track shots, notice your week, and find steady ground between doses.">
   <meta property="og:title" content="Zepbound Companion App — Calm GLP-1 Support | Tidewell">
-  <meta property="og:description" content="A calm companion for your Zepbound journey. Track shots, notice your week, and find steady ground between doses — without the noise or the shame.">
+  <meta property="og:description" content="A calm companion for your Zepbound® journey. Track shots, notice your week, and find steady ground between doses.">
   <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="https://tidewellapp.com/zepbound-companion">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://tidewellapp.com/zepbound-companion">
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/icon.png">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="canonical" href="https://tidewellapp.com/zepbound-companion">
-  <meta property="og:url" content="https://tidewellapp.com/zepbound-companion">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@1,8..60,500&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:#FAFCFE; color:#0D1E30; font-family:'Hanken Grotesk',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { color:#2E7BE0; text-decoration:none; }
+    a:hover { color:#1E5FBE; }
+    img { max-width:100%; }
+
+    @keyframes twFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+    @keyframes twGlow  { 0%,100% { opacity:.55; } 50% { opacity:.85; } }
+
+    .eyebrow { font-size:12.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#3E6FA8; }
+    .sec-h2 { font-family:Sora,sans-serif; font-weight:600; letter-spacing:-.025em; line-height:1.12; margin:16px 0 0; }
+    .sec-h2 em { font-family:'Source Serif 4',serif; font-style:italic; font-weight:500; color:#1E5FBE; }
+
+    /* ── Nav ── */
+    .nav { position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:rgba(250,252,254,.82); border-bottom:1px solid #E7EEF5; transition:box-shadow .3s; }
+    .nav.scrolled { box-shadow:0 1px 12px rgba(13,30,48,.06); }
+    .nav-inner { max-width:1160px; margin:0 auto; display:flex; align-items:center; gap:32px; padding:16px 28px; }
+    .nav-brand { display:flex; align-items:center; gap:9px; color:#0D1E30; }
+    .nav-brand img { width:28px; height:28px; border-radius:8px; display:block; }
+    .nav-brand span { font-family:Sora,sans-serif; font-weight:600; font-size:17px; letter-spacing:-.01em; }
+    .nav-links { display:flex; gap:26px; margin-left:auto; align-items:center; font-size:14.5px; font-weight:500; }
+    .nav-links a { color:#3E5266; }
+    .nav-links a:hover { color:#0D1E30; }
+    .nav-links a.nav-cta { background:#0D1E30; color:#fff; padding:10px 20px; border-radius:100px; font-size:14px; transition:background .3s; }
+    .nav-links a.nav-cta:hover { background:#1E5FBE; }
+    .nav-hamburger { display:none; margin-left:auto; background:none; border:none; cursor:pointer; padding:8px; flex-direction:column; gap:5px; }
+    .nav-hamburger span { display:block; width:22px; height:2px; background:#0D1E30; border-radius:2px; }
+    .mobile-menu { display:none; position:fixed; inset:61px 0 0 0; z-index:49; background:#FAFCFE; padding:28px; flex-direction:column; gap:22px; font-size:18px; font-weight:500; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:#3E5266; }
+
+    /* ── Store badges ── */
+    .store-badge { display:flex; flex-direction:column; justify-content:center; border-radius:14px; padding:11px 24px; line-height:1.2; text-align:left; transition:background .3s,border-color .3s; }
+    .store-badge .sb-row { display:flex; align-items:center; gap:11px; }
+    .store-badge .sb-text { display:flex; flex-direction:column; }
+    .store-badge .sb-sup { font-size:11px; }
+    .store-badge .sb-name { font-family:Sora,sans-serif; font-size:17px; font-weight:600; }
+    .store-badge.sb-ios { background:#0D1E30; color:#fff; }
+    .store-badge.sb-ios:hover { background:#1E5FBE; color:#fff; }
+    .store-badge.sb-ios .sb-sup { opacity:.75; }
+    .store-badge.sb-android { background:#fff; color:#0D1E30; border:1px solid #D8E2EC; }
+    .store-badge.sb-android:hover { border-color:#1E5FBE; color:#0D1E30; }
+    .store-badge.sb-android .sb-sup { color:#55697D; }
+
+    /* ── Companion hero ── */
+    .chero { position:relative; overflow:hidden; background:linear-gradient(180deg,#FAFCFE 0%,#EFF6FC 100%); }
+    .chero-glow { position:absolute; top:-220px; right:-160px; width:640px; height:640px; border-radius:50%; background:radial-gradient(circle,rgba(90,162,242,.20),rgba(90,162,242,0) 65%); animation:twGlow 9s ease-in-out infinite; }
+    .chero-grid { max-width:1160px; margin:0 auto; padding:84px 28px 96px; display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center; position:relative; }
+    .chero-pill { display:inline-flex; align-items:center; gap:8px; border:1px solid #D8E6F3; background:#fff; border-radius:100px; padding:7px 16px; font-size:12.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#3E6FA8; max-width:100%; }
+    .chero h1 { font-family:Sora,sans-serif; font-weight:600; font-size:54px; line-height:1.08; letter-spacing:-.028em; margin:26px 0 0; text-wrap:balance; }
+    .chero h1 em { font-family:'Source Serif 4',serif; font-style:italic; font-weight:500; color:#1E5FBE; }
+    .chero-sub { font-size:18.5px; line-height:1.6; color:#55697D; margin:22px 0 0; max-width:500px; text-wrap:pretty; }
+    .chero-badges { display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+    .chero-stats { display:flex; gap:36px; margin-top:44px; padding-top:28px; border-top:1px solid #E0EAF3; }
+    .chero-stats .hs-num { font-family:Sora,sans-serif; font-weight:600; font-size:24px; }
+    .chero-stats .hs-label { font-size:13.5px; color:#55697D; margin-top:3px; }
+
+    .chero-phone-wrap { display:flex; justify-content:center; position:relative; padding-top:10px; perspective:1400px; }
+    .chero-phone-floor { position:absolute; inset:auto -40px -70px -40px; height:400px; background:radial-gradient(ellipse at 50% 100%,rgba(46,123,224,.18),rgba(46,123,224,0) 70%); }
+    .chero-phone { width:300px; transform:rotateY(-16deg) rotateX(4deg) rotateZ(3deg); transform-style:preserve-3d; }
+    .chero-phone .phone-float { animation:twFloat 7s ease-in-out infinite; position:relative; filter:drop-shadow(-32px 52px 52px rgba(13,30,48,.42)); }
+    .chero-phone .phone-btn { position:absolute; width:3px; border-radius:2px; }
+    .chero-phone .phone-btn.left { left:-2px; background:linear-gradient(90deg,#5A6B82,#242E3D); }
+    .chero-phone .phone-btn.right { right:-2px; background:linear-gradient(90deg,#242E3D,#5A6B82); }
+    .chero-phone .frame { background:linear-gradient(135deg,#8C9CB2 0%,#39465A 12%,#1A2330 40%,#141C28 70%,#4A5A72 100%); border-radius:50px; padding:3.5px; position:relative; }
+    .chero-phone .screen { background:#060A10; border-radius:46.5px; padding:9px; }
+    .chero-phone .screen img { display:block; width:100%; border-radius:38px; }
+    .chero-phone .shine { position:absolute; inset:0; border-radius:50px; background:radial-gradient(120% 75% at 8% 0%,rgba(255,255,255,.36) 0%,rgba(255,255,255,.09) 24%,rgba(255,255,255,0) 46%); pointer-events:none; }
+
+    /* ── What people search ── */
+    .qa-section { max-width:1000px; margin:0 auto; padding:100px 28px 0; }
+    .qa-head { max-width:620px; }
+    .qa-head h2 { font-size:38px; }
+    .qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:44px; }
+    .qa-card { background:#fff; border:1px solid #E3ECF4; border-radius:20px; padding:28px; transition:transform .45s cubic-bezier(.2,.6,.2,1),box-shadow .45s,border-color .45s; }
+    .qa-card:hover { transform:translateY(-5px); border-color:#B9D3EE; box-shadow:0 18px 36px -20px rgba(13,30,48,.3); }
+    .qa-card h3 { font-family:Sora,sans-serif; font-weight:600; font-size:18px; margin:0 0 12px; letter-spacing:-.01em; line-height:1.35; }
+    .qa-card p { font-size:15px; line-height:1.65; color:#55697D; margin:0; text-wrap:pretty; }
+
+    /* ── The App ── */
+    .app-section { max-width:1160px; margin:0 auto; padding:100px 28px 0; }
+    .app-head { max-width:640px; }
+    .app-head h2 { font-size:38px; }
+    .app-head p { font-size:17px; line-height:1.65; color:#55697D; margin:18px 0 0; text-wrap:pretty; }
+    .app-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px; }
+    .app-card { background:#fff; border:1px solid #E3ECF4; border-radius:20px; padding:14px 14px 28px; transition:transform .5s cubic-bezier(.2,.6,.2,1),box-shadow .5s,border-color .5s; display:flex; flex-direction:column; }
+    .app-card:hover { border-color:#B9D3EE; box-shadow:0 26px 54px -24px rgba(13,30,48,.32); transform:translateY(-6px); }
+    .app-card .shot-window { border-radius:14px; overflow:hidden; height:270px; background:#F3F8FC; }
+    .app-card .shot-window img { display:block; width:86%; margin:22px auto 0; border-radius:18px; box-shadow:0 10px 30px -12px rgba(13,30,48,.3); transition:transform .7s cubic-bezier(.2,.6,.2,1); }
+    .app-card:hover .shot-window img { transform:scale(1.05) translateY(-8px); }
+    .app-card .card-body { padding:24px 14px 0; }
+    .app-card .card-index { font-family:Sora,sans-serif; font-size:13px; color:#9AAEC1; }
+    .app-card h3 { font-family:Sora,sans-serif; font-weight:600; font-size:19px; margin:12px 0 9px; letter-spacing:-.01em; }
+    .app-card p { font-size:14.5px; line-height:1.6; color:#55697D; margin:0; text-wrap:pretty; }
+    .app-card.dark { background:linear-gradient(135deg,#0D1E30,#153252); border:none; color:#fff; }
+    .app-card.dark .shot-window { background:rgba(255,255,255,.04); }
+    .app-card.dark .shot-window img { box-shadow:0 10px 30px -12px rgba(0,0,0,.5); }
+    .app-card.dark .card-body { display:flex; flex-direction:column; flex:1; }
+    .app-card.dark .card-index { color:#8FB4E0; }
+    .app-card.dark p { color:#B6C8DB; }
+    .app-card.dark .card-link { color:#8FC0F5; font-weight:600; font-size:14.5px; margin-top:auto; padding-top:16px; }
+    .app-card.dark .card-link:hover { color:#fff; }
+
+    /* ── Closing CTA ── */
+    .close-cta { margin-top:110px; background:#081524; color:#E9F1F9; position:relative; overflow:hidden; }
+    .close-glow { position:absolute; top:-240px; left:50%; transform:translateX(-50%); width:820px; height:540px; border-radius:50%; background:radial-gradient(circle,rgba(46,123,224,.22),rgba(46,123,224,0) 65%); animation:twGlow 10s ease-in-out infinite; }
+    .close-inner { max-width:720px; margin:0 auto; padding:100px 28px; text-align:center; position:relative; }
+    .close-quote { font-family:'Source Serif 4',serif; font-style:italic; font-size:26px; line-height:1.55; color:#fff; margin:0; text-wrap:pretty; }
+    .close-badges { display:flex; gap:14px; justify-content:center; margin-top:38px; flex-wrap:wrap; }
+    .close-badges .sb-ios { background:#fff; color:#0D1E30; }
+    .close-badges .sb-ios:hover { background:#DCE9F8; color:#0D1E30; }
+    .close-badges .sb-ios .sb-sup { color:#55697D; }
+    .close-badges .sb-android { background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.25); }
+    .close-badges .sb-android:hover { border-color:#8FC0F5; color:#fff; }
+    .close-badges .sb-android .sb-sup { opacity:.75; }
+    .close-disclaimer { font-size:12.5px; line-height:1.6; color:#7E93A9; margin:44px auto 0; max-width:540px; }
+
+    /* ── Footer ── */
+    .footer { background:#081524; color:#9DB2C7; }
+    .footer a { color:#9DB2C7; }
+    .footer a:hover { color:#fff; }
+    .footer-grid { max-width:1160px; margin:0 auto; padding:64px 28px 40px; display:grid; grid-template-columns:1.4fr 1fr 1fr 1.3fr; gap:40px; }
+    .footer-brand { display:flex; align-items:center; gap:9px; color:#fff; }
+    .footer-brand img { width:26px; height:26px; border-radius:7px; display:block; }
+    .footer-brand span { font-family:Sora,sans-serif; font-weight:600; font-size:16px; }
+    .footer-tagline { font-size:14px; line-height:1.6; margin:14px 0 0; max-width:240px; }
+    .footer-col { display:flex; flex-direction:column; gap:10px; font-size:14px; }
+    .footer-col .fc-title { font-family:Sora,sans-serif; font-weight:600; font-size:13px; color:#fff; margin-bottom:4px; }
+    .footer-legal { max-width:1160px; margin:0 auto; padding:0 28px 48px; }
+    .footer-legal p { font-size:12px; line-height:1.6; color:#5E7288; border-top:1px solid rgba(255,255,255,.08); padding-top:24px; margin:0; }
+
+    /* ── Responsive ── */
+    @media (max-width:1060px) {
+      .chero h1 { font-size:44px; }
+    }
+    @media (max-width:960px) {
+      .chero-grid { grid-template-columns:1fr; padding-top:64px; }
+      .chero-phone-wrap { max-width:400px; margin:20px auto 0; width:100%; }
+      .app-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:860px) {
+      .nav-links { display:none; }
+      .nav-hamburger { display:flex; }
+    }
+    @media (max-width:700px) {
+      .chero h1 { font-size:36px; }
+      .chero-pill { font-size:11px; letter-spacing:.05em; border-radius:18px; line-height:1.5; }
+      .qa-head h2, .app-head h2 { font-size:30px; }
+      .close-quote { font-size:22px; }
+      .qa-grid { grid-template-columns:1fr; }
+      .app-grid { grid-template-columns:1fr; }
+      .chero-stats { gap:24px; }
+      .footer-grid { grid-template-columns:1fr; gap:32px; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<nav class="nav" aria-label="Main">
   <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="Tidewell home">
-      <div class="nav-logo-icon" aria-hidden="true"><img src="assets/icon.png" alt=""></div>
-      <span class="nav-wordmark">Tidewell</span>
+    <a href="/" class="nav-brand">
+      <img src="assets/icon.png" alt="Tidewell logo">
+      <span>Tidewell</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="/#screenshots">The App</a></li>
-      <li><a href="/#pricing">Pricing</a></li>
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#faq">FAQ</a></li>
-    </ul>
-    <div class="nav-cta">
-      <a href="#" data-cta="ios" class="btn btn-primary"><span data-cta-label>Download Tidewell</span></a>
+    <div class="nav-links">
+      <a href="index.html#app">The App</a>
+      <a href="index.html#plus">Plus</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="#get" class="nav-cta">Get Tidewell</a>
     </div>
-    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<div class="mobile-menu" role="dialog" aria-label="Navigation menu">
-  <a href="/#screenshots">The App</a>
-  <a href="/#pricing">Pricing</a>
-  <a href="/#about">About</a>
-  <a href="/#faq">FAQ</a>
-  <div class="mobile-cta">
-    <a href="#" data-cta="ios" class="btn btn-primary" style="width:100%;justify-content:center;"><span data-cta-label>Download Tidewell</span></a>
-  </div>
+<div class="mobile-menu">
+  <a href="index.html#app">The App</a>
+  <a href="index.html#plus">Plus</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="#get">Get Tidewell</a>
 </div>
 
-<main>
-
-<!-- ── Hero ── -->
-<section class="hero hero-drug">
-  <div class="hero-inner">
-    <div class="hero-content">
-
-      <h1 class="hero-headline fade-in delay-1"><strong class="drug-brand">Zepbound<sup>®</sup></strong><span style="font-weight:400"> support, the calm way.</span></h1>
-
-      <p class="hero-sub fade-in delay-2">
-        Tidewell helps you notice the rhythm of your <strong class="drug-brand">Zepbound<sup>®</sup></strong> week — the food noise, the energy dips, the quiet wins — without turning it into another thing to optimize.
-      </p>
-
-      <div class="hero-beta-note fade-in delay-2">
-        Tidewell is live on iOS and Android. Download now and start your first check-in today.
+<header class="chero">
+  <div class="chero-glow" aria-hidden="true"></div>
+  <div class="chero-grid">
+    <div data-reveal>
+      <div class="chero-pill">Tidewell for Zepbound®</div>
+      <h1>Zepbound® support, <em>the calm way</em>.</h1>
+      <p class="chero-sub">Tidewell helps you notice the rhythm of your Zepbound® week — the food noise, the energy dips, the quiet wins — without turning it into another thing to optimize.</p>
+      <div class="chero-badges">
+        <a href="#" data-cta="ios" class="store-badge sb-ios"><span class="sb-row"><svg width="21" height="25" viewBox="0 0 384 512" aria-hidden="true"><path fill="#fff" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span class="sb-text"><span class="sb-sup">Download on the</span><span class="sb-name">App Store</span></span></span></a>
+        <a href="#" data-cta="android" class="store-badge sb-android"><span class="sb-row"><svg width="20" height="22" viewBox="0 0 512 512" aria-hidden="true"><path fill="#0D1E30" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 58.9-34.1c26.2-15.7 26.2-45.1 0-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg><span class="sb-text"><span class="sb-sup">Get it on</span><span class="sb-name">Google Play</span></span></span></a>
       </div>
-
-      <div class="hero-cta-group fade-in delay-3">
-        <div class="store-badges">
-          <a href="#" data-cta="ios" class="store-badge">
-            <svg class="store-badge-icon" viewBox="0 0 17 20" width="20" height="24" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">Download on the</span>
-              <span class="store-badge-name">App Store</span>
-            </div>
-          </a>
-          <a href="#" data-cta="android" class="store-badge" aria-disabled="true">
-            <svg class="store-badge-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 1.5v21L14.5 12 3 1.5Z" fill="#34A853"/><path d="M3 1.5L14.5 12 19.5 7 3 1.5Z" fill="#EA4335"/><path d="M3 22.5L14.5 12 19.5 17 3 22.5Z" fill="#FBBC05"/><path d="M19.5 7l3 5-3 5-5-5 5-5Z" fill="#4285F4"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">GET IT ON</span>
-              <span class="store-badge-name">Google Play</span>
-            </div>
-          </a>
+      <div class="chero-stats">
+        <div><div class="hs-num">20 sec</div><div class="hs-label">Daily check-in</div></div>
+        <div><div class="hs-num">5 min</div><div class="hs-label">Calm reads</div></div>
+        <div><div class="hs-num">Private</div><div class="hs-label">Data never sold</div></div>
+      </div>
+    </div>
+    <div class="chero-phone-wrap">
+      <div class="chero-phone-floor" aria-hidden="true"></div>
+      <div class="chero-phone">
+        <div class="phone-float">
+          <div class="phone-btn left" style="top:17%;height:30px"></div>
+          <div class="phone-btn left" style="top:26%;height:52px"></div>
+          <div class="phone-btn left" style="top:26%;margin-top:64px;height:52px"></div>
+          <div class="phone-btn right" style="top:30%;height:82px"></div>
+          <div class="frame">
+            <div class="screen"><img src="assets/app-home.png" alt="Tidewell home screen"></div>
+            <div class="shine" aria-hidden="true"></div>
+          </div>
         </div>
-        <span class="hero-cta-badge" data-cta-badge>
-          <span class="cta-badge-dot" aria-hidden="true"></span>
-          <span data-cta-badge-text>Available on iOS and Android</span>
-        </span>
       </div>
+    </div>
+  </div>
+</header>
 
-      <div class="hero-stats fade-in delay-4">
-        <div><div class="hero-stat-value">20 sec</div><div class="hero-stat-label">Daily check-in</div></div>
-        <div><div class="hero-stat-value">5 min</div><div class="hero-stat-label">Calm reads</div></div>
-        <div><div class="hero-stat-value">Private</div><div class="hero-stat-label">Never sold</div></div>
-      </div>
-
-      <div class="hero-trust fade-in delay-4">
-        <span class="hero-trust-item">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
-          Apple App Store managed
-        </span>
-        <span class="hero-trust-sep" aria-hidden="true">·</span>
-        <span class="hero-trust-item">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          Cancel anytime
-        </span>
-        <span class="hero-trust-sep" aria-hidden="true">·</span>
-        <span class="hero-trust-item">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Data never sold
-        </span>
-      </div>
-
+<section class="qa-section">
+  <div class="qa-head" data-reveal>
+    <div class="eyebrow">What people search</div>
+    <h2 class="sec-h2">The questions that show up <em>mid-week</em>.</h2>
+  </div>
+  <div class="qa-grid">
+    <div class="qa-card" data-reveal>
+      <h3>Is Zepbound® the same medication as Mounjaro®?</h3>
+      <p>Zepbound® and Mounjaro® share the same active ingredient, tirzepatide, but are approved for different purposes. Your prescriber can explain what's relevant to your specific situation.</p>
+    </div>
+    <div class="qa-card" data-reveal>
+      <h3>What does dose titration mean for Zepbound®?</h3>
+      <p>Titration refers to gradually increasing the dose over time, usually to help the body adjust and to manage side effects. Your prescriber sets the specific schedule for you.</p>
+    </div>
+    <div class="qa-card" data-reveal>
+      <h3>Why do I feel different in the days right after my shot versus later in the week?</h3>
+      <p>Many people notice a rhythm across their dosing week — often steadier appetite and food noise in the first days, with some return of both later on. This pattern is widely reported and isn't a sign anything is wrong.</p>
+    </div>
+    <div class="qa-card" data-reveal>
+      <h3>What helps with nausea on Zepbound®?</h3>
+      <p>Smaller, simpler meals, staying hydrated, and eating slowly are commonly mentioned by people managing nausea on GLP-1 medications. If nausea is severe or persistent, your prescriber may have additional options.</p>
     </div>
   </div>
 </section>
 
-<!-- ── What people search ── -->
-<section class="drug-qa-section section">
-  <div class="container">
-    <div class="section-label fade-in">What people search</div>
-    <div class="drug-qa-grid">
-
-      <div class="drug-qa-card fade-in delay-1">
-        <p class="drug-qa-q">Is <strong class="drug-brand">Zepbound<sup>®</sup></strong> the same medication as <strong class="drug-brand">Mounjaro<sup>®</sup></strong>?</p>
-        <p class="drug-qa-a"><strong class="drug-brand">Zepbound<sup>®</sup></strong> and <strong class="drug-brand">Mounjaro<sup>®</sup></strong> share the same active ingredient, tirzepatide, but are approved for different purposes. Your prescriber can explain what's relevant to your specific situation.</p>
-      </div>
-
-      <div class="drug-qa-card fade-in delay-2">
-        <p class="drug-qa-q">What does dose titration mean for <strong class="drug-brand">Zepbound<sup>®</sup></strong>?</p>
-        <p class="drug-qa-a">Titration refers to gradually increasing the dose over time, usually to help the body adjust and to manage side effects. Your prescriber sets the specific schedule for you.</p>
-      </div>
-
-      <div class="drug-qa-card fade-in delay-3">
-        <p class="drug-qa-q">Why do I feel different in the days right after my shot versus later in the week?</p>
-        <p class="drug-qa-a">Many people notice a rhythm across their dosing week — often steadier appetite and food noise in the first days, with some return of both later on. This pattern is widely reported and isn't a sign anything is wrong.</p>
-      </div>
-
-      <div class="drug-qa-card fade-in delay-4">
-        <p class="drug-qa-q">What helps with nausea on <strong class="drug-brand">Zepbound<sup>®</sup></strong>?</p>
-        <p class="drug-qa-a">Smaller, simpler meals, staying hydrated, and eating slowly are commonly mentioned by people managing nausea on GLP-1 medications. If nausea is severe or persistent, your prescriber may have additional options.</p>
-      </div>
-
-    </div>
+<section id="app" class="app-section">
+  <div class="app-head" data-reveal>
+    <div class="eyebrow">The App</div>
+    <h2 class="sec-h2">Designed to feel as <em>calm</em> as it works.</h2>
+    <p>Every screen answers one question: does this help, or does it add noise?</p>
   </div>
-</section>
-
-<!-- ── The App screenshots ── -->
-<section class="screenshots section" id="screenshots">
-  <div class="container">
-    <header class="screenshots-header">
-      <div class="section-label fade-in">The app</div>
-      <h2 class="section-heading fade-in delay-1">Designed to feel as calm as it works.</h2>
-      <p class="section-sub fade-in delay-2">Every screen built with one question in mind: does this help, or does it add noise?</p>
-    </header>
-  </div>
-
-  <div class="screenshots-scroll-stage">
-    <div class="screenshots-phone-rail">
-      <div class="phone-frame lg">
-        <div class="sticky-phone-screens">
-          <div class="phone-screen ss-home  spscreen" data-idx="0"></div>
-          <div class="phone-screen ss-shot   spscreen" data-idx="1"></div>
-          <div class="phone-screen ss-body   spscreen" data-idx="2"></div>
-          <div class="phone-screen ss-rhythm spscreen" data-idx="3"></div>
-          <div class="phone-screen ss-learn  spscreen" data-idx="4"></div>
-          <div class="phone-screen ss-plus   spscreen" data-idx="5"></div>
-        </div>
+  <div class="app-grid">
+    <div class="app-card" data-reveal>
+      <div class="shot-window"><img src="assets/app-home.png" alt="Home screen"></div>
+      <div class="card-body">
+        <div class="card-index">01 — Home</div>
+        <h3>Your week, held in place</h3>
+        <p>This week's check-ins, your next-shot countdown, and the quiet pattern your body is making — at a glance.</p>
       </div>
     </div>
-
-    <div class="screenshots-steps-rail">
-      <div class="screenshots-step" data-idx="0">
-        <p class="step-tag">Home</p>
-        <h3>Your week,<br>held in place.</h3>
-        <p class="step-body">See this week's check-ins, your next shot countdown, and the quiet pattern your body is making — all without noise.</p>
+    <div class="app-card" data-reveal>
+      <div class="shot-window"><img src="assets/app-checkin.png" alt="Check-in complete"></div>
+      <div class="card-body">
+        <div class="card-index">02 — Check-in</div>
+        <h3>Twenty seconds, then done</h3>
+        <p>Mood, energy, food noise, and a private note if you want one. Small notes, every day — that's all it needs to be.</p>
       </div>
-      <div class="screenshots-step" data-idx="1">
-        <p class="step-tag">Shot Log</p>
-        <h3>Logged<br>in seconds.</h3>
-        <p class="step-body">Pick your medication, dose, and injection site. Tidewell remembers your patterns so every log gets a little faster.</p>
+    </div>
+    <div class="app-card" data-reveal>
+      <div class="shot-window"><img src="assets/app-shot.png" alt="Shot logging"></div>
+      <div class="card-body">
+        <div class="card-index">03 — Shot Log</div>
+        <h3>Logged in seconds</h3>
+        <p>Medication, dose, injection site — with rotation tracked on a body map so no site gets overused.</p>
       </div>
-      <div class="screenshots-step" data-idx="2">
-        <p class="step-tag">Body</p>
-        <h3>Your body's shape,<br>gently tracked.</h3>
-        <p class="step-body">Weight and waist over time — not as numbers to stress over, but as a quiet record of what's been shifting since day one.</p>
+    </div>
+    <div class="app-card" data-reveal>
+      <div class="shot-window"><img src="assets/app-body.png" alt="Body tracking"></div>
+      <div class="card-body">
+        <div class="card-index">04 — Body</div>
+        <h3>Gently tracked</h3>
+        <p>Weight, waist, and BMI over time — not numbers to stress over, but a quiet record of what's been shifting.</p>
       </div>
-      <div class="screenshots-step" data-idx="3">
-        <p class="step-tag">Weekly Rhythm</p>
-        <h3>Four weeks,<br>held in place.</h3>
-        <p class="step-body">Spot patterns across weeks — when food noise spikes, when energy dips, what your body does in the days between shots.</p>
+    </div>
+    <div class="app-card" data-reveal>
+      <div class="shot-window"><img src="assets/app-learn.png" alt="Learn library"></div>
+      <div class="card-body">
+        <div class="card-index">05 — Learn</div>
+        <h3>The library your prescriber didn't give you</h3>
+        <p>Short, calm reads on what GLP-1s actually do to your body, appetite, and relationship with food.</p>
       </div>
-      <div class="screenshots-step" data-idx="4">
-        <p class="step-tag">Learn</p>
-        <h3>The library your<br>prescriber didn't give you.</h3>
-        <p class="step-body">Short pieces on what GLP-1s actually do to your body, your appetite, and your relationship with food. No noise. No shame.</p>
-      </div>
-      <div class="screenshots-step" data-idx="5">
-        <p class="step-tag">Tidewell Plus</p>
-        <h3>Everything,<br>without limits.</h3>
-        <p class="step-body">PDF exports for your prescriber, all companion pieces, cloud backup, and personalized nudges drawn from your own patterns.</p>
+    </div>
+    <div class="app-card dark" data-reveal>
+      <div class="shot-window"><img src="assets/app-membership.png" alt="Tidewell Plus membership"></div>
+      <div class="card-body">
+        <div class="card-index">06 — Tidewell Plus</div>
+        <h3>The full picture, unlocked</h3>
+        <p>Prescriber-ready briefings, supply guardianship, and deep pattern insight.</p>
+        <a href="index.html#plus" class="card-link">Explore Plus ↓</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Closing ── -->
-<section class="drug-close-section">
-  <div class="container">
-    <p class="drug-close-p fade-in"><strong class="drug-brand">Zepbound<sup>®</sup></strong> is a tool. The week you live around it is the part nobody hands you a guide for — the food noise, the energy, the quiet identity shifts. That's what Tidewell is for.</p>
-    <div class="store-badges fade-in delay-1" style="justify-content:center;">
-      <a href="#" data-cta="ios" class="store-badge">
-        <svg class="store-badge-icon" viewBox="0 0 17 20" width="20" height="24" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
-        <div class="store-badge-text">
-          <span class="store-badge-sub">Download on the</span>
-          <span class="store-badge-name">App Store</span>
-        </div>
-      </a>
-      <a href="#" data-cta="android" class="store-badge" aria-disabled="true">
-        <svg class="store-badge-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 1.5v21L14.5 12 3 1.5Z" fill="#34A853"/><path d="M3 1.5L14.5 12 19.5 7 3 1.5Z" fill="#EA4335"/><path d="M3 22.5L14.5 12 19.5 17 3 22.5Z" fill="#FBBC05"/><path d="M19.5 7l3 5-3 5-5-5 5-5Z" fill="#4285F4"/></svg>
-        <div class="store-badge-text">
-          <span class="store-badge-sub">GET IT ON</span>
-          <span class="store-badge-name">Google Play</span>
-        </div>
-      </a>
+<section id="get" class="close-cta">
+  <div class="close-glow" aria-hidden="true"></div>
+  <div class="close-inner" data-reveal>
+    <p class="close-quote">"Zepbound® is a tool. The week you live around it is the part nobody hands you a guide for — the food noise, the energy, the quiet identity shifts. That's what Tidewell is for."</p>
+    <div class="close-badges">
+      <a href="#" data-cta="ios" class="store-badge sb-ios"><span class="sb-row"><svg width="21" height="25" viewBox="0 0 384 512" aria-hidden="true"><path fill="#0D1E30" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span class="sb-text"><span class="sb-sup">Download on the</span><span class="sb-name">App Store</span></span></span></a>
+      <a href="#" data-cta="android" class="store-badge sb-android"><span class="sb-row"><svg width="20" height="22" viewBox="0 0 512 512" aria-hidden="true"><path fill="#fff" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 58.9-34.1c26.2-15.7 26.2-45.1 0-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg><span class="sb-text"><span class="sb-sup">Get it on</span><span class="sb-name">Google Play</span></span></span></a>
     </div>
-    <p class="final-disclaimer fade-in delay-2" style="margin-top:32px;">
-      Tidewell is a wellness companion, not a medical device. It doesn't diagnose conditions or recommend treatment. Always consult your healthcare provider about your medication and health goals.
-    </p>
+    <p class="close-disclaimer">Tidewell is a wellness companion, not a medical device. It doesn't diagnose conditions or recommend treatment. Always consult your healthcare provider about your medication and health goals.</p>
   </div>
 </section>
-
-</main>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
+  <div class="footer-grid">
+    <div>
       <div class="footer-brand">
-        <a href="/" class="footer-wordmark">Tidewell</a>
-        <p class="footer-tagline">Your calm companion for the week between shots.</p>
-        <div class="footer-store-row">
-          <a href="#" data-cta="ios" class="store-badge">
-            <svg class="store-badge-icon" viewBox="0 0 17 20" width="18" height="22" fill="currentColor" aria-hidden="true"><path d="M14.12 10.57c-.02-2.15 1.76-3.19 1.84-3.24-1-1.47-2.56-1.67-3.12-1.69-1.33-.14-2.6.79-3.27.79-.67 0-1.7-.77-2.8-.75-1.44.02-2.77.84-3.51 2.12C1.55 10.66 2.6 15.1 4.27 17.5c.84 1.17 1.83 2.49 3.13 2.44 1.26-.05 1.73-.81 3.25-.81 1.52 0 1.95.81 3.27.78 1.35-.02 2.2-1.2 3.02-2.38.96-1.36 1.35-2.69 1.37-2.76-.03-.01-2.61-1-2.63-3.96l-.56-.24zM11.99 4.1C12.66 3.28 13.1 2.15 12.98 1c-.96.04-2.14.64-2.83 1.44C9.5 3.2 8.97 4.36 9.11 5.41c1.07.08 2.17-.55 2.88-1.31z"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">Download on the</span>
-              <span class="store-badge-name">App Store</span>
-            </div>
-          </a>
-          <a href="#" data-cta="android" class="store-badge" aria-disabled="true">
-            <svg class="store-badge-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 1.5v21L14.5 12 3 1.5Z" fill="#34A853"/><path d="M3 1.5L14.5 12 19.5 7 3 1.5Z" fill="#EA4335"/><path d="M3 22.5L14.5 12 19.5 17 3 22.5Z" fill="#FBBC05"/><path d="M19.5 7l3 5-3 5-5-5 5-5Z" fill="#4285F4"/></svg>
-            <div class="store-badge-text">
-              <span class="store-badge-sub">GET IT ON</span>
-              <span class="store-badge-name">Google Play</span>
-            </div>
-          </a>
-        </div>
+        <img src="assets/icon.png" alt="Tidewell logo">
+        <span>Tidewell</span>
       </div>
-      <div>
-        <p class="footer-col-heading">Legal</p>
-        <ul class="footer-links">
-          <li><a href="/privacy">Privacy Policy</a></li>
-          <li><a href="/terms">Terms &amp; Conditions</a></li>
-          <li><a href="/medical-disclaimer">Medical Disclaimer</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer-col-heading">Contact</p>
-        <ul class="footer-links">
-          <li><a href="/contact">Get in touch</a></li>
-          <li><a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer-col-heading">For your medication</p>
-        <ul class="footer-links">
-          <li><a href="/mounjaro-companion" target="_blank" rel="noopener noreferrer">Mounjaro companion</a></li>
-          <li><a href="/ozempic-companion" target="_blank" rel="noopener noreferrer">Ozempic companion</a></li>
-          <li><a href="/wegovy-companion" target="_blank" rel="noopener noreferrer">Wegovy companion</a></li>
-          <li><a href="/zepbound-companion" target="_blank" rel="noopener noreferrer">Zepbound companion</a></li>
-          <li><a href="/semaglutide-companion" target="_blank" rel="noopener noreferrer">Semaglutide companion</a></li>
-          <li><a href="/tirzepatide-companion" target="_blank" rel="noopener noreferrer">Tirzepatide companion</a></li>
-        </ul>
-      </div>
+      <p class="footer-tagline">Your calm companion for the week between shots.</p>
     </div>
-    <div class="footer-disclaimer-box">
-      <p>Tidewell is a wellness companion, not a medical device. It does not diagnose conditions or recommend treatment. Always consult your healthcare provider about your medication and health goals.</p>
+    <div class="footer-col">
+      <div class="fc-title">Legal</div>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <a href="/medical-disclaimer">Medical Disclaimer</a>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Black Belt Code Labs. All rights reserved.</p>
-      <p class="footer-brand-credit">Black Belt Code Labs</p>
+    <div class="footer-col">
+      <div class="fc-title">Contact</div>
+      <a href="/contact">Get in touch</a>
+      <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>
     </div>
+    <div class="footer-col">
+      <div class="fc-title">For your medication</div>
+      <a href="/mounjaro-companion">Mounjaro companion</a>
+      <a href="/ozempic-companion">Ozempic companion</a>
+      <a href="/wegovy-companion">Wegovy companion</a>
+      <a href="/zepbound-companion">Zepbound companion</a>
+      <a href="/semaglutide-companion">Semaglutide companion</a>
+      <a href="/tirzepatide-companion">Tirzepatide companion</a>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <p>Ozempic, Wegovy, Mounjaro, and Zepbound are registered trademarks of their respective owners. Tidewell is not affiliated with or endorsed by Novo Nordisk or Eli Lilly and Company. Tidewell is a wellness companion, not a medical device.<br>© 2026 Black Belt Code Labs. All rights reserved.</p>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var hamburger = document.querySelector('.nav-hamburger');
+  var mobileMenu = document.querySelector('.mobile-menu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var els = document.querySelectorAll('[data-reveal]');
+  els.forEach(function (el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(26px)';
+    el.style.transition = 'opacity .85s cubic-bezier(.2,.6,.2,1), transform .85s cubic-bezier(.2,.6,.2,1)';
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>

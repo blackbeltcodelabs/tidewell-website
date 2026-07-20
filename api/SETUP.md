@@ -3,7 +3,7 @@
 The `/contact` form uses three Vercel serverless functions (no npm deps —
 they call the Supabase REST APIs with `fetch`):
 
-- `api/otp-send.js` — sends a 6-digit email OTP via Supabase Auth
+- `api/otp-send.js` — sends an 8-digit email OTP via Supabase Auth
 - `api/otp-verify.js` — verifies the code, returns a short-lived access token
 - `api/contact.js` — re-checks the verified email server-side, then stores the
   ticket in a Supabase table (no outbound email)
@@ -53,10 +53,10 @@ alter table public.contact_tickets enable row level security;
 ## Supabase: emit a numeric email OTP
 
 Supabase's default email template sends a **magic link**, not a code. To send a
-6-digit code:
+8-digit code:
 
 1. Supabase dashboard → **Authentication → Email Templates → Magic Link**.
-2. Add `{{ .Token }}` to the template body (renders the 6-digit code).
+2. Add `{{ .Token }}` to the template body (renders the 8-digit code).
 3. **Authentication → Providers → Email**: make sure email OTP is enabled.
 
 ## Department → priority → turnaround mapping

@@ -28,7 +28,7 @@ module.exports = async function handler(req, res) {
   const token = String(body.token || '').trim();
 
   if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Valid email required.' });
-  if (!/^\d{6}$/.test(token)) return res.status(400).json({ error: 'Enter the 6-digit code from your email.' });
+  if (!/^\d{6,8}$/.test(token)) return res.status(400).json({ error: 'Enter the 8-digit code from your email.' });
 
   const SUPABASE_URL = baseUrl(process.env.SUPABASE_URL);
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;

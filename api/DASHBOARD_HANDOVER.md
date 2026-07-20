@@ -9,7 +9,7 @@ Everything your dashboard needs to read contact-form submissions from Supabase.
 The `tidewellapp.com/contact` form does this on submit:
 
 1. Visitor fills the form (name, email, department, subject, message).
-2. Visitor verifies their email with a 6-digit Supabase OTP code.
+2. Visitor verifies their email with an 8-digit Supabase OTP code.
 3. A Vercel serverless function (`/api/contact`) re-checks the verified email
    server-side, then **inserts one row** into a dedicated Supabase table.
 4. **Your dashboard reads that table.**
@@ -173,7 +173,7 @@ alter publication supabase_realtime add table public.contact_tickets;
 
 | File | Role |
 |---|---|
-| `api/otp-send.js` | Sends the 6-digit email OTP (Supabase Auth) |
+| `api/otp-send.js` | Sends the 8-digit email OTP (Supabase Auth) |
 | `api/otp-verify.js` | Verifies the code, returns a short-lived token |
 | `api/contact.js` | Re-checks the verified email, inserts the ticket row |
 | `contact.html` | The public contact form + verification UI |

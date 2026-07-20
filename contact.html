@@ -144,7 +144,7 @@
     .cf-verify-label { font-size: 13px; font-weight: 600; color: var(--text); }
     .cf-verify-hint { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: -4px 0 2px; }
     .cf-verify-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .cf-code { width: 160px; letter-spacing: .32em; font-family: var(--font-head); font-weight: 600; text-align: center; }
+    .cf-code { width: 210px; letter-spacing: .26em; font-family: var(--font-head); font-weight: 600; text-align: center; }
     .cf-btn-secondary { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--text); font-family: var(--font-body); font-size: 14px; font-weight: 600; padding: 11px 20px; border: 1px solid var(--border); border-radius: 100px; cursor: pointer; transition: border-color .15s, color .15s; }
     .cf-btn-secondary:hover { border-color: #B9D3EE; color: var(--blue-dark); }
     .cf-btn-secondary:disabled { opacity: .55; cursor: default; }
@@ -239,12 +239,12 @@
 
       <div class="cf-verify" id="cf-verify">
         <div class="cf-verify-label">Verify your email</div>
-        <p class="cf-verify-hint">For security and spam protection we’ll email you a 6-digit code. You can send your message once your email is verified.</p>
+        <p class="cf-verify-hint">For security and spam protection we’ll email you an 8-digit code. You can send your message once your email is verified.</p>
         <div class="cf-verify-row" id="cf-verify-step1">
           <button type="button" class="cf-btn-secondary" id="cf-send-code">Send verification code</button>
         </div>
         <div class="cf-verify-row cf-hidden" id="cf-verify-step2">
-          <input class="cf-input cf-code" type="text" inputmode="numeric" maxlength="6" id="cf-code" placeholder="000000" autocomplete="one-time-code" aria-label="6-digit verification code">
+          <input class="cf-input cf-code" type="text" inputmode="numeric" maxlength="8" id="cf-code" placeholder="00000000" autocomplete="one-time-code" aria-label="8-digit verification code">
           <button type="button" class="cf-btn-secondary" id="cf-verify-code">Verify code</button>
           <button type="button" class="cf-link" id="cf-resend">Resend code</button>
         </div>
@@ -377,7 +377,7 @@
         .then(function(res){
           if(res.ok){
             step1.classList.add('cf-hidden'); step2.classList.remove('cf-hidden');
-            setStatus('ok', 'We’ve emailed a 6-digit code to ' + email + '. Enter it below.');
+            setStatus('ok', 'We’ve emailed an 8-digit code to ' + email + '. Enter it below.');
             codeInput.focus();
           } else { setStatus('err', res.d.error || 'Could not send the code.'); }
         })
@@ -389,7 +389,7 @@
 
     verifyBtn.addEventListener('click', function(){
       var email = emailInput.value.trim(), token = codeInput.value.trim();
-      if(!/^\d{6}$/.test(token)){ setStatus('err','Enter the 6-digit code from your email.'); return; }
+      if(!/^\d{6,8}$/.test(token)){ setStatus('err','Enter the 8-digit code from your email.'); return; }
       verifyBtn.disabled = true; var label = verifyBtn.textContent; verifyBtn.textContent = 'Verifying…';
       jsonReq('/api/otp-verify', { email: email, token: token })
         .then(function(res){

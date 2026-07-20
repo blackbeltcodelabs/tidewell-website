@@ -132,6 +132,28 @@
     .cf-status.show { display: block; }
     .cf-status.ok { background: rgba(76,163,111,.08); border: 1px solid rgba(76,163,111,.28); color: #2F6B48; }
     .cf-status.err { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); color: #B23B3B; }
+    /* Department priority + SLA badge */
+    .cf-sla { margin-top: -6px; display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--body); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 11px 14px; }
+    .cf-sla .cf-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--blue); }
+    .cf-sla.p-high .cf-dot { background: #E0603A; }
+    .cf-sla.p-medium .cf-dot { background: #E0A93A; }
+    .cf-sla.p-low .cf-dot { background: #4CA36F; }
+    .cf-sla strong { color: var(--text); font-weight: 600; }
+    /* Email verification */
+    .cf-verify { border-top: 1px solid var(--border-light); padding-top: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .cf-verify-label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .cf-verify-hint { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: -4px 0 2px; }
+    .cf-verify-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .cf-code { width: 160px; letter-spacing: .32em; font-family: var(--font-head); font-weight: 600; text-align: center; }
+    .cf-btn-secondary { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: var(--text); font-family: var(--font-body); font-size: 14px; font-weight: 600; padding: 11px 20px; border: 1px solid var(--border); border-radius: 100px; cursor: pointer; transition: border-color .15s, color .15s; }
+    .cf-btn-secondary:hover { border-color: #B9D3EE; color: var(--blue-dark); }
+    .cf-btn-secondary:disabled { opacity: .55; cursor: default; }
+    .cf-link { background: none; border: none; padding: 0; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--blue); cursor: pointer; }
+    .cf-link:hover { color: var(--blue-dark); }
+    .cf-link:disabled { color: var(--muted); cursor: default; }
+    .cf-verified { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #2F6B48; background: rgba(76,163,111,.08); border: 1px solid rgba(76,163,111,.28); border-radius: 100px; padding: 8px 16px; }
+    .cf-verified svg { flex: none; }
+    .cf-hidden { display: none !important; }
     @media (max-width: 640px) { .contact-main { padding: 48px 20px 64px; } .contact-form-card { padding: 28px 22px; } .cf-row { grid-template-columns: 1fr; } .cf-submit { align-self: stretch; } }
 </style>
 </head>
@@ -183,10 +205,6 @@
     <h2 class="cf-heading">Write to us directly</h2>
     <p class="cf-sub">Prefer a form? Fill this in and it lands in the same inbox. We aim to respond within 1–2 business days.</p>
     <form class="contact-form" id="contact-form" novalidate>
-      <!-- Web3Forms: replace the value below with your own access key from https://web3forms.com (free) -->
-      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
-      <input type="hidden" name="subject" value="New Tidewell contact-form message">
-      <input type="hidden" name="from_name" value="Tidewell website">
       <!-- Honeypot: bots fill this, humans never see it -->
       <input type="checkbox" name="botcheck" class="cf-hp" tabindex="-1" autocomplete="off">
       <div class="cf-row">
@@ -200,20 +218,42 @@
         </div>
       </div>
       <div class="cf-field">
-        <label for="cf-topic">Topic</label>
-        <select class="cf-select" id="cf-topic" name="topic">
-          <option>General enquiry</option>
-          <option>Bug report</option>
-          <option>Feature idea</option>
-          <option>Billing &amp; subscription</option>
-          <option>Privacy &amp; data</option>
+        <label for="cf-department">Department <span class="req">*</span></label>
+        <select class="cf-select" id="cf-department" name="department">
+          <option value="Website Support">Website Support</option>
+          <option value="Billing Issues">Billing Issues</option>
+          <option value="App Related Issues">App Related Issues</option>
+          <option value="Feedback or Concerns">Feedback or Concerns</option>
+          <option value="Business">Business</option>
         </select>
+      </div>
+      <div class="cf-sla" id="cf-sla"><span class="cf-dot" aria-hidden="true"></span><span id="cf-sla-text"></span></div>
+      <div class="cf-field">
+        <label for="cf-subject">Subject <span class="req">*</span></label>
+        <input class="cf-input" type="text" id="cf-subject" name="subject" placeholder="A short summary of your message" required maxlength="120">
       </div>
       <div class="cf-field">
         <label for="cf-message">Message <span class="req">*</span></label>
         <textarea class="cf-textarea" id="cf-message" name="message" placeholder="How can we help?" required></textarea>
       </div>
-      <button type="submit" class="cf-submit" id="cf-submit">Send message</button>
+
+      <div class="cf-verify" id="cf-verify">
+        <div class="cf-verify-label">Verify your email</div>
+        <p class="cf-verify-hint">For security and spam protection we’ll email you a 6-digit code. You can send your message once your email is verified.</p>
+        <div class="cf-verify-row" id="cf-verify-step1">
+          <button type="button" class="cf-btn-secondary" id="cf-send-code">Send verification code</button>
+        </div>
+        <div class="cf-verify-row cf-hidden" id="cf-verify-step2">
+          <input class="cf-input cf-code" type="text" inputmode="numeric" maxlength="6" id="cf-code" placeholder="000000" autocomplete="one-time-code" aria-label="6-digit verification code">
+          <button type="button" class="cf-btn-secondary" id="cf-verify-code">Verify code</button>
+          <button type="button" class="cf-link" id="cf-resend">Resend code</button>
+        </div>
+        <div class="cf-verify-row cf-hidden" id="cf-verify-done">
+          <span class="cf-verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="#2F6B48" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Email verified</span>
+        </div>
+      </div>
+
+      <button type="submit" class="cf-submit" id="cf-submit" disabled>Send message</button>
       <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
     </form>
   </div>
@@ -271,63 +311,126 @@
     m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');h.setAttribute('aria-expanded','false');});});
   })();
 
-  /* Contact form — Web3Forms AJAX submit, stays on page */
+  /* Contact form — department-driven priority, Supabase email OTP, Resend send */
   (function(){
     var form = document.getElementById('contact-form');
     if(!form) return;
-    var btn = document.getElementById('cf-submit');
-    var status = document.getElementById('cf-status');
+
+    // Departments connected to their priority + turnaround (mirrors the server).
+    var DEPARTMENTS = {
+      'Website Support':      { priority: 'Medium', hours: 36 },
+      'Billing Issues':       { priority: 'High',   hours: 24 },
+      'App Related Issues':   { priority: 'High',   hours: 24 },
+      'Feedback or Concerns': { priority: 'Low',    hours: 48 },
+      'Business':             { priority: 'Medium', hours: 36 }
+    };
+
+    var el = function(id){ return document.getElementById(id); };
+    var emailInput = el('cf-email'), dept = el('cf-department');
+    var sla = el('cf-sla'), slaText = el('cf-sla-text');
+    var step1 = el('cf-verify-step1'), step2 = el('cf-verify-step2'), done = el('cf-verify-done');
+    var sendBtn = el('cf-send-code'), verifyBtn = el('cf-verify-code'), resendBtn = el('cf-resend');
+    var codeInput = el('cf-code'), submitBtn = el('cf-submit'), status = el('cf-status');
+    var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    var verifiedEmail = null, accessToken = null;
 
     function setStatus(kind, msg){
-      status.className = 'cf-status show ' + kind;
-      status.textContent = msg;
+      status.className = 'cf-status' + (kind ? ' show ' + kind : '');
+      status.textContent = msg || '';
     }
+    function jsonReq(url, payload){
+      return fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return { ok:r.ok, d:d }; }); });
+    }
+
+    function updateSla(){
+      var d = DEPARTMENTS[dept.value] || DEPARTMENTS['Website Support'];
+      sla.className = 'cf-sla p-' + d.priority.toLowerCase();
+      slaText.innerHTML = 'Priority: <strong>' + d.priority + '</strong> · Typical response within <strong>' + d.hours + ' hours</strong>';
+    }
+    updateSla();
+    dept.addEventListener('change', updateSla);
+
+    function resetVerification(){
+      verifiedEmail = null; accessToken = null;
+      submitBtn.disabled = true;
+      step1.classList.remove('cf-hidden');
+      step2.classList.add('cf-hidden');
+      done.classList.add('cf-hidden');
+      codeInput.value = '';
+    }
+    emailInput.addEventListener('input', function(){
+      if(verifiedEmail && emailInput.value.trim().toLowerCase() !== verifiedEmail){
+        resetVerification();
+        setStatus('', '');
+      }
+    });
+
+    function sendCode(){
+      var email = emailInput.value.trim();
+      if(!EMAIL_RE.test(email)){ setStatus('err','Enter a valid email above first.'); emailInput.focus(); return; }
+      sendBtn.disabled = true; resendBtn.disabled = true;
+      var label = sendBtn.textContent; sendBtn.textContent = 'Sending…';
+      setStatus('', '');
+      jsonReq('/api/otp-send', { email: email, botcheck: form.botcheck.checked })
+        .then(function(res){
+          if(res.ok){
+            step1.classList.add('cf-hidden'); step2.classList.remove('cf-hidden');
+            setStatus('ok', 'We’ve emailed a 6-digit code to ' + email + '. Enter it below.');
+            codeInput.focus();
+          } else { setStatus('err', res.d.error || 'Could not send the code.'); }
+        })
+        .catch(function(){ setStatus('err','Could not reach the server. Try again shortly.'); })
+        .finally(function(){ sendBtn.disabled = false; resendBtn.disabled = false; sendBtn.textContent = label; });
+    }
+    sendBtn.addEventListener('click', sendCode);
+    resendBtn.addEventListener('click', sendCode);
+
+    verifyBtn.addEventListener('click', function(){
+      var email = emailInput.value.trim(), token = codeInput.value.trim();
+      if(!/^\d{6}$/.test(token)){ setStatus('err','Enter the 6-digit code from your email.'); return; }
+      verifyBtn.disabled = true; var label = verifyBtn.textContent; verifyBtn.textContent = 'Verifying…';
+      jsonReq('/api/otp-verify', { email: email, token: token })
+        .then(function(res){
+          if(res.ok && res.d.access_token){
+            verifiedEmail = email.toLowerCase(); accessToken = res.d.access_token;
+            step2.classList.add('cf-hidden'); done.classList.remove('cf-hidden');
+            submitBtn.disabled = false;
+            setStatus('ok','Email verified — you can send your message now.');
+          } else { setStatus('err', res.d.error || 'That code is invalid or expired.'); }
+        })
+        .catch(function(){ setStatus('err','Could not verify right now.'); })
+        .finally(function(){ verifyBtn.disabled = false; verifyBtn.textContent = label; });
+    });
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-
-      if(!form.checkValidity()){
-        setStatus('err', 'Please add your name, a valid email, and a message.');
-        form.reportValidity();
-        return;
-      }
-
-      var key = form.elements['access_key'].value;
-      if(!key || key === 'YOUR_WEB3FORMS_ACCESS_KEY'){
-        setStatus('err', 'The form isn’t connected yet. In the meantime, email us at support@blackbeltcodelabs.com.');
-        return;
-      }
-
-      btn.disabled = true;
-      var original = btn.textContent;
-      btn.textContent = 'Sending…';
+      if(!form.checkValidity()){ setStatus('err','Please complete your name, email, subject, and message.'); form.reportValidity(); return; }
+      if(!accessToken || emailInput.value.trim().toLowerCase() !== verifiedEmail){ setStatus('err','Please verify your email before sending.'); return; }
+      submitBtn.disabled = true; var label = submitBtn.textContent; submitBtn.textContent = 'Sending…';
       setStatus('', '');
-      status.className = 'cf-status';
-
-      var payload = {};
-      new FormData(form).forEach(function(v, k){ payload[k] = v; });
-
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
+      jsonReq('/api/contact', {
+        access_token: accessToken,
+        name: el('cf-name').value.trim(),
+        email: emailInput.value.trim(),
+        department: dept.value,
+        subject: el('cf-subject').value.trim(),
+        message: el('cf-message').value.trim(),
+        botcheck: form.botcheck.checked
       })
-      .then(function(r){ return r.json(); })
-      .then(function(data){
-        if(data.success){
-          form.reset();
-          setStatus('ok', 'Thanks — your message is on its way. We’ll reply within 1–2 business days.');
+      .then(function(res){
+        if(res.ok){
+          form.reset(); resetVerification(); updateSla();
+          var hrs = res.d && res.d.hours ? res.d.hours : null;
+          setStatus('ok','Thanks — your message is on its way.' + (hrs ? ' Expect a reply within ' + hrs + ' hours.' : ''));
         } else {
-          setStatus('err', 'Something went wrong. Please email us at support@blackbeltcodelabs.com.');
+          setStatus('err', (res.d && res.d.error) || 'Could not send your message.');
+          submitBtn.disabled = false;
         }
       })
-      .catch(function(){
-        setStatus('err', 'Couldn’t send just now. Please email us at support@blackbeltcodelabs.com.');
-      })
-      .finally(function(){
-        btn.disabled = false;
-        btn.textContent = original;
-      });
+      .catch(function(){ setStatus('err','Could not send just now. Please email support@blackbeltcodelabs.com.'); submitBtn.disabled = false; })
+      .finally(function(){ submitBtn.textContent = label; });
     });
   })();
 </script>

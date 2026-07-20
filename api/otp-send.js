@@ -2,6 +2,11 @@
 // Triggers a Supabase email OTP (6-digit code) for verification.
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
+// Tolerate a pasted URL with a trailing slash or a /rest/v1 (or /auth/v1) suffix.
+function baseUrl(u) {
+  return String(u || '').trim().replace(/\/+$/, '').replace(/\/(rest|auth)\/v1$/, '');
+}
+
 function readJson(req) {
   if (req.body && typeof req.body === 'object') return Promise.resolve(req.body);
   return new Promise((resolve) => {
@@ -27,7 +32,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Please enter a valid email address.' });
   }
 
-  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_URL = baseUrl(process.env.SUPABASE_URL);
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return res.status(500).json({ error: 'Email verification is not configured yet.' });
@@ -40,7 +45,13 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({ email, create_user: true })
     });
     if (!r.ok) {
-      return res.status(502).json({ error: 'Could not send a code right now. Please try again shortly.' });
+      let detail = '';
+      try { detail = (await r.text()).slice(0, 300); } catch (e2) {}
+      return res.status(502).json({
+        error: 'Could not send a code right now. Please try again shortly.',
+        upstream_status: r.status,
+        detail
+      });
     }
     return res.status(200).json({ ok: true });
   } catch (e) {

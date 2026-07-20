@@ -2,6 +2,11 @@
 // Verifies the 6-digit Supabase email OTP and returns a short-lived access token.
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
+// Tolerate a pasted URL with a trailing slash or a /rest/v1 (or /auth/v1) suffix.
+function baseUrl(u) {
+  return String(u || '').trim().replace(/\/+$/, '').replace(/\/(rest|auth)\/v1$/, '');
+}
+
 function readJson(req) {
   if (req.body && typeof req.body === 'object') return Promise.resolve(req.body);
   return new Promise((resolve) => {
@@ -25,7 +30,7 @@ module.exports = async function handler(req, res) {
   if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Valid email required.' });
   if (!/^\d{6}$/.test(token)) return res.status(400).json({ error: 'Enter the 6-digit code from your email.' });
 
-  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_URL = baseUrl(process.env.SUPABASE_URL);
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return res.status(500).json({ error: 'Email verification is not configured yet.' });

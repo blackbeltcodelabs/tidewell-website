@@ -1,46 +1,140 @@
-# Contact Tickets — Dashboard Integration Handover
+# Message Center — Dashboard Integration Handover
 
-Everything your dashboard needs to read contact-form submissions from Supabase.
+Everything your dashboard needs to **read tickets** and **reply to customers as
+Helpdesk**, on the Supabase `contact_tickets` + `ticket_messages` tables.
+
+- **Host:** `https://srbwbhovjtpuxcfwsrcb.supabase.co`
+- **Tables:** `public.contact_tickets` (ticket head) · `public.ticket_messages` (thread)
+- **Auth (your dashboard backend):** Supabase **service-role key**
+- **To reply as Helpdesk:** insert a `ticket_messages` row with `author = 'admin'`, then set `contact_tickets.status`
 
 ---
 
-## 1. What this is
+## 1. How the conversation flows
 
-The `tidewellapp.com/contact` form does this on submit:
+Every party reads and writes the **same two tables** — there is no separate
+message store.
 
-1. Visitor fills the form (name, email, department, subject, message).
-2. Visitor verifies their email with an 8-digit Supabase OTP code.
-3. A Vercel serverless function (`/api/contact`) re-checks the verified email
-   server-side, then **inserts one row** into a dedicated Supabase table.
-4. **Your dashboard reads that table.**
+1. Customer submits `tidewellapp.com/contact` → one `contact_tickets` row
+   (status `new`) **and** one `ticket_messages` row (`author='user'`, the
+   opening message). Sending is gated by an 8-digit Supabase email OTP.
+2. Customer follow-up on `/messages` → another `ticket_messages` row
+   (`author='user'`); status → `open`.
+3. **You reply from the dashboard** → a `ticket_messages` row (`author='admin'`)
+   + status → `answered`. It appears in the customer's Message Center as
+   **Helpdesk**.
 
-The table is standalone — no foreign keys to `auth.users` or any app table,
-fully isolated from the app's user data, but in the same Supabase project.
+The two tables are standalone — no foreign keys to `auth.users` or any app
+table — but live in the same Supabase project.
 
-## 2. The data source
+## 2. Reply to a ticket as Helpdesk (the integration you build)
 
-- **Table:** `public.contact_tickets`
-- **One row per submission.**
-- **Access:** Row Level Security is ON with no public policies, so the table is
-  private. Read it with the **service-role key** from a trusted backend.
+Your dashboard authenticates its own staff, then — with the **service-role key
+on your backend** — does two writes against Supabase. No call to the website API
+and no OTP is needed.
 
-### Schema
+**Step 1 — post the reply.** The website renders any message with
+`author = 'admin'` as **"Helpdesk"**:
+
+```
+POST https://srbwbhovjtpuxcfwsrcb.supabase.co/rest/v1/ticket_messages
+apikey: <SERVICE_ROLE_KEY>
+Authorization: Bearer <SERVICE_ROLE_KEY>
+Content-Type: application/json
+Prefer: return=representation
+
+{
+  "ticket_id":    "<the ticket's id>",
+  "author":       "admin",
+  "author_email": "support@blackbeltcodelabs.com",
+  "body":         "Your reply to the customer…"
+}
+```
+
+**Step 2 — advance the ticket status:**
+
+```
+PATCH https://srbwbhovjtpuxcfwsrcb.supabase.co/rest/v1/contact_tickets?id=eq.<ticket_id>
+apikey: <SERVICE_ROLE_KEY>
+Authorization: Bearer <SERVICE_ROLE_KEY>
+Content-Type: application/json
+
+{ "status": "answered" }
+```
+
+**Supabase JS (server-side only):**
+
+```js
+const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
+await supabase.from('ticket_messages').insert({
+  ticket_id, author: 'admin', author_email: 'support@blackbeltcodelabs.com', body
+});
+await supabase.from('contact_tickets').update({ status: 'answered' }).eq('id', ticket_id);
+```
+
+**Raw SQL:**
+
+```sql
+insert into public.ticket_messages (ticket_id, author, author_email, body)
+values ('<ticket_id>', 'admin', 'support@blackbeltcodelabs.com', 'Your reply text');
+update public.contact_tickets set status = 'answered' where id = '<ticket_id>';
+```
+
+**Rules the write must satisfy:** `author` must be exactly `user` or `admin`
+(DB check constraint) — use `admin` for Helpdesk; `ticket_id` must be an existing
+`contact_tickets.id` (FK); `author_email` and `body` are NOT NULL. Keep the
+service-role key server-side only.
+
+> Alternative: the website's `POST /api/reply` does the same insert + status
+> update, but it is **OTP-gated** (needs a Supabase auth session for an admin
+> email) — right for the website UI, awkward for a backend. From the dashboard,
+> write directly to the tables as above.
+
+## 3. Schema (live, verified)
+
+### `public.contact_tickets` — the ticket head
 
 | Column | Type | Null | Default | Meaning |
 |---|---|---|---|---|
-| `id` | uuid | no | `gen_random_uuid()` | Primary key |
-| `created_at` | timestamptz | no | `now()` | Submission time (UTC) |
-| `name` | text | no | — | Submitter's name |
-| `email` | text | no | — | Submitter's email (already OTP-verified) |
-| `department` | text | no | — | One of 5 department strings (see §5) |
-| `priority` | text | no | — | `High` / `Medium` / `Low` (derived from department) |
-| `turnaround_hours` | int | no | — | `24` / `36` / `48` (SLA derived from department) |
-| `subject` | text | no | — | The visitor's subject text |
-| `subject_line` | text | no | — | Composed: `[<Priority> Priority] [<Department>] <Subject>` |
-| `message` | text | no | — | The visitor's message body |
-| `status` | text | no | `'new'` | Ticket status; starts at `new` |
+| `id` | uuid | NOT NULL | `gen_random_uuid()` | Primary key |
+| `created_at` | timestamptz | NOT NULL | `now()` | Submission time (UTC) |
+| `name` | text | null ok | — | Submitter's name |
+| `email` | text | null ok | — | Submitter's email (lowercased, OTP-verified) |
+| `department` | text | null ok | — | One of 5 department strings (see §6) |
+| `priority` | text | null ok | — | `High` / `Medium` / `Low` (from department) |
+| `turnaround_hours` | int | null ok | — | `24` / `36` / `48` (SLA from department) |
+| `subject` | text | null ok | — | The customer's subject |
+| `subject_line` | text | null ok | — | `[<Priority> Priority] [<Department>] <Subject>` |
+| `message` | text | null ok | — | Opening message (also seeded into `ticket_messages`) |
+| `status` | text | NOT NULL | `'new'` | Lifecycle — you own it after creation |
 
-## 3. The address
+### `public.ticket_messages` — the thread
+
+| Column | Type | Null | Default | Meaning |
+|---|---|---|---|---|
+| `id` | uuid | NOT NULL | `gen_random_uuid()` | Primary key |
+| `ticket_id` | uuid | NOT NULL | — | FK → `contact_tickets(id)`, `ON DELETE CASCADE` |
+| `created_at` | timestamptz | NOT NULL | `now()` | Message time (UTC) |
+| `author` | text | NOT NULL | — | Check: `'user'` or `'admin'`. `admin` renders as **Helpdesk**. |
+| `author_email` | text | NOT NULL | — | Who wrote it |
+| `body` | text | NOT NULL | — | Message text |
+
+Both tables have **RLS enabled with no policies** → only the service-role key
+reads/writes. Indexes: `contact_tickets(created_at desc)`,
+`contact_tickets(status)`, `ticket_messages(ticket_id, created_at)`.
+
+**Backfill for older tickets** (created before `ticket_messages` existed, so
+their thread is empty — their opening text is only in `contact_tickets.message`):
+
+```sql
+insert into public.ticket_messages (ticket_id, author, author_email, body, created_at)
+select ct.id, 'user', ct.email, ct.message, ct.created_at
+from public.contact_tickets ct
+left join public.ticket_messages tm on tm.ticket_id = ct.id
+where tm.id is null and ct.message is not null;
+```
+
+## 4. The address
 
 The table is exposed through Supabase's auto-generated REST API (PostgREST).
 
@@ -66,7 +160,7 @@ apikey: <SERVICE_ROLE_KEY>
 Authorization: Bearer <SERVICE_ROLE_KEY>
 ```
 
-## 4. Reading the table
+## 5. Reading the table
 
 **List every ticket, newest first**
 
@@ -121,7 +215,7 @@ const { data, error } = await supabase
 ]
 ```
 
-## 5. Field values your dashboard can rely on
+## 6. Field values your dashboard can rely on
 
 **Department → priority → turnaround** (the server derives priority + SLA from
 the department, so these are always consistent):
@@ -139,7 +233,7 @@ the department, so these are always consistent):
   after that — e.g. `new → open → resolved → closed`. Nothing else writes to
   these rows, so you can update `status` freely.
 
-## 6. Live updates (optional)
+## 7. Live updates (optional)
 
 To push new tickets into the dashboard without polling, use Supabase Realtime:
 
@@ -158,7 +252,7 @@ Enable Realtime for the table once:
 alter publication supabase_realtime add table public.contact_tickets;
 ```
 
-## 7. Security notes
+## 8. Security notes
 
 - The table is **RLS-locked with no policies** — only the service-role key can
   read or write it. Keep that key on a server/backend; never ship it to a
@@ -169,7 +263,7 @@ alter publication supabase_realtime add table public.contact_tickets;
 - The write path is already protected: `/api/contact` only inserts after the
   submitter's email passes Supabase OTP verification server-side.
 
-## 8. What was built (in this repo)
+## 9. What was built (in this repo)
 
 | File | Role |
 |---|---|
@@ -178,7 +272,7 @@ alter publication supabase_realtime add table public.contact_tickets;
 | `api/contact.js` | Re-checks the verified email, inserts the ticket row |
 | `contact.html` | The public contact form + verification UI |
 
-## 9. Prerequisites (must be done before rows appear)
+## 10. Prerequisites (already done: tables created, env vars set)
 
 1. **Create the table** — run in Supabase SQL editor:
 

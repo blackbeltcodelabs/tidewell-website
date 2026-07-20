@@ -15,6 +15,7 @@ they call the Supabase REST APIs with `fetch`):
 | `SUPABASE_URL` | Auth base URL — your **custom auth domain** | `https://auth.tidewellapp.com` |
 | `SUPABASE_ANON_KEY` | Anon/public key (used for OTP send/verify + token check) | `eyJhbGci...` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service-role key (server-side only; used to insert the ticket) | `eyJhbGci...` |
+| `ADMIN_EMAILS` | *Optional.* Comma-separated allowlist of Message Center admins (reply as Helpdesk). Defaults to `support@blackbeltcodelabs.com` | `support@blackbeltcodelabs.com` |
 | `SUPABASE_REST_URL` | *Optional.* Only set if the custom auth domain does **not** serve `/rest/v1`; then use the project URL | `https://xxxx.supabase.co` |
 | `CONTACT_TABLE` | *Optional.* Table name (defaults to `contact_tickets`) | `contact_tickets` |
 
@@ -49,6 +50,31 @@ create index if not exists contact_tickets_status_idx     on public.contact_tick
 -- and your admin dashboard's backend) can read or write. No public/anon access.
 alter table public.contact_tickets enable row level security;
 ```
+
+## Supabase: create the Message Center thread table
+
+Powers the two-way Message Center (`/messages`). One row per message; the FK to
+`contact_tickets` lets the API return each ticket with its thread embedded:
+
+```sql
+create table if not exists public.ticket_messages (
+  id           uuid primary key default gen_random_uuid(),
+  ticket_id    uuid not null references public.contact_tickets(id) on delete cascade,
+  created_at   timestamptz not null default now(),
+  author       text not null check (author in ('user','admin')),
+  author_email text not null,
+  body         text not null
+);
+
+create index if not exists ticket_messages_ticket_idx on public.ticket_messages (ticket_id, created_at);
+
+alter table public.ticket_messages enable row level security;
+```
+
+The first form submission seeds the opening `user` message automatically. Users
+verify their email (OTP) to view/continue their own threads; admins on
+`ADMIN_EMAILS` see every ticket and reply as **Helpdesk**. Endpoints:
+`POST /api/thread` (list) and `POST /api/reply` (append message / set status).
 
 ## Supabase: emit a numeric email OTP
 

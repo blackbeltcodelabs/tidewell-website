@@ -154,6 +154,16 @@
     .cf-verified { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #2F6B48; background: rgba(76,163,111,.08); border: 1px solid rgba(76,163,111,.28); border-radius: 100px; padding: 8px 16px; }
     .cf-verified svg { flex: none; }
     .cf-hidden { display: none !important; }
+    /* Post-submission success panel */
+    .cf-success { text-align: center; padding: 8px 0 4px; }
+    .cf-success-icon { width: 52px; height: 52px; margin: 0 auto; border-radius: 50%; background: rgba(76,163,111,.12); display: grid; place-items: center; }
+    .cf-success-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; letter-spacing: -.015em; color: var(--text); margin: 18px 0 0; }
+    .cf-success-sla { font-size: 15.5px; line-height: 1.6; color: var(--body); margin: 10px auto 0; max-width: 420px; }
+    .cf-success-sla strong { color: var(--text); font-weight: 600; }
+    .cf-success-note { font-size: 13.5px; line-height: 1.6; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 18px; margin: 20px auto 0; max-width: 480px; }
+    .cf-success-btn { display: inline-flex; align-items: center; background: var(--text); color: #fff; font-size: 15px; font-weight: 600; padding: 13px 26px; border-radius: 100px; margin-top: 24px; }
+    .cf-success-btn:hover { background: #1E3A52; color: #fff; }
+    .cf-success-sub { font-size: 13px; line-height: 1.6; color: var(--muted); margin: 14px auto 0; max-width: 420px; }
     @media (max-width: 640px) { .contact-main { padding: 48px 20px 64px; } .contact-form-card { padding: 28px 22px; } .cf-row { grid-template-columns: 1fr; } .cf-submit { align-self: stretch; } }
 </style>
 </head>
@@ -251,6 +261,14 @@
       <button type="submit" class="cf-submit" id="cf-submit" disabled>Send message</button>
       <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
     </form>
+    <div class="cf-success cf-hidden" id="cf-success">
+      <div class="cf-success-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="#2F6B48" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cf-success-title">Message received</h3>
+      <p class="cf-success-sla" id="cf-success-sla">Our Helpdesk will reply soon.</p>
+      <p class="cf-success-note">Sending more messages before we’ve replied to your first will extend the response time — please be patient. If it’s urgent, email <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>.</p>
+      <a href="/messages" class="cf-success-btn">Open Message Center →</a>
+      <p class="cf-success-sub">Check the status of your ticket or continue the conversation anytime — just verify your email.</p>
+    </div>
   </div>
   <div class="contact-card-ds">
     <p class="contact-label-ds">Support email</p>
@@ -282,6 +300,7 @@
         <p class="footer-col-heading">Contact</p>
         <ul class="footer-links">
           <li><a href="/contact">Get in touch</a></li>
+          <li><a href="/messages">Message Center</a></li>
           <li><a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a></li>
         </ul>
       </div>
@@ -421,9 +440,15 @@
       })
       .then(function(res){
         if(res.ok){
-          form.reset(); resetVerification(); updateSla();
           var hrs = res.d && res.d.hours ? res.d.hours : null;
-          setStatus('ok','Thanks — your message is on its way.' + (hrs ? ' Expect a reply within ' + hrs + ' hours.' : ''));
+          var card = form.closest('.contact-form-card');
+          ['.cf-eyebrow','.cf-heading','.cf-sub'].forEach(function(sel){ var n = card.querySelector(sel); if(n) n.classList.add('cf-hidden'); });
+          form.classList.add('cf-hidden');
+          el('cf-success-sla').innerHTML = hrs
+            ? 'Our Helpdesk will reply within <strong>' + hrs + ' hours</strong>.'
+            : 'Our Helpdesk will reply soon.';
+          el('cf-success').classList.remove('cf-hidden');
+          el('cf-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
           setStatus('err', (res.d && res.d.error) || 'Could not send your message.');
           submitBtn.disabled = false;

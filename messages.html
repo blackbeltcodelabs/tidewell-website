@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Center — Tidewell</title>
+  <meta name="description" content="Check the status of your Tidewell support ticket and continue the conversation.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #FAFCFE; --surface: #F3F8FC; --border: #DCE9F4; --border-light: #E7EEF5;
+      --text: #0D1E30; --body: #3E5266; --muted: #55697D; --accent: #3E6FA8;
+      --blue: #2E7BE0; --blue-dark: #1E5FBE; --footer-bg: #081524; --footer-text: #9DB2C7;
+      --font-head: 'Sora', system-ui, sans-serif; --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    a { color: var(--blue); text-decoration: none; } a:hover { color: var(--blue-dark); }
+
+    /* Nav */
+    .nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(250,252,254,.88); border-bottom: 1px solid var(--border-light); }
+    .nav-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; gap: 32px; padding: 15px 28px; }
+    .nav-logo { display: flex; align-items: center; gap: 9px; color: var(--text); flex-shrink: 0; }
+    .nav-logo-icon { width: 28px; height: 28px; border-radius: 8px; overflow: hidden; }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .nav-wordmark { font-family: var(--font-head); font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+    .nav-links { display: flex; gap: 26px; list-style: none; margin-left: auto; align-items: center; }
+    .nav-links a { font-size: 14.5px; font-weight: 500; color: var(--body); }
+    .nav-links a:hover { color: var(--text); }
+    .btn-ds { display: inline-flex; align-items: center; background: var(--text); color: #fff; font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 100px; }
+    .btn-ds:hover { background: #1E3A52; color: #fff; }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: auto; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+    .mobile-menu { display: none; flex-direction: column; background: var(--bg); border-bottom: 1px solid var(--border-light); padding: 8px 0 16px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 15px; font-weight: 500; color: var(--body); padding: 12px 28px; }
+
+    /* Header */
+    .policy-header { background: linear-gradient(180deg, var(--bg), #EFF6FC); border-bottom: 1px solid var(--border-light); }
+    .policy-header-inner { max-width: 760px; margin: 0 auto; padding: 64px 28px 44px; text-align: center; }
+    .eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+    .policy-header h1 { font-family: var(--font-head); font-weight: 600; font-size: clamp(30px, 5vw, 42px); letter-spacing: -.028em; line-height: 1.1; margin: 14px 0 0; }
+    .policy-header h1 em { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-weight: 500; color: var(--blue-dark); }
+    .policy-header p { font-size: 16.5px; line-height: 1.65; color: var(--muted); margin: 16px auto 0; max-width: 520px; }
+
+    .mc-main { max-width: 760px; margin: 0 auto; padding: 40px 28px 100px; }
+
+    /* Login / verify card (shared cf-* look) */
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 36px 34px; }
+    .card .cf-eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); text-align: center; }
+    .card .cf-heading { font-family: var(--font-head); font-weight: 600; font-size: 22px; letter-spacing: -.015em; text-align: center; margin: 10px 0 0; }
+    .card .cf-sub { font-size: 14.5px; line-height: 1.65; color: var(--muted); text-align: center; margin: 8px auto 0; max-width: 440px; }
+    .cf-field { display: flex; flex-direction: column; gap: 7px; margin-top: 22px; }
+    .cf-field label { font-size: 13px; font-weight: 600; }
+    .cf-input, .cf-select, .cf-textarea { width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; -webkit-appearance: none; appearance: none; }
+    .cf-input:focus, .cf-select:focus, .cf-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(46,123,224,.14); }
+    .cf-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .cf-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%2355697D' stroke-width='1.6' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; cursor: pointer; }
+    .cf-verify-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+    .cf-code { width: 210px; letter-spacing: .26em; font-family: var(--font-head); font-weight: 600; text-align: center; }
+    .cf-submit { display: inline-flex; align-items: center; justify-content: center; background: var(--text); color: #fff; font-size: 15px; font-weight: 600; padding: 12px 26px; border: none; border-radius: 100px; cursor: pointer; }
+    .cf-submit:hover { background: #1E3A52; } .cf-submit:disabled { opacity: .6; cursor: default; }
+    .cf-btn-secondary { display: inline-flex; align-items: center; background: #fff; color: var(--text); font-size: 14px; font-weight: 600; padding: 11px 20px; border: 1px solid var(--border); border-radius: 100px; cursor: pointer; }
+    .cf-btn-secondary:hover { border-color: #B9D3EE; color: var(--blue-dark); } .cf-btn-secondary:disabled { opacity: .55; cursor: default; }
+    .cf-link { background: none; border: none; padding: 0; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--blue); cursor: pointer; }
+    .cf-status { font-size: 14.5px; line-height: 1.6; border-radius: 12px; padding: 13px 16px; margin-top: 16px; display: none; }
+    .cf-status.show { display: block; }
+    .cf-status.ok { background: rgba(76,163,111,.08); border: 1px solid rgba(76,163,111,.28); color: #2F6B48; }
+    .cf-status.err { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); color: #B23B3B; }
+    .cf-hidden { display: none !important; }
+
+    /* Content */
+    .mc-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .mc-heading h2 { font-family: var(--font-head); font-weight: 600; font-size: 22px; letter-spacing: -.015em; }
+    .mc-signout { font-size: 13.5px; font-weight: 600; color: var(--muted); background: none; border: none; cursor: pointer; }
+    .mc-signout:hover { color: var(--text); }
+
+    .mc-ticket { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 24px 24px 20px; margin-bottom: 18px; }
+    .mc-ticket-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+    .mc-subject { font-family: var(--font-head); font-weight: 600; font-size: 16.5px; letter-spacing: -.01em; }
+    .mc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .mc-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650; padding: 4px 10px; border-radius: 100px; white-space: nowrap; text-transform: capitalize; }
+    .chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .chip.high { color: #B23B1E; background: rgba(224,96,58,.12); } .chip.high .dot { background: #E0603A; }
+    .chip.medium { color: #8A6516; background: rgba(224,169,58,.15); } .chip.medium .dot { background: #E0A93A; }
+    .chip.low { color: #2F6B48; background: rgba(76,163,111,.12); } .chip.low .dot { background: #4CA36F; }
+    .status-chip { display: inline-flex; align-items: center; font-size: 12px; font-weight: 650; padding: 4px 10px; border-radius: 100px; text-transform: capitalize; }
+    .status-chip.st-new { color: #1E5FBE; background: rgba(46,123,224,.10); }
+    .status-chip.st-open { color: #8A6516; background: rgba(224,169,58,.15); }
+    .status-chip.st-answered { color: #2F6B48; background: rgba(76,163,111,.14); }
+    .status-chip.st-resolved { color: #3E5266; background: rgba(62,82,102,.12); }
+    .status-chip.st-closed { color: #7E93A9; background: rgba(126,147,169,.14); }
+
+    .mc-thread { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 0; }
+    .msg { max-width: 84%; padding: 12px 15px; border-radius: 14px; }
+    .msg.them { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); }
+    .msg.me { align-self: flex-end; background: rgba(46,123,224,.09); border: 1px solid rgba(46,123,224,.2); }
+    .msg-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .msg-author { font-size: 12.5px; font-weight: 700; color: var(--text); }
+    .msg-time { font-size: 11.5px; color: #8FA0B0; }
+    .msg-body { font-size: 14.5px; line-height: 1.6; color: var(--body); white-space: pre-wrap; word-wrap: break-word; }
+
+    .mc-reply { border-top: 1px solid var(--border-light); margin-top: 20px; padding-top: 18px; }
+    .mc-reply-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+    .mc-status-ctl { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    .mc-status-ctl .cf-select { width: auto; padding: 8px 30px 8px 12px; }
+    .mc-disclaimer { font-size: 13px; line-height: 1.6; color: var(--muted); margin-top: 12px; }
+    .mc-empty { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 40px 28px; text-align: center; color: var(--muted); }
+    .mc-empty a { font-weight: 600; }
+
+    /* Footer */
+    .footer { background: var(--footer-bg); color: var(--footer-text); border-top: 1px solid rgba(255,255,255,.07); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; padding: 56px 28px 40px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+    .footer-brand-logo { display: flex; align-items: center; gap: 9px; color: #fff; }
+    .footer-brand-logo img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+    .footer-brand-logo span { font-family: var(--font-head); font-weight: 600; font-size: 16px; }
+    .footer-tagline { font-size: 14px; line-height: 1.6; margin: 14px 0 0; max-width: 240px; }
+    .footer-col-heading { font-family: var(--font-head); font-weight: 600; font-size: 13px; color: #fff; margin-bottom: 14px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--footer-text); }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom { max-width: 1160px; margin: 0 auto; padding: 0 28px 44px; }
+    .footer-disclaimer { font-size: 12px; line-height: 1.6; color: #5E7288; border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; }
+
+    @media (max-width: 860px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) {
+      .nav-links { display: none; } .nav-hamburger { display: flex; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .card { padding: 28px 22px; } .msg { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Tidewell home">
+      <div class="nav-logo-icon" aria-hidden="true"><img src="assets/icon.png" alt=""></div>
+      <span class="nav-wordmark">Tidewell</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#screenshots">The App</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/messages">Message Center</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html#screenshots">The App</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="/contact">Contact</a>
+  <a href="/messages">Message Center</a>
+</div>
+
+<header class="policy-header">
+  <div class="policy-header-inner">
+    <div class="eyebrow">Message Center</div>
+    <h1>Your <em>conversation</em>, in one place.</h1>
+    <p>Verify your email to check the status of your ticket and continue the conversation with our Helpdesk.</p>
+  </div>
+</header>
+
+<main class="mc-main">
+  <!-- Login -->
+  <div class="card" id="mc-login">
+    <p class="cf-eyebrow">Sign in</p>
+    <h2 class="cf-heading">Verify your email</h2>
+    <p class="cf-sub">Enter the email you contacted us with. We’ll send an 8-digit code to confirm it’s you.</p>
+    <div class="cf-field">
+      <label for="mc-email">Email</label>
+      <input class="cf-input" type="email" id="mc-email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="cf-verify-row" id="mc-step1">
+      <button type="button" class="cf-btn-secondary" id="mc-send-code">Send verification code</button>
+    </div>
+    <div class="cf-verify-row cf-hidden" id="mc-step2">
+      <input class="cf-input cf-code" type="text" inputmode="numeric" maxlength="8" id="mc-code" placeholder="00000000" autocomplete="one-time-code" aria-label="8-digit verification code">
+      <button type="button" class="cf-btn-secondary" id="mc-verify-code">Verify code</button>
+      <button type="button" class="cf-link" id="mc-resend">Resend code</button>
+    </div>
+    <p class="cf-status" id="mc-login-status" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- Content -->
+  <div id="mc-content" class="cf-hidden">
+    <div class="mc-heading">
+      <h2 id="mc-heading-text">Your messages</h2>
+      <button class="mc-signout" id="mc-signout">Sign out</button>
+    </div>
+    <p class="cf-status" id="mc-status" role="status" aria-live="polite"></p>
+    <div id="mc-tickets"></div>
+    <div class="mc-empty cf-hidden" id="mc-empty">
+      No tickets yet under this email. <a href="/contact">Send a message →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a href="/" class="footer-brand-logo"><img src="assets/icon.png" alt=""><span>Tidewell</span></a>
+      <p class="footer-tagline">Your calm companion for the week between shots.</p>
+    </div>
+    <div>
+      <p class="footer-col-heading">Legal</p>
+      <ul class="footer-links">
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms &amp; Conditions</a></li>
+        <li><a href="/medical-disclaimer">Medical Disclaimer</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-heading">Contact</p>
+      <ul class="footer-links">
+        <li><a href="/contact">Get in touch</a></li>
+        <li><a href="/messages">Message Center</a></li>
+        <li><a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-disclaimer">Tidewell is a wellness companion, not a medical device.<br>© 2026 Black Belt Code Labs. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var h=document.querySelector('.nav-hamburger'), m=document.querySelector('.mobile-menu');
+  if(h&&m){ h.addEventListener('click',function(){var o=m.classList.toggle('open');h.setAttribute('aria-expanded',String(o));}); }
+})();
+
+(function(){
+  var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  var STATUSES = ['new','open','answered','resolved','closed'];
+  var el = function(id){ return document.getElementById(id); };
+  var emailInput = el('mc-email'), codeInput = el('mc-code');
+  var step1 = el('mc-step1'), step2 = el('mc-step2');
+  var sendBtn = el('mc-send-code'), verifyBtn = el('mc-verify-code'), resendBtn = el('mc-resend');
+  var loginCard = el('mc-login'), loginStatus = el('mc-login-status');
+  var content = el('mc-content'), headingText = el('mc-heading-text');
+  var list = el('mc-tickets'), empty = el('mc-empty'), status = el('mc-status');
+
+  var accessToken = null, verifiedEmail = null, isAdmin = false;
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function fmtDate(iso){ try{ return new Date(iso).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }catch(e){ return iso; } }
+  function setStatus(node, kind, msg){ node.className = 'cf-status' + (kind ? ' show ' + kind : ''); node.textContent = msg || ''; }
+  function req(url, payload){
+    return fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json().catch(function(){return{};}).then(function(d){ return {ok:r.ok, d:d}; }); });
+  }
+
+  /* ---- OTP login ---- */
+  function sendCode(){
+    var email = emailInput.value.trim();
+    if(!EMAIL_RE.test(email)){ setStatus(loginStatus,'err','Enter a valid email first.'); emailInput.focus(); return; }
+    sendBtn.disabled = true; resendBtn.disabled = true;
+    var lbl = sendBtn.textContent; sendBtn.textContent = 'Sending…'; setStatus(loginStatus,'','');
+    req('/api/otp-send', { email: email }).then(function(res){
+      if(res.ok){ step1.classList.add('cf-hidden'); step2.classList.remove('cf-hidden'); setStatus(loginStatus,'ok','We’ve emailed an 8-digit code to '+email+'.'); codeInput.focus(); }
+      else { setStatus(loginStatus,'err', res.d.error || 'Could not send the code.'); }
+    }).catch(function(){ setStatus(loginStatus,'err','Could not reach the server.'); })
+      .finally(function(){ sendBtn.disabled=false; resendBtn.disabled=false; sendBtn.textContent=lbl; });
+  }
+  sendBtn.addEventListener('click', sendCode);
+  resendBtn.addEventListener('click', sendCode);
+
+  verifyBtn.addEventListener('click', function(){
+    var email = emailInput.value.trim(), token = codeInput.value.trim();
+    if(!/^\d{6,8}$/.test(token)){ setStatus(loginStatus,'err','Enter the 8-digit code from your email.'); return; }
+    verifyBtn.disabled = true; var lbl = verifyBtn.textContent; verifyBtn.textContent = 'Verifying…';
+    req('/api/otp-verify', { email: email, token: token }).then(function(res){
+      if(res.ok && res.d.access_token){
+        accessToken = res.d.access_token; verifiedEmail = email.toLowerCase();
+        loadThread(true);
+      } else { setStatus(loginStatus,'err', res.d.error || 'That code is invalid or expired.'); }
+    }).catch(function(){ setStatus(loginStatus,'err','Could not verify right now.'); })
+      .finally(function(){ verifyBtn.disabled=false; verifyBtn.textContent=lbl; });
+  });
+
+  el('mc-signout').addEventListener('click', function(){
+    accessToken = null; verifiedEmail = null; isAdmin = false;
+    content.classList.add('cf-hidden'); loginCard.classList.remove('cf-hidden');
+    step2.classList.add('cf-hidden'); step1.classList.remove('cf-hidden');
+    codeInput.value=''; setStatus(loginStatus,'','');
+  });
+
+  /* ---- Thread ---- */
+  function loadThread(firstLoad){
+    req('/api/thread', { access_token: accessToken, email: verifiedEmail }).then(function(res){
+      if(!res.ok){ setStatus(firstLoad ? loginStatus : status, 'err', res.d.error || 'Could not load your messages.'); return; }
+      isAdmin = !!res.d.admin;
+      loginCard.classList.add('cf-hidden'); content.classList.remove('cf-hidden');
+      headingText.textContent = isAdmin ? 'Helpdesk — all tickets' : 'Your messages';
+      render(res.d.tickets || []);
+    }).catch(function(){ setStatus(firstLoad ? loginStatus : status, 'err','Could not load your messages.'); });
+  }
+
+  function render(tickets){
+    if(!tickets.length){ empty.classList.remove('cf-hidden'); list.innerHTML=''; return; }
+    empty.classList.add('cf-hidden');
+    list.innerHTML = tickets.map(renderTicket).join('');
+  }
+
+  function renderTicket(t){
+    var pr = (t.priority||'').toLowerCase();
+    var st = 'st-' + (t.status||'new');
+    var msgs = (t.ticket_messages||[]).map(function(msg){ return renderMsg(msg, t); }).join('');
+    var meta = esc(t.department) + ' · ' + fmtDate(t.created_at);
+    if(isAdmin) meta += ' · ' + esc(t.name || '') + ' &lt;' + esc(t.email) + '&gt;';
+    return '<div class="mc-ticket" data-ticket="'+esc(t.id)+'">'
+      + '<div class="mc-ticket-head"><div>'
+      + '<div class="mc-subject">'+esc(t.subject || t.subject_line || '(no subject)')+'</div>'
+      + '<div class="mc-meta">'+meta+'</div></div>'
+      + '<div class="mc-chips"><span class="chip '+pr+'"><span class="dot"></span>'+esc(t.priority)+'</span>'
+      + '<span class="status-chip '+st+'">'+esc(t.status)+'</span></div></div>'
+      + '<div class="mc-thread">'+msgs+'</div>'
+      + renderReply(t) + '</div>';
+  }
+
+  function renderMsg(msg, t){
+    var mine = msg.author === (isAdmin ? 'admin' : 'user');
+    var label = msg.author === 'admin' ? 'Helpdesk' : (isAdmin ? (t.name || msg.author_email) : 'You');
+    return '<div class="msg '+(mine?'me':'them')+'">'
+      + '<div class="msg-head"><span class="msg-author">'+esc(label)+'</span><span class="msg-time">'+fmtDate(msg.created_at)+'</span></div>'
+      + '<div class="msg-body">'+esc(msg.body)+'</div></div>';
+  }
+
+  function renderReply(t){
+    if(isAdmin){
+      var opts = STATUSES.map(function(s){ return '<option value="'+s+'"'+(s===t.status?' selected':'')+'>'+s+'</option>'; }).join('');
+      return '<div class="mc-reply">'
+        + '<textarea class="cf-textarea mc-reply-box" data-ticket="'+esc(t.id)+'" placeholder="Reply as Helpdesk…"></textarea>'
+        + '<div class="mc-reply-actions">'
+        + '<button class="cf-submit mc-send" data-ticket="'+esc(t.id)+'">Reply as Helpdesk</button>'
+        + '<label class="mc-status-ctl">Status <select class="cf-select mc-status" data-ticket="'+esc(t.id)+'">'+opts+'</select></label>'
+        + '<button class="cf-btn-secondary mc-update" data-ticket="'+esc(t.id)+'">Update status</button>'
+        + '</div></div>';
+    }
+    return '<div class="mc-reply">'
+      + '<textarea class="cf-textarea mc-reply-box" data-ticket="'+esc(t.id)+'" placeholder="Add to this conversation…"></textarea>'
+      + '<div class="mc-reply-actions"><button class="cf-submit mc-send" data-ticket="'+esc(t.id)+'">Send reply</button></div>'
+      + '<p class="mc-disclaimer">Sending more messages before we’ve replied to your first will extend the response time — please be patient. If it’s urgent, email <a href="mailto:support@blackbeltcodelabs.com">support@blackbeltcodelabs.com</a>.</p>'
+      + '</div>';
+  }
+
+  list.addEventListener('click', function(e){
+    var send = e.target.closest('.mc-send');
+    var update = e.target.closest('.mc-update');
+    if(send){
+      var id = send.getAttribute('data-ticket');
+      var box = list.querySelector('.mc-reply-box[data-ticket="'+id+'"]');
+      var text = (box.value||'').trim();
+      if(!text){ setStatus(status,'err','Write a message before sending.'); box.focus(); return; }
+      send.disabled = true; var lbl = send.textContent; send.textContent = 'Sending…'; setStatus(status,'','');
+      req('/api/reply', { access_token: accessToken, email: verifiedEmail, ticket_id: id, body: text })
+        .then(function(res){
+          if(res.ok){ setStatus(status,'ok','Reply sent.'); loadThread(false); }
+          else { setStatus(status,'err', res.d.error || 'Could not send your reply.'); send.disabled=false; send.textContent=lbl; }
+        }).catch(function(){ setStatus(status,'err','Could not send your reply.'); send.disabled=false; send.textContent=lbl; });
+    } else if(update){
+      var tid = update.getAttribute('data-ticket');
+      var sel = list.querySelector('.mc-status[data-ticket="'+tid+'"]');
+      var newStatus = sel.value;
+      update.disabled = true; var l2 = update.textContent; update.textContent = 'Updating…'; setStatus(status,'','');
+      req('/api/reply', { access_token: accessToken, email: verifiedEmail, ticket_id: tid, status: newStatus })
+        .then(function(res){
+          if(res.ok){ setStatus(status,'ok','Status updated.'); loadThread(false); }
+          else { setStatus(status,'err', res.d.error || 'Could not update status.'); update.disabled=false; update.textContent=l2; }
+        }).catch(function(){ setStatus(status,'err','Could not update status.'); update.disabled=false; update.textContent=l2; });
+    }
+  });
+})();
+</script>
+</body>
+</html>

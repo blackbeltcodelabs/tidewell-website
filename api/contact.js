@@ -82,6 +82,8 @@ module.exports = async function handler(req, res) {
   const priority = dept.priority;
   const subjectLine = `[${priority} Priority] [${department}] ${subject}`;
 
+  const normEmail = email.toLowerCase();
+
   try {
     const ins = await fetch(`${REST_URL}/rest/v1/${TABLE}`, {
       method: 'POST',
@@ -89,11 +91,11 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json',
         apikey: SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
-        Prefer: 'return=minimal'
+        Prefer: 'return=representation'
       },
       body: JSON.stringify({
         name,
-        email,
+        email: normEmail,
         department,
         priority,
         turnaround_hours: dept.hours,
@@ -106,7 +108,26 @@ module.exports = async function handler(req, res) {
     if (!ins.ok) {
       return res.status(502).json({ error: 'Could not save your message right now. Please email support@blackbeltcodelabs.com.' });
     }
-    return res.status(200).json({ ok: true, priority, hours: dept.hours });
+
+    // Seed the thread with the visitor's opening message (best-effort).
+    const rows = await ins.json().catch(() => []);
+    const ticketId = rows && rows[0] && rows[0].id;
+    if (ticketId) {
+      try {
+        await fetch(`${REST_URL}/rest/v1/ticket_messages`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SERVICE_ROLE_KEY,
+            Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+            Prefer: 'return=minimal'
+          },
+          body: JSON.stringify({ ticket_id: ticketId, author: 'user', author_email: normEmail, body: message })
+        });
+      } catch (e) { /* thread seed is non-fatal; ticket is saved */ }
+    }
+
+    return res.status(200).json({ ok: true, priority, hours: dept.hours, ticket_id: ticketId });
   } catch (e) {
     return res.status(502).json({ error: 'Could not save your message right now.' });
   }

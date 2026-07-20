@@ -1,6 +1,8 @@
 // POST /api/contact
 // { access_token, name, email, department, subject, message }
-// Confirms the email was OTP-verified (Supabase), then sends the ticket via Resend.
+// Confirms the email was OTP-verified (Supabase), then stores the ticket
+// in a Supabase table (no outbound email). Uses the service-role key
+// server-side only, so the table can stay fully locked down by RLS.
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 // Departments are connected to a priority + turnaround SLA here (server is the source of truth).
@@ -20,10 +22,6 @@ function readJson(req) {
     req.on('end', () => { try { resolve(JSON.parse(data || '{}')); } catch (e) { resolve({}); } });
     req.on('error', () => resolve({}));
   });
-}
-
-function esc(s) {
-  return String(s).replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
 }
 
 module.exports = async function handler(req, res) {
@@ -49,12 +47,16 @@ module.exports = async function handler(req, res) {
   if (!dept) return res.status(400).json({ error: 'Please choose a valid department.' });
   if (!accessToken) return res.status(401).json({ error: 'Please verify your email before sending.' });
 
+  // Auth service (custom domain): https://auth.tidewellapp.com
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-  const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const RESEND_FROM = process.env.RESEND_FROM || 'Tidewell <onboarding@resend.dev>';
-  const CONTACT_TO = process.env.CONTACT_TO_EMAIL || 'support@blackbeltcodelabs.com';
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !RESEND_API_KEY) {
+  const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // REST (PostgREST) base — defaults to SUPABASE_URL. Set SUPABASE_REST_URL only if the
+  // custom auth domain does not also serve /rest/v1 (then use the project https://xxxx.supabase.co URL).
+  const REST_URL = process.env.SUPABASE_REST_URL || SUPABASE_URL;
+  const TABLE = process.env.CONTACT_TABLE || 'contact_tickets';
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SERVICE_ROLE_KEY) {
     return res.status(500).json({ error: 'Messaging is not fully configured yet.' });
   }
 
@@ -71,54 +73,36 @@ module.exports = async function handler(req, res) {
     return res.status(502).json({ error: 'Could not confirm verification.' });
   }
 
-  // 2) Build the ticket. Subject line: [Priority] [Department] Subject.
+  // 2) Store the ticket. Subject line format kept for reference: [Priority] [Department] Subject.
   const priority = dept.priority;
   const subjectLine = `[${priority} Priority] [${department}] ${subject}`;
 
-  const html =
-    `<div style="font-family:Arial,Helvetica,sans-serif;color:#0D1E30;line-height:1.6">` +
-    `<h2 style="margin:0 0 4px">New contact ticket</h2>` +
-    `<p style="margin:0 0 16px;color:#55697D">Priority <strong>${esc(priority)}</strong> · target response within <strong>${dept.hours} hours</strong></p>` +
-    `<table style="border-collapse:collapse;font-size:14px">` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Priority</td><td style="padding:4px 0"><strong>${esc(priority)}</strong></td></tr>` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Department</td><td style="padding:4px 0">${esc(department)}</td></tr>` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Turnaround</td><td style="padding:4px 0">Within ${dept.hours} hours</td></tr>` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Name</td><td style="padding:4px 0">${esc(name)}</td></tr>` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Email</td><td style="padding:4px 0">${esc(email)} (verified)</td></tr>` +
-    `<tr><td style="padding:4px 16px 4px 0;color:#55697D">Subject</td><td style="padding:4px 0">${esc(subject)}</td></tr>` +
-    `</table>` +
-    `<h3 style="margin:20px 0 6px">Message</h3>` +
-    `<p style="white-space:pre-wrap;margin:0">${esc(message)}</p>` +
-    `</div>`;
-
-  const text =
-    `New contact ticket\n` +
-    `Priority: ${priority} (target response within ${dept.hours} hours)\n` +
-    `Department: ${department}\n` +
-    `Name: ${name}\n` +
-    `Email: ${email} (verified)\n` +
-    `Subject: ${subject}\n\n` +
-    `${message}\n`;
-
-  // 3) Send via Resend.
   try {
-    const rr = await fetch('https://api.resend.com/emails', {
+    const ins = await fetch(`${REST_URL}/rest/v1/${TABLE}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+        Prefer: 'return=minimal'
+      },
       body: JSON.stringify({
-        from: RESEND_FROM,
-        to: [CONTACT_TO],
-        reply_to: email,
-        subject: subjectLine,
-        html,
-        text
+        name,
+        email,
+        department,
+        priority,
+        turnaround_hours: dept.hours,
+        subject,
+        subject_line: subjectLine,
+        message,
+        status: 'new'
       })
     });
-    if (!rr.ok) {
-      return res.status(502).json({ error: 'Could not send your message right now. Please email support directly.' });
+    if (!ins.ok) {
+      return res.status(502).json({ error: 'Could not save your message right now. Please email support@blackbeltcodelabs.com.' });
     }
     return res.status(200).json({ ok: true, priority, hours: dept.hours });
   } catch (e) {
-    return res.status(502).json({ error: 'Could not send your message right now.' });
+    return res.status(502).json({ error: 'Could not save your message right now.' });
   }
 };

@@ -42,7 +42,11 @@ module.exports = async function handler(req, res) {
     const r = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
-      body: JSON.stringify({ email, create_user: true })
+      // Tag accounts created via the website contact/message flow so the admin
+      // dashboard can tell them apart from real app users (and keep them out of
+      // signup metrics). App users who verify here still count as app users —
+      // the dashboard's is_app_user check (has app data) takes precedence.
+      body: JSON.stringify({ email, create_user: true, data: { source: 'website_contact' } })
     });
     if (!r.ok) {
       // 429 = Supabase per-address send rate limit; surface a clear message.

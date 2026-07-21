@@ -675,6 +675,55 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tidewellapp.com/#org",
+      "name": "Black Belt Code Labs",
+      "url": "https://tidewellapp.com/",
+      "logo": "https://tidewellapp.com/assets/icon.png"
+    },
+    {
+      "@type": [
+        "SoftwareApplication",
+        "MobileApplication"
+      ],
+      "name": "Tidewell",
+      "url": "https://tidewellapp.com/",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "iOS, Android",
+      "description": "A calm wellness companion for people on GLP-1 medications (Ozempic, Wegovy, Mounjaro, Zepbound). A 20-second daily check-in, shot logging with injection-site rotation, and gentle body tracking — core health tracking is free, with a premium Tidewell Plus tier.",
+      "publisher": {
+        "@id": "https://tidewellapp.com/#org"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free — core health tracking",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Tidewell Plus — Monthly",
+          "price": "9.99",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Tidewell Plus — Annual",
+          "price": "79.99",
+          "priceCurrency": "USD"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Is this another calorie tracker?", "acceptedAnswer": { "@type": "Answer", "text": "No. Tidewell doesn't track food, macros, or calories. It tracks how you feel — mood, energy, food noise, and side effects — so you can notice patterns without the burden of counting anything." } },

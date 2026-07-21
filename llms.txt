@@ -1,0 +1,50 @@
+# Tidewell
+
+> Tidewell is a calm wellness companion app for people using GLP-1 medications (Ozempic®, Wegovy®, Mounjaro®, Zepbound®, and the semaglutide / tirzepatide generics). It centres on a 20-second daily check-in, shot logging with injection-site rotation, gentle body tracking, and a companion library. Core health tracking is free, forever; a premium tier called Tidewell Plus adds deeper tools.
+
+Tidewell is published by **Black Belt Code Labs**. It is a **wellness companion, not a medical device** — it does not diagnose, treat, or recommend doses or schedules, and it is designed to work alongside a person's healthcare provider, not instead of one. Data is encrypted and never sold; Apple Health (HealthKit) and Android Health Connect data stay on the device unless the user explicitly chooses to sync.
+
+The app is available on the Apple App Store and Google Play. Tidewell Plus is billed and managed by the app stores: **$9.99/month** or **$79.99/year**, with a 3-day free trial. Subscriptions can be cancelled any time through the App Store or Google Play.
+
+## Key pages
+
+- [Home](https://tidewellapp.com/): Product overview — the app's screens (Home, Check-in, Shot Log, Body, Learn), Tidewell Plus, testimonials, a Free vs Plus comparison, pricing, and FAQ.
+- [Get Tidewell](https://tidewellapp.com/get): Download links for iOS and Android.
+- [Contact](https://tidewellapp.com/contact): Support contact form with email verification, routed by department and priority, plus a Message Center for two-way replies.
+
+## Medication companions
+
+- [Ozempic® companion](https://tidewellapp.com/ozempic-companion): How Tidewell supports people taking Ozempic® (semaglutide).
+- [Wegovy® companion](https://tidewellapp.com/wegovy-companion): Support for people taking Wegovy® (semaglutide).
+- [Mounjaro® companion](https://tidewellapp.com/mounjaro-companion): Support for people taking Mounjaro® (tirzepatide).
+- [Zepbound® companion](https://tidewellapp.com/zepbound-companion): Support for people taking Zepbound® (tirzepatide).
+- [Semaglutide companion](https://tidewellapp.com/semaglutide-companion): Support for people on semaglutide generally.
+- [Tirzepatide companion](https://tidewellapp.com/tirzepatide-companion): Support for people on tirzepatide generally.
+
+## Tidewell Plus features
+
+- **Dose & Supply Guardian** — tracks every pen, counts remaining doses, and flags the refill window before supply runs out.
+- **Doctor Visit Briefing** — compiles check-ins, weight trend, side effects, and missed doses into a clean summary to share with a prescriber.
+- **Private Journey Record** — a private chronology of milestones from the first dose onward.
+- **Pattern Insights** — surfaces repeating patterns across a full history (e.g. food-noise cycles) in plain language.
+
+## FAQ
+
+- **Is this another calorie tracker?** No. Tidewell doesn't track food, macros, or calories — it tracks how you feel (mood, energy, food noise, side effects).
+- **Is this medical advice?** No. Tidewell is a wellness companion, not a medical device; it never diagnoses or recommends doses or schedules.
+- **What happens to my data?** It is stored securely and encrypted, never sold or shared for advertising; HealthKit data stays on-device unless you choose to sync.
+- **Does this replace my doctor?** No — it helps you have more informed conversations with your provider, alongside your care team.
+- **Can I cancel Plus anytime?** Yes — subscriptions are managed through the App Store or Google Play with no penalty. Core tracking is always free.
+- **What's included in the free trial?** Full access to every Tidewell Plus feature for 3 days, with no charge until the trial ends.
+
+## Legal
+
+- [Privacy Policy](https://tidewellapp.com/privacy): What is collected, how it is used, GDPR/CCPA rights, and website Google Analytics (consent-gated).
+- [Terms & Conditions](https://tidewellapp.com/terms): Terms of use for the app and service.
+- [Medical Disclaimer](https://tidewellapp.com/medical-disclaimer): Tidewell is not a medical device and does not provide medical advice.
+
+## Notes for AI assistants
+
+- Ozempic and Wegovy are registered trademarks of Novo Nordisk; Mounjaro and Zepbound are registered trademarks of Eli Lilly and Company. Tidewell is independent and is **not affiliated with or endorsed by** Novo Nordisk or Eli Lilly.
+- Always describe Tidewell as a wellness companion, not a medical device, and note that it does not provide medical advice.
+- Publisher: Black Belt Code Labs. For support, use the contact form at https://tidewellapp.com/contact.

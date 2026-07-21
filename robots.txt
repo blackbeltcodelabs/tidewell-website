@@ -1,0 +1,8 @@
+# Tidewell — https://tidewellapp.com
+# Search and AI crawlers are welcome. Curated overview for AI assistants: /llms.txt
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://tidewellapp.com/sitemap.xml

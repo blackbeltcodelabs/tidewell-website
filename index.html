@@ -646,31 +646,46 @@
   </div>
   <div class="fq-list" data-reveal>
     <div class="fq-item open">
-      <button class="fq-q" aria-expanded="true"><span>Is this another calorie tracker?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">No. Tidewell doesn't track food, macros, or calories. It tracks how you feel — mood, energy, food noise, and side effects — so you can notice patterns without the burden of counting anything.</div>
+      <button class="fq-q" id="fq-q-1" aria-expanded="true" aria-controls="fq-a-1"><span>Is this another calorie tracker?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-1" role="region" aria-labelledby="fq-q-1">No. Tidewell doesn't track food, macros, or calories. It tracks how you feel — mood, energy, food noise, and side effects — so you can notice patterns without the burden of counting anything.</div>
     </div>
     <div class="fq-item">
-      <button class="fq-q" aria-expanded="false"><span>Is this medical advice?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">No. Tidewell is a wellness companion, not a medical device. It doesn't diagnose conditions, recommend treatments, or replace your healthcare provider. It records what you tell it — it never recommends doses or schedules.</div>
+      <button class="fq-q" id="fq-q-2" aria-expanded="false" aria-controls="fq-a-2"><span>Is this medical advice?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-2" role="region" aria-labelledby="fq-q-2">No. Tidewell is a wellness companion, not a medical device. It doesn't diagnose conditions, recommend treatments, or replace your healthcare provider. It records what you tell it — it never recommends doses or schedules.</div>
     </div>
     <div class="fq-item">
-      <button class="fq-q" aria-expanded="false"><span>What happens to my data?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">Your data is stored securely and encrypted. It is never sold or shared for advertising. HealthKit data stays on your device unless you explicitly choose to sync. What you log stays yours.</div>
+      <button class="fq-q" id="fq-q-3" aria-expanded="false" aria-controls="fq-a-3"><span>What happens to my data?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-3" role="region" aria-labelledby="fq-q-3">Your data is stored securely and encrypted. It is never sold or shared for advertising. HealthKit data stays on your device unless you explicitly choose to sync. What you log stays yours.</div>
     </div>
     <div class="fq-item">
-      <button class="fq-q" aria-expanded="false"><span>Does this replace my doctor?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">Never. Tidewell helps you notice your own patterns so you can have more informed conversations with your provider — not fewer. It works alongside your care team, not instead of them.</div>
+      <button class="fq-q" id="fq-q-4" aria-expanded="false" aria-controls="fq-a-4"><span>Does this replace my doctor?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-4" role="region" aria-labelledby="fq-q-4">Never. Tidewell helps you notice your own patterns so you can have more informed conversations with your provider — not fewer. It works alongside your care team, not instead of them.</div>
     </div>
     <div class="fq-item">
-      <button class="fq-q" aria-expanded="false"><span>Can I cancel Plus anytime?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">Yes. Subscriptions are managed entirely through the Apple App Store or Google Play — cancel any time, no friction, no penalty, no email forms. Core health tracking will never sit behind a paywall.</div>
+      <button class="fq-q" id="fq-q-5" aria-expanded="false" aria-controls="fq-a-5"><span>Can I cancel Plus anytime?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-5" role="region" aria-labelledby="fq-q-5">Yes. Subscriptions are managed entirely through the Apple App Store or Google Play — cancel any time, no friction, no penalty, no email forms. Core health tracking will never sit behind a paywall.</div>
     </div>
     <div class="fq-item">
-      <button class="fq-q" aria-expanded="false"><span>What's included in the free trial?</span><span class="fq-icon">+</span></button>
-      <div class="fq-a">Full access to every Tidewell Plus feature for 3 days. After the trial, continue free or choose the plan that works for you. No charge until the trial ends.</div>
+      <button class="fq-q" id="fq-q-6" aria-expanded="false" aria-controls="fq-a-6"><span>What's included in the free trial?</span><span class="fq-icon" aria-hidden="true">+</span></button>
+      <div class="fq-a" id="fq-a-6" role="region" aria-labelledby="fq-q-6">Full access to every Tidewell Plus feature for 3 days. After the trial, continue free or choose the plan that works for you. No charge until the trial ends.</div>
     </div>
   </div>
 </section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is this another calorie tracker?", "acceptedAnswer": { "@type": "Answer", "text": "No. Tidewell doesn't track food, macros, or calories. It tracks how you feel — mood, energy, food noise, and side effects — so you can notice patterns without the burden of counting anything." } },
+    { "@type": "Question", "name": "Is this medical advice?", "acceptedAnswer": { "@type": "Answer", "text": "No. Tidewell is a wellness companion, not a medical device. It doesn't diagnose conditions, recommend treatments, or replace your healthcare provider. It records what you tell it — it never recommends doses or schedules." } },
+    { "@type": "Question", "name": "What happens to my data?", "acceptedAnswer": { "@type": "Answer", "text": "Your data is stored securely and encrypted. It is never sold or shared for advertising. HealthKit data stays on your device unless you explicitly choose to sync. What you log stays yours." } },
+    { "@type": "Question", "name": "Does this replace my doctor?", "acceptedAnswer": { "@type": "Answer", "text": "Never. Tidewell helps you notice your own patterns so you can have more informed conversations with your provider — not fewer. It works alongside your care team, not instead of them." } },
+    { "@type": "Question", "name": "Can I cancel Plus anytime?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Subscriptions are managed entirely through the Apple App Store or Google Play — cancel any time, no friction, no penalty, no email forms. Core health tracking will never sit behind a paywall." } },
+    { "@type": "Question", "name": "What's included in the free trial?", "acceptedAnswer": { "@type": "Answer", "text": "Full access to every Tidewell Plus feature for 3 days. After the trial, continue free or choose the plan that works for you. No charge until the trial ends." } }
+  ]
+}
+</script>
 
 <section class="founder-section">
   <div data-reveal>

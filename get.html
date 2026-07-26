@@ -170,9 +170,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var target = document.querySelector(isIOS ? '[data-cta="ios"]' : '[data-cta="android"]');
   var url = target ? target.getAttribute('href') : '#';
 
-  document.getElementById('get-status').classList.add('show');
-
+  // Only show "Opening the store…" and redirect when there is a real store link.
+  // (iOS stays on this page with the download buttons until the App Store URL is set.)
   if (url && url !== '#') {
+    document.getElementById('get-status').classList.add('show');
     setTimeout(function () { window.location.href = url; }, 600);
   }
 });

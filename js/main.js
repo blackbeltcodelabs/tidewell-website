@@ -17,7 +17,7 @@ const APP_CONFIG = {
     androidDisabled: true,
   },
   live: {
-    ios:             '#', // ← replace with App Store link once listing is approved
+    ios:             'https://apps.apple.com/us/app/glp-1-tracker-tidewell/id6779065250',
     android:         'https://play.google.com/store/apps/details?id=com.tidewell.app',
     ctaLabel:        'Download Tidewell',
     ctaBadge:        'Available on iOS and Android',

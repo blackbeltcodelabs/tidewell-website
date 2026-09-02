@@ -161,22 +161,42 @@
 
 <script src="js/main.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  var ua = navigator.userAgent || '';
-  var isIOS = /iPhone|iPad|iPod/i.test(ua);
-  var isAndroid = /Android/i.test(ua);
-  if (!isIOS && !isAndroid) return;
+/* Device redirect for /get.
+   /get is served fresh (Cache-Control: max-age=0, must-revalidate), but
+   /js/main.js is immutably cached for a year — so a returning device can run a
+   STALE main.js and never learn the real store URLs. To keep this redirect
+   reliable and race-free, the store URLs are defined directly here instead of
+   being read from the CTA href that main.js populates. These must stay in sync
+   with APP_CONFIG.live in /js/main.js (the site-wide source of truth). */
+(function () {
+  var IOS_URL     = 'https://apps.apple.com/us/app/glp-1-tracker-tidewell/id6779065250';
+  var ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.tidewell.app';
 
-  var target = document.querySelector(isIOS ? '[data-cta="ios"]' : '[data-cta="android"]');
-  var url = target ? target.getAttribute('href') : '#';
+  function ready(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
 
-  // Only show "Opening the store…" and redirect when there is a real store link.
-  // (iOS stays on this page with the download buttons until the App Store URL is set.)
-  if (url && url !== '#') {
+  ready(function () {
+    var ua = navigator.userAgent || '';
+    // iPadOS Safari reports a desktop "Macintosh" UA, so also treat Mac-with-touch as iOS.
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isAndroid = /Android/i.test(ua);
+
+    // Point the visible badges at the real stores regardless of main.js cache state.
+    var iosLinks = document.querySelectorAll('[data-cta="ios"]');
+    for (var i = 0; i < iosLinks.length; i++) iosLinks[i].href = IOS_URL;
+    var androidLinks = document.querySelectorAll('[data-cta="android"]');
+    for (var j = 0; j < androidLinks.length; j++) androidLinks[j].href = ANDROID_URL;
+
+    if (!isIOS && !isAndroid) return; // desktop / unknown: show buttons, no redirect
+
+    var url = isIOS ? IOS_URL : ANDROID_URL;
     document.getElementById('get-status').classList.add('show');
     setTimeout(function () { window.location.href = url; }, 600);
-  }
-});
+  });
+})();
 </script>
 </body>
 </html>
